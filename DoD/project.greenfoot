@@ -1,4 +1,7 @@
 #Greenfoot properties
-#Mon Feb 16 18:29:38 PST 2015
-project.charset=UTF-8
+#Mon Feb 16 19:08:25 PST 2015
 version=2.7.0
+project.charset=UTF-8
+class.Map.superclass=greenfoot.World
+class.Manpower.superclass=greenfoot.Actor
+class.Faction.superclass=greenfoot.Actor
