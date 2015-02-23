@@ -9,12 +9,12 @@ import java.util.ArrayList;
  */
 public class Territory extends Actor
 {
-    int manpower = 10;
-    int owner = 1;
-    private Faction ownerFaction;
+    int recruitNumber = 10;
+    private Faction owner;
     Terrain terrain;
     boolean isExterior = false;
     public ArrayList<Border> conflictedBorderList = new ArrayList<Border>();
+    public ArrayList<Territory> adjacentTerritoryList = new ArrayList<Territory>();
 
     
     
@@ -34,7 +34,7 @@ public class Territory extends Actor
     }
     
     protected void addedToWorld(World world) {
-        ownerFaction = new Faction(); // for testing
+        owner = new Faction(); // for testing
         
         conflictedBorderList.add(border[0]); // for testing
         conflictedBorderList.add(border[1]); // for testing
@@ -55,33 +55,31 @@ public class Territory extends Actor
     {
         if ( ((DoDWorld)getWorld()).getGameTime() > lastTime) {
             lastTime = ((DoDWorld)getWorld()).getGameTime();
-            System.out.println("Territory " + territoryID + " spawns " + manpower + " units.");
-            addUnits(manpower);
+            System.out.println("Territory " + territoryID + " spawns " + recruitNumber + " units.");
+            addUnits(recruitNumber);
         }
     }  
     
-    public int getOwner() {
-        return owner;
-    }
     
-    public Faction getOwnerFaction() {
-        return ownerFaction;
+    public Faction getOwner() {
+        return owner;
     }
         
     
     public void newOwner(Faction newFaction) {
         //Update territory owner
-        ownerFaction = newFaction;
-		//Update borders in conflict
-		//Update adjacent territories' borders in conflict
-		//Update toggles (use AI?)
-		// Update Border's parent territory id pointers
-		// Update faction's manpower
-		
+        owner = newFaction;
+        //Update borders in conflict
+        //Update adjacent territories' borders in conflict
+        //Update toggles (use AI?)
+        // Update faction's manpower
+
+ 
 
     }
     
     private void addUnits(int incoming) {
+        // Daniel points out that Andrew forgot that troops have to travel from the center to the border. This section will be updated appropriately.
         
         // if territory has borders in conflict, set split troops between borders
         if (isExterior) {
@@ -98,7 +96,7 @@ public class Territory extends Actor
                 }
             }
         } else { // else give territories to faction
-            ownerFaction.addTroops(incoming, getX(), getY() );
+            owner.addTroops(incoming, getX(), getY() );
         }
         
     }

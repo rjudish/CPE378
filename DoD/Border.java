@@ -10,7 +10,7 @@ public class Border extends Actor
 {
     boolean inConflict = false;
     boolean hasRiver = false;
-    int manpower = 0;
+    int borderManCount = 0;
     
     int lastTime = 0;
     int borderID = 1;
@@ -35,7 +35,7 @@ public class Border extends Actor
     {
     }
     
-    public int getOwner() {
+    public Faction getOwner() {
         return parentTerritory.getOwner();
     }
     
@@ -44,7 +44,7 @@ public class Border extends Actor
     }
     
     public void addTroops(int incoming) {
-        manpower += incoming;
-        System.out.println("Border " + borderID + " gets " + incoming + " new units, for a total of " + manpower);
+        borderManCount += incoming;
+        System.out.println("Border " + borderID + " gets " + incoming + " new units, for a total of " + borderManCount);
     }
 }

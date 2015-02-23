@@ -12,18 +12,20 @@ public class Faction extends Actor
     int INIT_TERRITORIES = 25;
 
     int id = 0;
-    int manpower = 0;
-    int troopCount = 0;
+
+    //int manpower = 0;
+        //renamed to:
+            //int factionTroopCount = 0;
+                // which I then realized is just troopList.size
+    
+    int factionManCount = 0; //includes men in troops as well as men at borders
+    
     private ArrayList<Troop> troopList = new ArrayList<Troop>();
     private ArrayList<Territory> territoryList = new ArrayList<Territory>(INIT_TERRITORIES);
     private ArrayList<Territory> conflictedTerritoryList = new ArrayList<Territory>();
     private ArrayList<Territory> nonConflictedTerritoryList = new ArrayList<Territory>();
     
-
-      
     int lastTime = 0;
-    
-    
    
     
     /**
@@ -43,9 +45,12 @@ public class Faction extends Actor
     public void addTroops(int incoming, int xPos, int yPos) {
         Troop newTroop = new Troop(this, incoming);
         troopList.add(newTroop);
-        troopCount += incoming;
+        
+        //troopCount += incoming;
+            //This is now done using troopList.size instead
+        
         //getWorld().addObject(newTroop, xPos, yPos); // HALP
-        System.out.println("Gave " + incoming + " units to Faction " + this.id + " for a total of " + troopCount);
+        System.out.println("Gave " + incoming + " units to Faction " + this.id + " for a total of " + troopList.size());
 
     }
 }

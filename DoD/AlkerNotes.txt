@@ -18,9 +18,14 @@ Set images of nothing for items that are invisible (transparency, null, somethin
 retype trooplist and territory list to private and use getter/setters
 
 manpower is
-	A) spawn rate of a territory
-	B) how many men are at a border - use borderTroopCount?
-	C) how many men are in a "troop"?
+	A) spawn rate of a territory - recruitNumber
+	B) how many men are at a border - use borderManCount?
+	C) how many men are in a "troop"? troopManCount  
+	D) How many troops are in a faction - factionTroopCount? no. TroopList.size()
+	E) How many men are in a faction - factionManCount, includes men in troops as well as men at borders
+
+
+
 
 Pre Battle
 

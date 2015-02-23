@@ -9,13 +9,13 @@ import greenfoot.*;
 public class Troop extends Actor
 {
     Faction owner;
-    int size;
+    int troopManCount;
     int speed = 1;
     
     public Troop(Faction faction, int incoming) {
         super();
         this.owner = faction;
-        this.size = incoming;
+        this.troopManCount = incoming;
     }
     
     /**
