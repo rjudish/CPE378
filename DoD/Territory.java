@@ -33,6 +33,14 @@ public class Territory extends Actor
         
     }
     
+    public Territory(int owner, int territoryID, boolean isExterior) {
+        super();
+        this.owner = owner;
+        this.territoryID = territoryID;
+        this.isExterior = isExterior;
+        
+    }
+    
     protected void addedToWorld(World world) {
         ownerFaction = new Faction(); // for testing
         

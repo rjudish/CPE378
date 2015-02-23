@@ -11,6 +11,7 @@ import java.util.ArrayList;
 public class DoDWorld extends World
 {
     private Player player;
+    private AI ai;
     private int gameTime = 0;
     private int deltaTime = 0;
     public DisplayBar displayBar;
@@ -26,6 +27,7 @@ public class DoDWorld extends World
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
         super(600, 400, 1); 
         player = new Player();
+        ai = new AI(); //or add an integer parameter for more than one AI
         displayBar = new DisplayBar();
         Territory TEST_TERRITORY = new Territory(1, true);
         this.addObject(TEST_TERRITORY, 400, 300);
