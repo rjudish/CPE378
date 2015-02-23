@@ -29,10 +29,11 @@ public class DoDWorld extends World
         player = new Player();
         ai = new AI(); //or add an integer parameter for more than one AI
         displayBar = new DisplayBar();
-        Territory TEST_TERRITORY = new Territory(1, true);
+        Faction playerFaction = new Faction(); // for testing purposes
+        Territory TEST_TERRITORY = new Territory(playerFaction, 1, true);
         this.addObject(TEST_TERRITORY, 400, 300);
         conflictedTerritoryList.add(TEST_TERRITORY);
-        Territory TEST_TERRITORY2 = new Territory(2, false);
+        Territory TEST_TERRITORY2 = new Territory(playerFaction, 2, false);
         this.addObject(TEST_TERRITORY2, 300, 300);
         
     }

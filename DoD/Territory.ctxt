@@ -1,6 +1,6 @@
 #BlueJ class context
-comment0.params=territoryID\ isExterior
-comment0.target=Territory(int,\ boolean)
+comment0.params=owner\ territoryID\ isExterior
+comment0.target=Territory(Faction,\ int,\ boolean)
 comment1.params=world
 comment1.target=void\ addedToWorld(greenfoot.World)
 comment2.params=

@@ -26,14 +26,8 @@ public class Territory extends Actor
         new Border(this), new Border(this),
     };
     
-    public Territory(int territoryID, boolean isExterior) {
-        super();
-        this.territoryID = territoryID;
-        this.isExterior = isExterior;
-        
-    }
     
-    public Territory(int owner, int territoryID, boolean isExterior) {
+    public Territory(Faction owner, int territoryID, boolean isExterior) {
         super();
         this.owner = owner;
         this.territoryID = territoryID;
