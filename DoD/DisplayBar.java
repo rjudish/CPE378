@@ -1,19 +1,19 @@
 import greenfoot.*;
 
 /**
- * Write a description of class Map here.
+ * Write a description of class DisplayBar here.
  * 
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class Map extends DoDWorld
+public class DisplayBar
 {
-    
+
     /**
-     * Constructor for objects of class Map.
+     * Constructor for objects of class DisplayBar.
      * 
      */
-    public Map()
+    public DisplayBar()
     {    
         
     }

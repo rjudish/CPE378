@@ -1,0 +1,44 @@
+Hexagonal superworld:
+http://www.greenfoot.org/scenarios/10574
+
+help adding units when spawning in interior
+
+toggles should only be visible if they're your faction (default state 0?)
+make sure you can't interact with toggles that don't belong to you
+
+Flipping a toggle to outside should flip other outside pointing toggles in the territory to inside?
+Turn direction of toggles to match map directions (post alpha)
+
+Territory manpower variance
+Tie in ID numbers
+Tie in directionality?
+Reorder border creation to directions match IDs
+Set images of nothing for items that are invisible (transparency, null, something)
+
+retype trooplist and territory list to private and use getter/setters
+
+manpower is
+	A) spawn rate of a territory
+	B) how many men are at a border - use borderTroopCount?
+	C) how many men are in a "troop"?
+
+Pre Battle
+
+
+
+
+Battle
+
+
+
+Post Battle
+
+Territory owner needs to be updated
+
+
+
+
+
+Take territory
+	call newOwner(int faction)
+	
