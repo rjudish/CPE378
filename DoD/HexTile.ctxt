@@ -1,8 +1,0 @@
-#BlueJ class context
-comment0.params=type\ factionNum
-comment0.target=HexTile(int,\ int)
-comment1.params=
-comment1.target=int\ getTerrain()
-comment2.params=
-comment2.target=int\ getFaction()
-numComments=3

@@ -1,8 +1,0 @@
-#BlueJ class context
-comment0.params=
-comment0.target=ManpowerStatistic()
-comment1.params=initialCount
-comment1.target=ManpowerStatistic(int)
-comment2.params=newCount
-comment2.target=void\ update(int)
-numComments=3

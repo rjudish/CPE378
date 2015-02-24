@@ -29,7 +29,7 @@ public class Map extends DoDWorld
     {    
         
         int numFactions = 4; //Don't change without modifying placeFactions method!
-        HexTile[][] tileMap = new HexTile[columns][rows];
+        HexTile[][] tileMap = new HexTile[COLUMNS][ROWS];
         placeMapFeatures(tileMap);
         int[][] factionsMap = placeFactions(tileMap, numFactions);
         int[][] terrainsMap = placeTerrains(tileMap);
