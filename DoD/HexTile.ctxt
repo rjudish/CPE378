@@ -1,5 +1,8 @@
 #BlueJ class context
 comment0.params=type\ factionNum
 comment0.target=HexTile(int,\ int)
-comment0.text=\r\n\ Constructor\ for\ objects\ of\ class\ HexTile.\r\n\ 0\ \=\ Ocean\r\n\ 1\ \=\ Inland\ Sea\r\n\ 2\ \=\ Mountain\r\n\ 3\ \=\ Forrest\r\n\ 4\ \=\ Hills\r\n\ 5\ \=\ Grassland\r\n\ 6\ \=\ Plains\r\n\ 7\ \=\ Desert\r\n\ 8\ \=\ Arctic\r\n
-numComments=1
+comment1.params=
+comment1.target=int\ getTerrain()
+comment2.params=
+comment2.target=int\ getFaction()
+numComments=3

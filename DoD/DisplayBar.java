@@ -8,13 +8,5 @@ import greenfoot.*;
  */
 public class DisplayBar
 {
-
-    /**
-     * Constructor for objects of class DisplayBar.
-     * 
-     */
-    public DisplayBar()
-    {    
-        
-    }
+    
 }
