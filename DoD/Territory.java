@@ -1,6 +1,6 @@
 import greenfoot.*;
 import java.util.ArrayList;
-
+import java.awt.Color;
 /**
  * Write a description of class Territory here.
  * 
@@ -33,7 +33,16 @@ public class Territory extends Actor
         this.owner = owner;
         this.territoryID = territoryID;
         this.isExterior = isExterior;
-        
+    }
+    
+    public Territory(Faction owner, int territoryID, boolean isExterior, Terrain terrain) {
+        this(owner, territoryID, isExterior);
+        this.terrain = terrain;
+        //setImage(terrain.getImage());
+        GreenfootImage image = new GreenfootImage(terrain.getImage());
+        image.drawImage(new GreenfootImage("MP: " + recruitNumber, 20, Color.BLACK, Color.WHITE), 40, 30);
+        image.drawImage(new GreenfootImage("images/faction4.png"), 50, 50); //Change to Faction.image() or whereever faction-specific images will be held
+        setImage(image);
     }
     
     protected void addedToWorld(World world) {
@@ -42,12 +51,12 @@ public class Territory extends Actor
         conflictedBorderList.add(border[0]); // for testing
         conflictedBorderList.add(border[1]); // for testing
     
-        world.addObject(border[0], getX(), getY() + 30);
-        world.addObject(border[1], getX() + 25, getY() + 15);
-        world.addObject(border[2], getX() + 25, getY() - 15);
-        world.addObject(border[3], getX(), getY() - 30);
-        world.addObject(border[4], getX() - 25, getY() + 15);
-        world.addObject(border[5], getX() - 25, getY() - 15);
+        world.addObject(border[0], getX(), getY() + 40);
+        world.addObject(border[1], getX() + 35, getY() + 25);
+        world.addObject(border[2], getX() + 35, getY() - 25);
+        world.addObject(border[3], getX(), getY() - 40);
+        world.addObject(border[4], getX() - 35, getY() + 25);
+        world.addObject(border[5], getX() - 35, getY() - 25);
     }
     
     /**
@@ -79,7 +88,6 @@ public class Territory extends Actor
     public Faction getOwner() {
         return owner;
     }
-        
     
     public void newOwner(Faction newFaction) {
         //Update territory owner
@@ -116,5 +124,11 @@ public class Territory extends Actor
         
     }
 
+    public Terrain getTerrain() {
+        return terrain;
+    }
     
+    public void setTerrain(Terrain terrain) {
+        this.terrain = terrain;
+    }
 }

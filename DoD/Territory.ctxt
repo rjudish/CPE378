@@ -1,6 +1,7 @@
 #BlueJ class context
 comment0.params=owner\ territoryID\ isExterior
 comment0.target=Territory(Faction,\ int,\ boolean)
+<<<<<<< HEAD
 comment1.params=world
 comment1.target=void\ addedToWorld(greenfoot.World)
 comment2.params=
@@ -8,10 +9,27 @@ comment2.target=void\ act()
 comment2.text=\n\ Act\ -\ do\ whatever\ the\ Territory\ wants\ to\ do.\ This\ method\ is\ called\ whenever\n\ the\ 'Act'\ or\ 'Run'\ button\ gets\ pressed\ in\ the\ environment.\n
 comment3.params=neighbor
 comment3.target=Border\ sharedBorder(Territory)
+=======
+comment1.params=owner\ territoryID\ isExterior\ terrain
+comment1.target=Territory(Faction,\ int,\ boolean,\ Terrain)
+comment2.params=world
+comment2.target=void\ addedToWorld(greenfoot.World)
+comment3.params=
+comment3.target=void\ act()
+comment3.text=\r\n\ Act\ -\ do\ whatever\ the\ Territory\ wants\ to\ do.\ This\ method\ is\ called\ whenever\r\n\ the\ 'Act'\ or\ 'Run'\ button\ gets\ pressed\ in\ the\ environment.\r\n
+>>>>>>> FETCH_HEAD
 comment4.params=
 comment4.target=Faction\ getOwner()
 comment5.params=newFaction
 comment5.target=void\ newOwner(Faction)
 comment6.params=incoming
 comment6.target=void\ addUnits(int)
+<<<<<<< HEAD
 numComments=7
+=======
+comment7.params=
+comment7.target=Terrain\ getTerrain()
+comment8.params=terrain
+comment8.target=void\ setTerrain(Terrain)
+numComments=9
+>>>>>>> FETCH_HEAD

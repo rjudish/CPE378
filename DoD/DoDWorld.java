@@ -16,7 +16,10 @@ public class DoDWorld extends World
     private int deltaTime = 0;
     public DisplayBar displayBar;
     private ArrayList<Territory> conflictedTerritoryList = new ArrayList<Territory>();
-
+    private static final int START_X = 140;
+    private static final int START_Y = 152;
+    private static final int HEX_WIDTH = 120;
+    private static final int HEX_HEIGHT = 107;
         
     /**
      * Constructor for objects of class DoDWorld.
@@ -25,7 +28,7 @@ public class DoDWorld extends World
     public DoDWorld()
     {    
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
-        super(600, 400, 1); 
+        super(1600, 1080, 1); 
         player = new Player();
         
         displayBar = new DisplayBar();

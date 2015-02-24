@@ -21,8 +21,20 @@ public class HexTile
      * 7 = Desert
      * 8 = Arctic
      */
+    
+    int terrain;
+    int factionNum;
     public HexTile(int type, int factionNum)
     {
-           
+        this.terrain = type;
+        this.factionNum = factionNum;
+    }
+    
+    public int getTerrain() {
+        return terrain;
+    }
+    
+    public int getFaction() {
+        return factionNum;
     }
 }
