@@ -17,7 +17,6 @@ public class Faction extends Actor
         //renamed to:
             //int factionTroopCount = 0;
                 // which I then realized is just troopList.size
-    
     int factionManCount = 0; //includes men in troops as well as men at borders
     
     private ArrayList<Troop> troopList = new ArrayList<Troop>();

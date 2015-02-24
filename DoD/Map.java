@@ -1,6 +1,7 @@
 import greenfoot.*;
 import java.util.Random;
-
+import java.util.List;
+import java.util.ArrayList;
 /**
  * Write a description of class Map here.
  * 
@@ -12,14 +13,14 @@ public class Map extends DoDWorld
     public static final int ROWS = 8;
     public static final int COLUMNS = 16;
     
-    HexTile[][] tileMap;
-    java.util.Map<Integer, GreenfootImage> terrains;
-    
+    List<Territory> territories = new ArrayList<Territory>();    
     private static final int START_X = 140;
     private static final int START_Y = 192;
     private static final int HEX_WIDTH = 120;
     private static final int HEX_HEIGHT = 106;
     
+    TerritoryStatistic tStat;
+    ManpowerStatistic mpStat;
     /**
      * Constructor for objects of class Map.
      * 
@@ -28,7 +29,7 @@ public class Map extends DoDWorld
     {    
         
         int numFactions = 4; //Don't change without modifying placeFactions method!
-        tileMap = new HexTile[COLUMNS][ROWS];
+        HexTile[][] tileMap = new HexTile[columns][rows];
         placeMapFeatures(tileMap);
         int[][] factionsMap = placeFactions(tileMap, numFactions);
         int[][] terrainsMap = placeTerrains(tileMap);
@@ -39,12 +40,12 @@ public class Map extends DoDWorld
                 }
             }
         }
-        buildMap();
+        buildMap(tileMap);
         setupDisplayBar();
         setBackground("images/background.png");
     }
     
-    private void buildMap() {
+    private void buildMap(HexTile[][] tileMap) {
         boolean zigzag = false;
         //random numbers to make things line up. No idea why.
         int offsetY = HEX_WIDTH/2-8;
@@ -60,6 +61,7 @@ public class Map extends DoDWorld
                     Terrain terrainType = Terrain.getTerrain(currTile.getTerrain());
                     Territory currTerritory = new Territory(new Faction(), territoryID, false, terrainType);
                     currObject = currTerritory;
+                    territories.add(currTerritory);
                 }
                 else {
                     //MapFeature
@@ -153,7 +155,17 @@ public class Map extends DoDWorld
     }
     
     public void setupDisplayBar() {
-        addObject(new TerritoryStatistic(), 100, 40);
-        addObject(new ManpowerStatistic(), 1500, 40);
+        tStat = new TerritoryStatistic(25); //Match to initial territories
+        addObject(tStat, 60, 40);
+        mpStat = new ManpowerStatistic(0);
+        addObject(mpStat, 1500, 40);
+    }
+    
+    public void updateTerritoryStatistic(int newCount) {
+        tStat.update(newCount);
+    }
+    
+    public void updateManpowerStatistic(int newCount) {
+        mpStat.update(newCount);
     }
 }

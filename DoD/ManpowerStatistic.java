@@ -13,12 +13,12 @@ public class ManpowerStatistic extends Actor
     public ManpowerStatistic() {
         setImage(new GreenfootImage(text, 20, Color.BLACK, Color.WHITE));
     }
-    /**
-     * Act - do whatever the ManpowerStatistic wants to do. This method is called whenever
-     * the 'Act' or 'Run' button gets pressed in the environment.
-     */
-    public void act() 
-    {
-         setImage(new GreenfootImage(text + "400", 20, Color.BLACK, Color.WHITE));
-    }    
+    
+    public ManpowerStatistic(int initialCount) {
+        update(initialCount);
+    }
+
+    public void update(int newCount) {
+        setImage(new GreenfootImage(text + newCount, 20, Color.BLACK, Color.WHITE));
+    }
 }
