@@ -1,19 +1,6 @@
 #BlueJ class context
 comment0.params=
 comment0.target=Map()
-<<<<<<< HEAD
-comment0.text=\n\ Constructor\ for\ objects\ of\ class\ Map.\n\ \n
-comment1.params=tiles
-comment1.target=void\ placeMapFeatures(HexTile[][])
-comment1.text=\n\ Psuedo-randomly\ generates\ the\ locations\ of\ map\ features\ in\ the\ world.\n\ Then\ creates\ and\ initializes\ the\ objects.\n
-comment2.params=tiles\ numFactions
-comment2.target=int[][]\ placeFactions(HexTile[][],\ int)
-comment2.text=\n\ Psuedo-randomly\ generates\ the\ locations\ of\ factions\ in\ the\ world.\n\ ALPHA\:\ 4\ factions\ everytime\n
-comment3.params=tiles
-comment3.target=int[][]\ placeTerrains(HexTile[][])
-comment3.text=\n\ Sets\ the\ terrains\ of\ territory\ objects.\n
-numComments=4
-=======
 comment0.text=\r\n\ Constructor\ for\ objects\ of\ class\ Map.\r\n\ \r\n
 comment1.params=
 comment1.target=void\ buildMap()
@@ -29,4 +16,3 @@ comment4.text=\r\n\ Sets\ the\ terrains\ of\ territory\ objects.\r\n
 comment5.params=
 comment5.target=void\ setupDisplayBar()
 numComments=6
->>>>>>> FETCH_HEAD

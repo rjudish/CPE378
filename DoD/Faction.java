@@ -21,12 +21,25 @@ public class Faction extends Actor
     int factionManCount = 0; //includes men in troops as well as men at borders
     
     private ArrayList<Troop> troopList = new ArrayList<Troop>();
-    public ArrayList<Territory> territoryList = new ArrayList<Territory>(INIT_TERRITORIES);
+    public ArrayList<Territory> territoryList = new ArrayList<Territory>();
     private ArrayList<Territory> conflictedTerritoryList = new ArrayList<Territory>();
     public ArrayList<Territory> nonConflictedTerritoryList = new ArrayList<Territory>();
     
     int lastTime = 0;
    
+    // Constructor
+    /*public Faction(ArrayList<Territory> conflictedTerritoryList, ArrayList<Territory> nonConflictedTerritoryList)
+    {
+        this.conflictedTerritoryList = conflictedTerritories;
+        this.nonConflictedTerritoryList = nonConflictedTerritoryList;
+        for(Territory terr : conflictedTerritoryList) { 
+            territoryList.add(terr);
+        }
+        for(Territory terr : nonConflictedTerritoryList) { 
+            territoryList.add(terr);
+        }
+        
+    }*/
     
     /**
      * Act - do whatever the Faction wants to do. This method is called whenever

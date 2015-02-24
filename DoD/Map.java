@@ -9,8 +9,8 @@ import java.util.Random;
  */
 public class Map extends DoDWorld
 {
-    public static final int rows = 8;
-    public static final int columns = 16;
+    public static final int ROWS = 8;
+    public static final int COLUMNS = 16;
     
     HexTile[][] tileMap;
     java.util.Map<Integer, GreenfootImage> terrains;
@@ -19,19 +19,21 @@ public class Map extends DoDWorld
     private static final int START_Y = 192;
     private static final int HEX_WIDTH = 120;
     private static final int HEX_HEIGHT = 106;
+    
     /**
      * Constructor for objects of class Map.
      * 
      */
     public Map()
     {    
+        
         int numFactions = 4; //Don't change without modifying placeFactions method!
-        tileMap = new HexTile[columns][rows];
+        tileMap = new HexTile[COLUMNS][ROWS];
         placeMapFeatures(tileMap);
         int[][] factionsMap = placeFactions(tileMap, numFactions);
         int[][] terrainsMap = placeTerrains(tileMap);
-        for (int i = 0; i < rows; i++) {
-            for(int j = 0; j < columns; j++) {
+        for (int i = 0; i < ROWS; i++) {
+            for(int j = 0; j < COLUMNS; j++) {
                 if(tileMap[j][i] == null) {
                     tileMap[j][i] = new HexTile(terrainsMap[j][i], factionsMap[j][i]);
                 }
@@ -47,9 +49,10 @@ public class Map extends DoDWorld
         //random numbers to make things line up. No idea why.
         int offsetY = HEX_WIDTH/2-8;
         
+        
         int territoryID = 0;
-        for (int y = START_Y, row = 0; row < rows; y += HEX_HEIGHT-2, row++) {
-            for (int x = START_X, column = 0; column < columns; x += HEX_WIDTH*3/4-2, column++) {
+        for (int y = START_Y, row = 0; row < ROWS; y += HEX_HEIGHT-2, row++) {
+            for (int x = START_X, column = 0; column < COLUMNS; x += HEX_WIDTH*3/4-2, column++) {
                 HexTile currTile = tileMap[column][row];
                 Actor currObject;
                 if (currTile.getTerrain() > 2) {
@@ -81,9 +84,9 @@ public class Map extends DoDWorld
      */
     public void placeMapFeatures(HexTile[][] tiles) {
         double waterEdgeChance = 0.2, waterInteriorChance = 0.1;
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < columns; j++) {
-                if (i == 0 || i == rows - 1 || j == 0 || j == columns - 1) {
+        for (int i = 0; i < ROWS; i++) {
+            for (int j = 0; j < COLUMNS; j++) {
+                if (i == 0 || i == ROWS - 1 || j == 0 || j == COLUMNS - 1) {
                     if (Math.random() < waterEdgeChance) {
                         tiles[j][i] = new HexTile(0, 0);
                     }
@@ -96,8 +99,8 @@ public class Map extends DoDWorld
         }
         //Mountains Pass
         double mountainChance = 0.1;
-        for (int i = 1; i < rows - 1; i++) {
-            for (int j = 1; j < columns - 1; j++) {
+        for (int i = 1; i < ROWS - 1; i++) {
+            for (int j = 1; j < COLUMNS - 1; j++) {
                 if (tiles[j][i] == null && Math.random() < mountainChance) {
                     tiles[j][i] = new HexTile(2, 0);
                 }
@@ -110,18 +113,18 @@ public class Map extends DoDWorld
      * ALPHA: 4 factions everytime
      */
     public int[][] placeFactions(HexTile[][] tiles, int numFactions) {
-        int[][] factionsMap = new int[columns][rows];
-        for (int i = 0; i < rows; i++) {
-            for(int j = 0; j < columns; j++) {
+        int[][] factionsMap = new int[COLUMNS][ROWS];
+        for (int i = 0; i < ROWS; i++) {
+            for(int j = 0; j < COLUMNS; j++) {
                 if(tiles[j][i] == null) {
-                    if(i < rows / 2) {
-                        if(j < columns / 2) {
+                    if(i < ROWS / 2) {
+                        if(j < COLUMNS / 2) {
                             factionsMap[j][i] = 1;
                         } else {
                             factionsMap[j][i] = 2;
                         }
                     } else {
-                        if(j < columns / 2) {
+                        if(j < COLUMNS / 2) {
                             factionsMap[j][i] = 3;
                         } else {
                             factionsMap[j][i] = 4;
@@ -138,9 +141,9 @@ public class Map extends DoDWorld
      */
     public int[][] placeTerrains(HexTile[][] tiles) {
         Random rand = new Random();
-        int[][] terrainsMap = new int[columns][rows];
-        for (int i = 0; i < rows; i++) {
-            for(int j = 0; j < columns; j++) {
+        int[][] terrainsMap = new int[COLUMNS][ROWS];
+        for (int i = 0; i < ROWS; i++) {
+            for(int j = 0; j < COLUMNS; j++) {
                 if(tiles[j][i] == null) {
                     terrainsMap[j][i] = rand.nextInt(6)+3;
                 }
