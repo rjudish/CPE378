@@ -21,9 +21,9 @@ public class Faction extends Actor
     int factionManCount = 0; //includes men in troops as well as men at borders
     
     private ArrayList<Troop> troopList = new ArrayList<Troop>();
-    private ArrayList<Territory> territoryList = new ArrayList<Territory>(INIT_TERRITORIES);
+    public ArrayList<Territory> territoryList = new ArrayList<Territory>(INIT_TERRITORIES);
     private ArrayList<Territory> conflictedTerritoryList = new ArrayList<Territory>();
-    private ArrayList<Territory> nonConflictedTerritoryList = new ArrayList<Territory>();
+    public ArrayList<Territory> nonConflictedTerritoryList = new ArrayList<Territory>();
     
     int lastTime = 0;
    

@@ -13,6 +13,7 @@ public class Territory extends Actor
     private Faction owner;
     Terrain terrain;
     boolean isExterior = false;
+    boolean isToggleSet = false;
     public ArrayList<Border> conflictedBorderList = new ArrayList<Border>();
     public ArrayList<Territory> adjacentTerritoryList = new ArrayList<Territory>();
 
@@ -62,6 +63,18 @@ public class Territory extends Actor
         }
     }  
     
+    //gives the border shared between two neighboring territories
+    public Border sharedBorder(Territory neighbor) {
+        //FIX
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 6; j++) {
+                if (this.border[i].borderID == neighbor.border[j].borderID)
+                    return this.border[i];
+            }
+        }
+        
+        return null;
+    }
     
     public Faction getOwner() {
         return owner;

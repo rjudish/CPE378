@@ -1,9 +1,9 @@
 #BlueJ class context
-comment0.params=
-comment0.target=AI()
-comment0.text=\r\n\ Constructor\ for\ objects\ of\ class\ AI\r\n
-comment1.params=numAI
-comment1.target=AI(int)
+comment0.params=player
+comment0.target=AI(Faction)
+comment0.text=\n\ Constructor\ for\ objects\ of\ class\ AI\n
+comment1.params=player\ numAIFactions
+comment1.target=AI(Faction,\ int)
 comment2.params=
-comment2.target=void\ act()
+comment2.target=void\ initToggle()
 numComments=3
