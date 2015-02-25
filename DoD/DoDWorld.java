@@ -38,7 +38,7 @@ public class DoDWorld extends World
         player = new Player();
         
         displayBar = new DisplayBar();
-        Faction playerFaction = new Faction(); // for testing purposes
+        Faction playerFaction = new Faction(this); // for testing purposes
         //Territory TEST_TERRITORY = new Territory(playerFaction, 1, true);
         //this.addObject(TEST_TERRITORY, 400, 300);
         //conflictedTerritoryList.add(TEST_TERRITORY);

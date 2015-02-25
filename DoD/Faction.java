@@ -17,15 +17,23 @@ public class Faction extends Actor
         //renamed to:
             //int factionTroopCount = 0;
                 // which I then realized is just troopList.size
+    
     int factionManCount = 0; //includes men in troops as well as men at borders
     
-    private ArrayList<Troop> troopList = new ArrayList<Troop>();
+    public ArrayList<Troop> troopList = new ArrayList<Troop>();    // does not include men at borders
+    
     public ArrayList<Territory> territoryList = new ArrayList<Territory>();
     private ArrayList<Territory> conflictedTerritoryList = new ArrayList<Territory>();
     public ArrayList<Territory> nonConflictedTerritoryList = new ArrayList<Territory>();
     
     int lastTime = 0;
    GreenfootImage flag;
+   
+   World world;
+   
+   public Faction(World world) {
+       this.world = world;
+    }
     
     /**
      * Act - do whatever the Faction wants to do. This method is called whenever
@@ -48,10 +56,12 @@ public class Faction extends Actor
         //troopCount += incoming;
             //This is now done using troopList.size instead
         
-        //getWorld().addObject(newTroop, xPos, yPos); // HALP
+        world.addObject(newTroop, xPos, yPos); // HALP
         //System.out.println("Gave " + incoming + " units to Faction " + this.id + " for a total of " + troopList.size());
 
     }
+    
+    
     
     public GreenfootImage getFlag() {
         return flag;

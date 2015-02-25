@@ -49,15 +49,16 @@ public class Territory extends Actor
     }
     
     protected void addedToWorld(World world) {
-        owner = new Faction(); // for testing
+        //owner = new Faction(); // for testing
         
         conflictedBorderList.add(border[0]); // for testing
         conflictedBorderList.add(border[1]); // for testing
     
-        world.addObject(border[0], getX(), getY() + 40);
-        world.addObject(border[1], getX() + 35, getY() + 25);
-        world.addObject(border[2], getX() + 35, getY() - 25);
-        world.addObject(border[3], getX(), getY() - 40);
+        // Clockwise from N
+        world.addObject(border[0], getX(), getY() - 40);
+        world.addObject(border[1], getX() + 35, getY() - 25);
+        world.addObject(border[2], getX() + 35, getY() + 25);
+        world.addObject(border[3], getX(), getY() + 40);
         world.addObject(border[4], getX() - 35, getY() + 25);
         world.addObject(border[5], getX() - 35, getY() - 25);
     }

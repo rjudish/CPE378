@@ -30,6 +30,9 @@ public class Toggle extends Actor
             this.setImage("ArrowU.png");
         else if (toggleVal == 2)
             this.setImage("ArrowD.png");
+        else if (toggleVal == 3)
+            this.getImage().clear();
+            
     }    
     
     public void toggleToggle() {

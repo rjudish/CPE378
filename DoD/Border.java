@@ -45,7 +45,7 @@ public class Border extends Actor
     
     public void addTroops(int incoming) {
         borderManCount += incoming;
-        System.out.println("Border " + borderID + " gets " + incoming + " new units, for a total of " + borderManCount);
+        //System.out.println("Border " + borderID + " gets " + incoming + " new units, for a total of " + borderManCount);
     }
 
     public void drawRiver() {

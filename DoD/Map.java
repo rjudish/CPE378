@@ -172,7 +172,7 @@ public class Map extends DoDWorld
     
     private void initializeFactionMap() {
         for (int i = 1; i <= NUM_FACTIONS; i++) {
-            Faction newFaction = new Faction();
+            Faction newFaction = new Faction(this);
             newFaction.setFlag(new GreenfootImage("faction" + i + ".png"));
             factions.put(i, newFaction);
         }
