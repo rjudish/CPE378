@@ -45,7 +45,7 @@ public class Map extends DoDWorld
                 }
             }
         }
-        buildMap(tileMap);
+        Territory[][] territoryMap = buildMap(tileMap);
         setBackground("images/background.png");
         setupDisplayBar();
     }
@@ -55,12 +55,11 @@ public class Map extends DoDWorld
         scroll();
     }
     
-    private void buildMap(HexTile[][] tileMap) {
+    private Territory[][] buildMap(HexTile[][] tileMap) {
         boolean zigzag = false;
         //random numbers to make things line up. No idea why.
         int offsetY = HEX_WIDTH/2-8;
-        
-        
+        Territory[][] territoryMap = new Territory[COLUMNS][ROWS];
         int territoryID = 0;
         for (int y = START_Y, row = 0; row < ROWS; y += HEX_HEIGHT-2, row++) {
             for (int x = START_X, column = 0; column < COLUMNS; x += HEX_WIDTH*3/4-2, column++) {
@@ -73,21 +72,22 @@ public class Map extends DoDWorld
                     Territory currTerritory = new Territory(currFaction, territoryID, false, terrainType);
                     currObject = currTerritory;
                     territories.add(currTerritory);
+                    territoryMap[column][row] = currTerritory;
                 }
                 else {
                     //MapFeature
                     currObject = new MapFeature(Terrain.getTerrain(currTile.getTerrain()));
                 }
                 if (!zigzag) {
-                    addObject(currObject, x, y);//tileMap[column][row], x, y);
+                    addObject(currObject, x, y);
                 }
                 else {
-                    addObject(currObject, x, y+offsetY); //tileMap[column][row],
+                    addObject(currObject, x, y+offsetY);
                 }
                 zigzag = !zigzag;
             }
         }
-    
+        return territoryMap;
     
     }
     
@@ -203,18 +203,18 @@ public class Map extends DoDWorld
         }
     }
     
-    private void addAdjacencyLists(HexTile[][] tiles, int[][] terrainsMap) {
+    private void addAdjacencyLists(Territory[][] territoryMap, int[][] terrainsMap) {
         for (int i = 0; i < ROWS; i++) {
             for(int j = 0; j < COLUMNS; j++) {
                 if(terrainsMap[j][i] >= NUM_MAP_FEATURES) { //if not map feature
                     if(j % 2 == 0) { //even column
                         if(j > 1 && i > 0 && i < ROWS - 1 && j < COLUMNS - 1) { //not edge
-                            ((Territory)tiles[j][i]).adjacentTerritoryList.add((Territory)tiles[j-1][i-1]);
-                            ((Territory)tiles[j][i]).adjacentTerritoryList.add((Territory)tiles[j-1][i]);
-                            ((Territory)tiles[j][i]).adjacentTerritoryList.add((Territory)tiles[j][i+1]);
-                            ((Territory)tiles[j][i]).adjacentTerritoryList.add((Territory)tiles[j+1][i]);
-                            ((Territory)tiles[j][i]).adjacentTerritoryList.add((Territory)tiles[j+1][i-1]);
-                            ((Territory)tiles[j][i]).adjacentTerritoryList.add((Territory)tiles[j][i-1]);
+                            territoryMap[j][i].adjacentTerritoryList.add(territoryMap[j-1][i-1]);
+                            (territoryMap[j][i]).adjacentTerritoryList.add(territoryMap[j-1][i]);
+                            (territoryMap[j][i]).adjacentTerritoryList.add(territoryMap[j][i+1]);
+                            (territoryMap[j][i]).adjacentTerritoryList.add(territoryMap[j+1][i]);
+                            (territoryMap[j][i]).adjacentTerritoryList.add(territoryMap[j+1][i-1]);
+                            (territoryMap[j][i]).adjacentTerritoryList.add(territoryMap[j][i-1]);
                         } else { //edge
                             
                             
@@ -222,12 +222,12 @@ public class Map extends DoDWorld
                         }
                     } else { //odd column
                         if(j > 1 && i > 0 && i < ROWS - 1 && j < COLUMNS - 1) { //not edge
-                            ((Territory)tiles[j][i]).adjacentTerritoryList.add((Territory)tiles[j-1][i-1]);
-                            ((Territory)tiles[j][i]).adjacentTerritoryList.add((Territory)tiles[j-1][i]);
-                            ((Territory)tiles[j][i]).adjacentTerritoryList.add((Territory)tiles[j][i+1]);
-                            ((Territory)tiles[j][i]).adjacentTerritoryList.add((Territory)tiles[j+1][i+1]);
-                            ((Territory)tiles[j][i]).adjacentTerritoryList.add((Territory)tiles[j+1][i]);
-                            ((Territory)tiles[j][i]).adjacentTerritoryList.add((Territory)tiles[j][i-1]);
+                            (territoryMap[j][i]).adjacentTerritoryList.add(territoryMap[j-1][i-1]);
+                            (territoryMap[j][i]).adjacentTerritoryList.add(territoryMap[j-1][i]);
+                            (territoryMap[j][i]).adjacentTerritoryList.add(territoryMap[j][i+1]);
+                            (territoryMap[j][i]).adjacentTerritoryList.add(territoryMap[j+1][i+1]);
+                            (territoryMap[j][i]).adjacentTerritoryList.add(territoryMap[j+1][i]);
+                            (territoryMap[j][i]).adjacentTerritoryList.add(territoryMap[j][i-1]);
                         } else { //edge
                             
                         }
