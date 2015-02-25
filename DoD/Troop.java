@@ -27,10 +27,10 @@ public class Troop extends Actor
         Territory currTerr = getCurrTerritory();
         //System.out.println("territory");
         if(currTerr != null) {
-            for (Border bord : currTerr.border) {
+            for (Border bord : currTerr.borders) {
                 //System.out.println("border");
                 // This is supposed to be 2, not 1, but currently toggles are all init to 1 and mouseclicks broke so this works for testing
-                if (bord.toggle.getToggleVal() == 1) {
+                if (bord.toggle.getToggleVal() == 2) {
                     //System.out.println("turn");
                     turnTowards( bord.getX(), bord.getY());
                 }

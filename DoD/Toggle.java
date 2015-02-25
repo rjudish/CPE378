@@ -8,11 +8,27 @@ import greenfoot.*;
  */
 public class Toggle extends Actor
 {
-    int toggleVal = 1;
+    int toggleVal = 2;
     Border parentBorder;
     
     public Toggle(Border parentBorder) {
         this.parentBorder = parentBorder;
+
+        boolean done = false;
+
+        //if (this.parentBorder.parentTerritory == null)
+        //    System.out.println("parentTerritory is null");
+        // why is parentTerritory null?!?!?
+        
+        /*
+        for (Border bord : parentBorder.parentTerritory.getBorders()) {
+            if (bord == parentBorder)
+                done = true;
+            if (!done) {
+                turn(60);
+            }
+        }
+        */
     }
     
     /**
@@ -27,24 +43,25 @@ public class Toggle extends Actor
         if (toggleVal == 0)
             this.getImage().clear();
         else if (toggleVal == 1)
-            this.setImage("ArrowU.png");
-        else if (toggleVal == 2)
             this.setImage("ArrowD.png");
+        else if (toggleVal == 2)
+            this.setImage("ArrowU.png");
         else if (toggleVal == 3)
             this.getImage().clear();
             
     }    
     
     public void toggleToggle() {
+        //System.out.println("Toggling from val " + toggleVal);
         Toggle otherToggle = parentBorder.otherBorder.toggle;
         // TODO: Post alpha: add conditionals to verify that it's an okay move
         if (toggleVal == 1) {
             toggleVal = 2;
-            otherToggle.setToggleVal(1);
+            //otherToggle.setToggleVal(1); //won't work until otherBorder is init'd
         }
         else if (toggleVal == 2) {
             toggleVal = 1;
-            otherToggle.setToggleVal(2);
+            //otherToggle.setToggleVal(2);  //won't work until otherBorder is init'd
         }
     }
     

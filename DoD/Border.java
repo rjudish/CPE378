@@ -20,6 +20,8 @@ public class Border extends Actor
     
     public Border(Territory parentTerritory) {
         this.parentTerritory = parentTerritory;
+        if (this.parentTerritory == null)
+            System.out.println("NULL");
     }
     
     protected void addedToWorld(World world) {

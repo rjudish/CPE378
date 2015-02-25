@@ -21,12 +21,7 @@ public class Territory extends Actor
     
     int lastTime = 0;
     int territoryID = 1;
-    Border[] border ={
-        new Border(this), new Border(this),
-        new Border(this), new Border(this),
-        new Border(this), new Border(this),
-   
-    };
+    Border[] borders = new Border[6];
     
     
     
@@ -35,6 +30,9 @@ public class Territory extends Actor
         this.owner = owner;
         this.territoryID = territoryID;
         this.isExterior = isExterior;
+        for( int i = 0; i < 6; i++ ) {
+            this.borders[i] = new Border(this);
+        }
     }
     
     public Territory(Faction owner, int territoryID, boolean isExterior, Terrain terrain) {
@@ -51,16 +49,16 @@ public class Territory extends Actor
     protected void addedToWorld(World world) {
         //owner = new Faction(); // for testing
         
-        conflictedBorderList.add(border[0]); // for testing
-        conflictedBorderList.add(border[1]); // for testing
+        conflictedBorderList.add(borders[0]); // for testing
+        conflictedBorderList.add(borders[1]); // for testing
     
         // Clockwise from N
-        world.addObject(border[0], getX(), getY() - 40);
-        world.addObject(border[1], getX() + 35, getY() - 25);
-        world.addObject(border[2], getX() + 35, getY() + 25);
-        world.addObject(border[3], getX(), getY() + 40);
-        world.addObject(border[4], getX() - 35, getY() + 25);
-        world.addObject(border[5], getX() - 35, getY() - 25);
+        world.addObject(borders[0], getX(), getY() - 40);
+        world.addObject(borders[1], getX() + 35, getY() - 25);
+        world.addObject(borders[2], getX() + 35, getY() + 25);
+        world.addObject(borders[3], getX(), getY() + 40);
+        world.addObject(borders[4], getX() - 35, getY() + 25);
+        world.addObject(borders[5], getX() - 35, getY() - 25);
     }
     
     /**
@@ -80,8 +78,8 @@ public class Territory extends Actor
         //FIX
         for (int i = 0; i < 6; i++) {
             for (int j = 0; j < 6; j++) {
-                if (this.border[i].borderID == neighbor.border[j].borderID)
-                    return this.border[i];
+                if (this.borders[i].borderID == neighbor.borders[j].borderID)
+                    return this.borders[i];
             }
         }
         
@@ -115,10 +113,10 @@ public class Territory extends Actor
             int size = conflictedBorderList.size();
             for( int i = 0; i < size; i++) {
                 if (menLeft > (incoming / size)) {
-                    border[i].addTroops(incoming / size);
+                    borders[i].addTroops(incoming / size);
                     menLeft -= (incoming / size);
                 } else {
-                    border[i].addTroops(menLeft);
+                    borders[i].addTroops(menLeft);
                     menLeft = 0;
                 }
             }
@@ -136,7 +134,7 @@ public class Territory extends Actor
         this.terrain = terrain;
     }
     
-        public Border[] getBorders() {
-        return border;
+    public Border[] getBorders() {
+        return borders;
     }
 }
