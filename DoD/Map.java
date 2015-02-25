@@ -246,4 +246,40 @@ public class Map extends DoDWorld
             }
         }
     }
+
+    public void drawRivers() {
+        for (Territory territory : territories) {
+            Border[] borders = territory.getBorders();
+            for (int i = 0; i < borders.length; i++) {
+                if (borders[i].hasRiver) {
+                    int centerX = territory.getX();
+                    int centerY = territory.getY();
+                    int x1 = 0;
+                    int x2 = 0;
+                    int y1 = 0;
+                    int y2 = 0;
+                    //Center to flat is 53px
+                    switch (i) {
+                    case 0: //N
+                        break;
+                    case 1: //NE
+                        break;
+                    case 2: //SE
+                        break;
+                    case 3: //S
+                        break;
+                    case 4: //SW
+                        break;
+                    case 5: //NW
+                        break;
+                    }
+                    //GreenfootImage parentImage = parentTerritory.getImage();
+                    //parentImage.setColor(new Color(112, 141, 241));
+                    //parentImage.drawLine(this.getX(), this.getY(), this.getX() + 100, this.getY() + 100);
+                    //parentImage.drawPolygon();
+                    //parentTerritory.setImage(parentImage);
+                }
+            }
+        }
+    }
 }

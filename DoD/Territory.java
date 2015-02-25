@@ -135,4 +135,8 @@ public class Territory extends Actor
     public void setTerrain(Terrain terrain) {
         this.terrain = terrain;
     }
+    
+        public Border[] getBorders() {
+        return border;
+    }
 }
