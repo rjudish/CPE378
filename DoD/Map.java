@@ -13,6 +13,7 @@ public class Map extends DoDWorld
     public static final int ROWS = 8;
     public static final int COLUMNS = 16;
     public static final int NUM_FACTIONS = 4; //Don't change without modifying placeFactions method!
+    public static final int NUM_MAP_FEATURES = 3;
 
     private static final int START_X = 140;
     private static final int START_Y = 192;
@@ -157,7 +158,7 @@ public class Map extends DoDWorld
         for (int i = 0; i < ROWS; i++) {
             for(int j = 0; j < COLUMNS; j++) {
                 if(tiles[j][i] == null) {
-                    terrainsMap[j][i] = rand.nextInt(6)+3;
+                    terrainsMap[j][i] = rand.nextInt(6)+NUM_MAP_FEATURES;
                 }
             }
         }
@@ -198,6 +199,41 @@ public class Map extends DoDWorld
                 cameraX += shiftX;
                 cameraY += shiftY;
                 moveAllObjects(shiftX, shiftY);
+            }
+        }
+    }
+    
+    private void addAdjacencyLists(HexTile[][] tiles, int[][] terrainsMap) {
+        for (int i = 0; i < ROWS; i++) {
+            for(int j = 0; j < COLUMNS; j++) {
+                if(terrainsMap[j][i] >= NUM_MAP_FEATURES) { //if not map feature
+                    if(j % 2 == 0) { //even column
+                        if(j > 1 && i > 0 && i < ROWS - 1 && j < COLUMNS - 1) { //not edge
+                            ((Territory)tiles[j][i]).adjacentTerritoryList.add((Territory)tiles[j-1][i-1]);
+                            ((Territory)tiles[j][i]).adjacentTerritoryList.add((Territory)tiles[j-1][i]);
+                            ((Territory)tiles[j][i]).adjacentTerritoryList.add((Territory)tiles[j][i+1]);
+                            ((Territory)tiles[j][i]).adjacentTerritoryList.add((Territory)tiles[j+1][i]);
+                            ((Territory)tiles[j][i]).adjacentTerritoryList.add((Territory)tiles[j+1][i-1]);
+                            ((Territory)tiles[j][i]).adjacentTerritoryList.add((Territory)tiles[j][i-1]);
+                        } else { //edge
+                            
+                            
+                            
+                        }
+                    } else { //odd column
+                        if(j > 1 && i > 0 && i < ROWS - 1 && j < COLUMNS - 1) { //not edge
+                            ((Territory)tiles[j][i]).adjacentTerritoryList.add((Territory)tiles[j-1][i-1]);
+                            ((Territory)tiles[j][i]).adjacentTerritoryList.add((Territory)tiles[j-1][i]);
+                            ((Territory)tiles[j][i]).adjacentTerritoryList.add((Territory)tiles[j][i+1]);
+                            ((Territory)tiles[j][i]).adjacentTerritoryList.add((Territory)tiles[j+1][i+1]);
+                            ((Territory)tiles[j][i]).adjacentTerritoryList.add((Territory)tiles[j+1][i]);
+                            ((Territory)tiles[j][i]).adjacentTerritoryList.add((Territory)tiles[j][i-1]);
+                        } else { //edge
+                            
+                        }
+                    }
+                    
+                }
             }
         }
     }
