@@ -13,17 +13,18 @@ public class Map extends DoDWorld
     public static final int ROWS = 8;
     public static final int COLUMNS = 16;
     public static final int NUM_FACTIONS = 4; //Don't change without modifying placeFactions method!
-    public static final int NUM_MAP_FEATURES = 3;
 
     private static final int START_X = 140;
     private static final int START_Y = 192;
     private static final int HEX_WIDTH = 120;
     private static final int HEX_HEIGHT = 106;
-    
-    TerritoryStatistic tStat;
-    ManpowerStatistic mpStat;
-   
-    
+
+    int cameraX = 0;
+    int cameraY = 0;
+    public static final int SCROLL_SPEED = 10;
+
+    DisplayBar displayBar;
+
     /**
      * Constructor for objects of class Map.
      * 
@@ -44,8 +45,13 @@ public class Map extends DoDWorld
             }
         }
         buildMap(tileMap);
-        setupDisplayBar();
         setBackground("images/background.png");
+        setupDisplayBar();
+    }
+    
+    public void act() {
+        super.act();
+        scroll();
     }
     
     private void buildMap(HexTile[][] tileMap) {
@@ -151,7 +157,7 @@ public class Map extends DoDWorld
         for (int i = 0; i < ROWS; i++) {
             for(int j = 0; j < COLUMNS; j++) {
                 if(tiles[j][i] == null) {
-                    terrainsMap[j][i] = rand.nextInt(6)+NUM_MAP_FEATURES;
+                    terrainsMap[j][i] = rand.nextInt(6)+3;
                 }
             }
         }
@@ -159,18 +165,8 @@ public class Map extends DoDWorld
     }
     
     public void setupDisplayBar() {
-        tStat = new TerritoryStatistic(25); //Match to initial territories
-        addObject(tStat, 60, 40);
-        mpStat = new ManpowerStatistic(0);
-        addObject(mpStat, 1500, 40);
-    }
-    
-    public void updateTerritoryStatistic(int newCount) {
-        tStat.update(newCount);
-    }
-    
-    public void updateManpowerStatistic(int newCount) {
-        mpStat.update(newCount);
+        displayBar = new DisplayBar();
+        addObject(displayBar, SCREEN_WIDTH/2, 40);
     }
     
     private void initializeFactionMap() {
@@ -181,37 +177,36 @@ public class Map extends DoDWorld
         }
     }
     
-    private void addAdjacencyLists(HexTile[][] tiles) {
-        for (int i = 0; i < ROWS; i++) {
-            for(int j = 0; j < COLUMNS; j++) {
-                if(tiles[j][i] >= NUM_MAP_FEATURES) { //if not map feature
-                    if(j % 2 == 0) { //even column
-                        if(j > 1 && i > 0 && i < ROWS - 1 && j < COLUMNS - 1) { //not edge
-                            ((Territory)tiles[j][i]).adjacentTerritoryList.add((Territory)tiles[j-1][i-1]);
-                            ((Territory)tiles[j][i]).adjacentTerritoryList.add((Territory)tiles[j-1][i]);
-                            ((Territory)tiles[j][i]).adjacentTerritoryList.add((Territory)tiles[j][i+1]);
-                            ((Territory)tiles[j][i]).adjacentTerritoryList.add((Territory)tiles[j+1][i]);
-                            ((Territory)tiles[j][i]).adjacentTerritoryList.add((Territory)tiles[j+1][i-1]);
-                            ((Territory)tiles[j][i]).adjacentTerritoryList.add((Territory)tiles[j][i-1]);
-                        } else { //edge
-                            
-                            
-                            
-                        }
-                    } else { //odd column
-                        if(j > 1 && i > 0 && i < ROWS - 1 && j < COLUMNS - 1) { //not edge
-                            ((Territory)tiles[j][i]).adjacentTerritoryList.add((Territory)tiles[j-1][i-1]);
-                            ((Territory)tiles[j][i]).adjacentTerritoryList.add((Territory)tiles[j-1][i]);
-                            ((Territory)tiles[j][i]).adjacentTerritoryList.add((Territory)tiles[j][i+1]);
-                            ((Territory)tiles[j][i]).adjacentTerritoryList.add((Territory)tiles[j+1][i+1]);
-                            ((Territory)tiles[j][i]).adjacentTerritoryList.add((Territory)tiles[j+1][i]);
-                            ((Territory)tiles[j][i]).adjacentTerritoryList.add((Territory)tiles[j][i-1]);
-                        } else { //edge
-                            
-                        }
-                    }
-                    
-                }
+        public void scroll() {
+        MouseInfo info = Greenfoot.getMouseInfo();
+        if (info != null) {
+            int shiftX = 0;
+            int shiftY = 0;
+            if (info.getX() < 30 && cameraX > 0) {
+                shiftX = -SCROLL_SPEED;
+            }
+            else if (info.getX() > 870 && cameraX < (1600-900)) {
+                shiftX = SCROLL_SPEED;
+            }
+            if (info.getY() < 110 && cameraY > 0) {
+                shiftY = -SCROLL_SPEED;
+            }
+            else if (info.getY() > 570 && cameraY < (1080-600)) {
+                shiftY = SCROLL_SPEED;
+            }
+            if (shiftX != 0 || shiftY != 0) {
+                cameraX += shiftX;
+                cameraY += shiftY;
+                moveAllObjects(shiftX, shiftY);
+            }
+        }
+    }
+    
+    public void moveAllObjects(int shiftX, int shiftY) {
+        List<Actor> actors = getObjects(Actor.class);
+        for (Actor actor : actors) {
+            if (actor.getClass() != DisplayBar.class) {
+                actor.setLocation(actor.getX() - shiftX, actor.getY() - shiftY);
             }
         }
     }
