@@ -48,8 +48,8 @@ public class Territory extends Actor
     protected void addedToWorld(World world) {
         //owner = new Faction(); // for testing
         
-        conflictedBorderList.add(borders[0]); // for testing
-        conflictedBorderList.add(borders[1]); // for testing
+        //conflictedBorderList.add(borders[0]); // for testing
+        //conflictedBorderList.add(borders[1]); // for testing
     
         // Clockwise from N
         world.addObject(borders[0], getX(), getY() - 40);
@@ -109,20 +109,21 @@ public class Territory extends Actor
         if (isExterior) {
             int menLeft = incoming;
             //System.out.println("Territory " + territoryID + " has " + conflictedBorderList.size() + " conflicted Borders.");
-            int size = conflictedBorderList.size();
-            for( int i = 0; i < size; i++) {
-                if (menLeft > (incoming / size)) {
-                    borders[i].addTroops(incoming / size);
-                    menLeft -= (incoming / size);
-                } else {
-                    borders[i].addTroops(menLeft);
-                    menLeft = 0;
+            int size = 0;
+            for (int i = 0; i < 6; i++) {
+                if (conflictedBorderList[i]) {
+                    if (menLeft > (incoming / size)) {
+                        borders[i].addTroops(incoming / size);
+                        menLeft -= (incoming / size);
+                    } else {
+                        borders[i].addTroops(menLeft);
+                        menLeft = 0;
+                    }
+                } else { // else give territories to faction
+                    owner.addTroops(incoming, getX(), getY() );
                 }
             }
-        } else { // else give territories to faction
-            owner.addTroops(incoming, getX(), getY() );
         }
-        
     }
 
     public Terrain getTerrain() {

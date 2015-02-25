@@ -34,7 +34,8 @@ public class Troop extends Actor
                     //System.out.println("turn");
                     turnTowards( bord.getX(), bord.getY());
                 }
-                if (intersects(bord)) {
+                if (bord.inConflict && //doesn't work til inConflict is init'd
+                    intersects(bord)) {
                     bord.addTroops(troopManCount);
                     owner.troopList.remove(this);
                     owner.world.removeObject(this);
