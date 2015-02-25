@@ -18,11 +18,13 @@ public class Map extends DoDWorld
     private static final int START_Y = 192;
     private static final int HEX_WIDTH = 120;
     private static final int HEX_HEIGHT = 106;
-    
-    TerritoryStatistic tStat;
-    ManpowerStatistic mpStat;
-   
-    
+
+    int cameraX = 0;
+    int cameraY = 0;
+    public static final int SCROLL_SPEED = 10;
+
+    DisplayBar displayBar;
+
     /**
      * Constructor for objects of class Map.
      * 
@@ -43,8 +45,13 @@ public class Map extends DoDWorld
             }
         }
         buildMap(tileMap);
-        setupDisplayBar();
         setBackground("images/background.png");
+        setupDisplayBar();
+    }
+    
+    public void act() {
+        super.act();
+        scroll();
     }
     
     private void buildMap(HexTile[][] tileMap) {
@@ -158,18 +165,8 @@ public class Map extends DoDWorld
     }
     
     public void setupDisplayBar() {
-        tStat = new TerritoryStatistic(25); //Match to initial territories
-        addObject(tStat, 60, 40);
-        mpStat = new ManpowerStatistic(0);
-        addObject(mpStat, 1500, 40);
-    }
-    
-    public void updateTerritoryStatistic(int newCount) {
-        tStat.update(newCount);
-    }
-    
-    public void updateManpowerStatistic(int newCount) {
-        mpStat.update(newCount);
+        displayBar = new DisplayBar();
+        addObject(displayBar, SCREEN_WIDTH/2, 40);
     }
     
     private void initializeFactionMap() {
@@ -177,6 +174,40 @@ public class Map extends DoDWorld
             Faction newFaction = new Faction();
             newFaction.setFlag(new GreenfootImage("faction" + i + ".png"));
             factions.put(i, newFaction);
+        }
+    }
+    
+        public void scroll() {
+        MouseInfo info = Greenfoot.getMouseInfo();
+        if (info != null) {
+            int shiftX = 0;
+            int shiftY = 0;
+            if (info.getX() < 30 && cameraX > 0) {
+                shiftX = -SCROLL_SPEED;
+            }
+            else if (info.getX() > 870 && cameraX < (1600-900)) {
+                shiftX = SCROLL_SPEED;
+            }
+            if (info.getY() < 110 && cameraY > 0) {
+                shiftY = -SCROLL_SPEED;
+            }
+            else if (info.getY() > 570 && cameraY < (1080-600)) {
+                shiftY = SCROLL_SPEED;
+            }
+            if (shiftX != 0 || shiftY != 0) {
+                cameraX += shiftX;
+                cameraY += shiftY;
+                moveAllObjects(shiftX, shiftY);
+            }
+        }
+    }
+    
+    public void moveAllObjects(int shiftX, int shiftY) {
+        List<Actor> actors = getObjects(Actor.class);
+        for (Actor actor : actors) {
+            if (actor.getClass() != DisplayBar.class) {
+                actor.setLocation(actor.getX() - shiftX, actor.getY() - shiftY);
+            }
         }
     }
 }

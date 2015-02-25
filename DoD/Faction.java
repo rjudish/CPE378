@@ -9,7 +9,7 @@ import java.util.ArrayList;
  */
 public class Faction extends Actor
 {
-    int INIT_TERRITORIES = 25;
+    public static final int INIT_TERRITORIES = 25;
 
     int id = 0;
 

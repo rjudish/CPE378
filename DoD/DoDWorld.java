@@ -22,6 +22,9 @@ public class DoDWorld extends World
     private static final int HEX_WIDTH = 120;
     private static final int HEX_HEIGHT = 107;
     
+    public static final int SCREEN_WIDTH = 900;
+    public static final int SCREEN_HEIGHT = 600;
+    
     List<Territory> territories = new ArrayList<Territory>();    
     java.util.Map<Integer, Faction> factions = new HashMap<Integer, Faction>();
     /**
@@ -31,7 +34,7 @@ public class DoDWorld extends World
     public DoDWorld()
     {    
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
-        super(1600, 1080, 1); 
+        super(SCREEN_WIDTH, SCREEN_HEIGHT, 1, false); 
         player = new Player();
         
         displayBar = new DisplayBar();
