@@ -47,6 +47,7 @@ public class Map extends DoDWorld
         }
         Territory[][] territoryMap = buildMap(tileMap);
         setBackground("images/background.png");
+        setPaintOrder(DisplayBar.class, Troop.class, Actor.class);
         setupDisplayBar();
     }
     
