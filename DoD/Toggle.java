@@ -9,6 +9,11 @@ import greenfoot.*;
 public class Toggle extends Actor
 {
     int toggleVal = 1;
+    Border parentBorder;
+    
+    public Toggle(Border parentBorder) {
+        this.parentBorder = parentBorder;
+    }
     
     /**
      * Act - do whatever the Toggle wants to do. This method is called whenever
@@ -28,14 +33,24 @@ public class Toggle extends Actor
     }    
     
     public void toggleToggle() {
-        if (toggleVal == 1)
+        Toggle otherToggle = parentBorder.otherBorder.toggle;
+        // TODO: Post alpha: add conditionals to verify that it's an okay move
+        if (toggleVal == 1) {
             toggleVal = 2;
-        else if (toggleVal == 2)
+            otherToggle.setToggleVal(1);
+        }
+        else if (toggleVal == 2) {
             toggleVal = 1;
-            
+            otherToggle.setToggleVal(2);
+        }
     }
     
-    public int getVal() {
+    public int getToggleVal() {
         return toggleVal;
     }
+    
+    public void setToggleVal(int newVal) {
+        toggleVal = newVal;
+    }
+    
 }

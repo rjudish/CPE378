@@ -16,7 +16,7 @@ public class Border extends Actor
     int borderID = 1;
     Border otherBorder = this;
     Territory parentTerritory;
-    Toggle toggle = new Toggle();
+    Toggle toggle = new Toggle(this);
     
     public Border(Territory parentTerritory) {
         this.parentTerritory = parentTerritory;

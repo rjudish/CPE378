@@ -15,10 +15,10 @@ final public class Battle
     }
     
     static void step(ArrayList<Territory> conflictedTerritoryList) {
-        System.out.println("Executing Battle Code.");
+        //System.out.println("Executing Battle Code.");
         for(Territory terr : conflictedTerritoryList) {
             for(Border bord : terr.conflictedBorderList) {
-                System.out.println("Dealing with a border");
+                //System.out.println("Dealing with a border");
             }
         }
 

@@ -35,8 +35,8 @@ public class Faction extends Actor
     {
         if ( ((DoDWorld)getWorld()).getGameTime() > lastTime) {
             lastTime = ((DoDWorld)getWorld()).getGameTime();
-            System.out.println("Faction Loop.");
-            System.out.println("Spawn Code.");
+            //System.out.println("Faction Loop.");
+            //System.out.println("Spawn Code.");
             
         }
     }
@@ -49,7 +49,7 @@ public class Faction extends Actor
             //This is now done using troopList.size instead
         
         //getWorld().addObject(newTroop, xPos, yPos); // HALP
-        System.out.println("Gave " + incoming + " units to Faction " + this.id + " for a total of " + troopList.size());
+        //System.out.println("Gave " + incoming + " units to Faction " + this.id + " for a total of " + troopList.size());
 
     }
     

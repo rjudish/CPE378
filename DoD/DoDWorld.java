@@ -36,11 +36,11 @@ public class DoDWorld extends World
         
         displayBar = new DisplayBar();
         Faction playerFaction = new Faction(); // for testing purposes
-        Territory TEST_TERRITORY = new Territory(playerFaction, 1, true);
-        this.addObject(TEST_TERRITORY, 400, 300);
-        conflictedTerritoryList.add(TEST_TERRITORY);
-        Territory TEST_TERRITORY2 = new Territory(playerFaction, 2, false);
-        this.addObject(TEST_TERRITORY2, 300, 300);
+        //Territory TEST_TERRITORY = new Territory(playerFaction, 1, true);
+        //this.addObject(TEST_TERRITORY, 400, 300);
+        //conflictedTerritoryList.add(TEST_TERRITORY);
+        //Territory TEST_TERRITORY2 = new Territory(playerFaction, 2, false);
+        //this.addObject(TEST_TERRITORY2, 300, 300);
         
         ai = new AI(playerFaction); //or add an integer parameter for more than two factions
         ai.initToggle();
@@ -56,9 +56,9 @@ public class DoDWorld extends World
         deltaTime = (deltaTime + 1) % 60;
         if (deltaTime == 0) {
             gameTime++;
-            System.out.println("Game Time: " + gameTime);
+            //System.out.println("Game Time: " + gameTime);
             Battle.step(conflictedTerritoryList);
-            System.out.println("Executing Spawn Code...");
+            //System.out.println("Executing Spawn Code...");
             
         }
     }

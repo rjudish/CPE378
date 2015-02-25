@@ -70,7 +70,6 @@ public class Territory extends Actor
     {
         if ( ((DoDWorld)getWorld()).getGameTime() > lastTime) {
             lastTime = ((DoDWorld)getWorld()).getGameTime();
-            System.out.println("Territory " + territoryID + " spawns " + recruitNumber + " units.");
             addUnits(recruitNumber);
         }
     }  
@@ -105,12 +104,13 @@ public class Territory extends Actor
     }
     
     private void addUnits(int incoming) {
-        // Daniel points out that Andrew forgot that troops have to travel from the center to the border. This section will be updated appropriately.
-        
+        //System.out.println("Territory " + territoryID + " spawns " + incoming + " units.");
+
         // if territory has borders in conflict, set split troops between borders
+        // Daniel points out that Andrew forgot that troops have to travel from the center to the border. This section will be updated appropriately.
         if (isExterior) {
             int menLeft = incoming;
-            System.out.println("Territory " + territoryID + " has " + conflictedBorderList.size() + " conflicted Borders.");
+            //System.out.println("Territory " + territoryID + " has " + conflictedBorderList.size() + " conflicted Borders.");
             int size = conflictedBorderList.size();
             for( int i = 0; i < size; i++) {
                 if (menLeft > (incoming / size)) {
