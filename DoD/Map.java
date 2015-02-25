@@ -46,6 +46,9 @@ public class Map extends DoDWorld
             }
         }
         Territory[][] territoryMap = buildMap(tileMap);
+        addAdjacencyLists(territoryMap, terrainsMap);
+        initConflictedBorders(territoryMap);
+        
         setBackground("images/background.png");
         setPaintOrder(DisplayBar.class, Toggle.class, Troop.class, Actor.class);
         setupDisplayBar();
@@ -300,6 +303,20 @@ public class Map extends DoDWorld
                         }
                     }
                     
+                }
+            }
+        }
+    }
+    
+    private void initConflictedBorders(Territory[][] territoryMap) {
+        for (int i = 0; i < ROWS; i++) {
+            for(int j = 0; j < COLUMNS; j++) {
+                if(territoryMap[j][i] != null) {
+                    for(int k=0; k < 6; k++) {
+                        if(territoryMap[j][i].adjacentTerritoryList[k] != null && territoryMap[j][i].getOwner() != territoryMap[j][i].adjacentTerritoryList[k].getOwner()) {
+                            territoryMap[j][i].conflictedBorderList[k] = true; 
+                        }
+                    }
                 }
             }
         }

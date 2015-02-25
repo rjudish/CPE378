@@ -14,9 +14,7 @@ public class Territory extends Actor
     Terrain terrain;
     boolean isExterior = false;
     boolean isToggleSet = false;
-    public ArrayList<Border> conflictedBorderList = new ArrayList<Border>();
-    
-    //public ArrayList<Territory> adjacentTerritoryList = new ArrayList<Territory>();
+    public boolean[] conflictedBorderList = new boolean[6];
     public Territory[] adjacentTerritoryList = new Territory[6]; //Starts from N goes clockwise
     
     
