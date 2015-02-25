@@ -31,7 +31,7 @@ public class AI {
     //same for toggleToggle in Toggle
     //Added isToggleSet variable to Territory; used for initializing
     public void initToggle() {
-        for (int i = 0; i < numAIFactions; i++) {
+        /*for (int i = 0; i < numAIFactions; i++) {
             Faction currFaction = player;//aiFactions.get(i);
             ArrayList<Territory> interiorTerritoryQueue = (ArrayList<Territory>) currFaction.nonConflictedTerritoryList.clone();
             //go through each interior territory owned by currFaction
@@ -62,7 +62,7 @@ public class AI {
                 else
                     interiorTerritoryQueue.add(interiorTerritoryQueue.remove(0));
             }
-        }
+        }*/
     }
     
     /*public void act() {

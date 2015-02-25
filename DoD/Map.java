@@ -97,7 +97,7 @@ public class Map extends DoDWorld
      * Then creates and initializes the objects.
      */
     public void placeMapFeatures(HexTile[][] tiles) {
-        double waterEdgeChance = 0.2, waterInteriorChance = 0.1;
+        double waterEdgeChance = 0.0, waterInteriorChance = 0.1; //ALPHA no edges to prevent islands
         for (int i = 0; i < ROWS; i++) {
             for (int j = 0; j < COLUMNS; j++) {
                 if (i == 0 || i == ROWS - 1 || j == 0 || j == COLUMNS - 1) {
@@ -210,27 +210,93 @@ public class Map extends DoDWorld
                 if(terrainsMap[j][i] >= NUM_MAP_FEATURES) { //if not map feature
                     if(j % 2 == 0) { //even column
                         if(j > 1 && i > 0 && i < ROWS - 1 && j < COLUMNS - 1) { //not edge
-                            territoryMap[j][i].adjacentTerritoryList.add(territoryMap[j-1][i-1]);
-                            (territoryMap[j][i]).adjacentTerritoryList.add(territoryMap[j-1][i]);
-                            (territoryMap[j][i]).adjacentTerritoryList.add(territoryMap[j][i+1]);
-                            (territoryMap[j][i]).adjacentTerritoryList.add(territoryMap[j+1][i]);
-                            (territoryMap[j][i]).adjacentTerritoryList.add(territoryMap[j+1][i-1]);
-                            (territoryMap[j][i]).adjacentTerritoryList.add(territoryMap[j][i-1]);
+                            territoryMap[j][i].adjacentTerritoryList[0] = territoryMap[j][i-1];
+                            territoryMap[j][i].adjacentTerritoryList[1] = territoryMap[j+1][i-1];
+                            territoryMap[j][i].adjacentTerritoryList[2] = territoryMap[j+1][i];
+                            territoryMap[j][i].adjacentTerritoryList[3] = territoryMap[j][i+1];
+                            territoryMap[j][i].adjacentTerritoryList[4] = territoryMap[j-1][i];
+                            territoryMap[j][i].adjacentTerritoryList[5] = territoryMap[j-1][i-1];
                         } else { //edge
-                            
-                            
+                            if(j == 0) { //left edge
+                                if(i == 0) { //top
+                                   territoryMap[j][i].adjacentTerritoryList[2] = territoryMap[j+1][i];
+                                   territoryMap[j][i].adjacentTerritoryList[3] = territoryMap[j][i+1];
+                                } else if (i == ROWS - 1) { //bottom
+                                    territoryMap[j][i].adjacentTerritoryList[0] = territoryMap[j][i-1];
+                                    territoryMap[j][i].adjacentTerritoryList[1] = territoryMap[j+1][i-1];
+                                    territoryMap[j][i].adjacentTerritoryList[2] = territoryMap[j+1][i];
+                                } else { // middle
+                                    territoryMap[j][i].adjacentTerritoryList[0] = territoryMap[j][i-1];
+                                    territoryMap[j][i].adjacentTerritoryList[1] = territoryMap[j+1][i-1];
+                                    territoryMap[j][i].adjacentTerritoryList[2] = territoryMap[j+1][i];
+                                    territoryMap[j][i].adjacentTerritoryList[3] = territoryMap[j][i+1];
+                                }
+                            } else if (j == COLUMNS - 1) { //right edge
+                                if(i == 0) { //top
+                                   territoryMap[j][i].adjacentTerritoryList[2] = territoryMap[j+1][i];
+                                   territoryMap[j][i].adjacentTerritoryList[3] = territoryMap[j][i+1];
+                                } else if (i == ROWS - 1) { //bottom
+                                    territoryMap[j][i].adjacentTerritoryList[0] = territoryMap[j][i-1];
+                                    territoryMap[j][i].adjacentTerritoryList[1] = territoryMap[j+1][i-1];
+                                    territoryMap[j][i].adjacentTerritoryList[2] = territoryMap[j+1][i];
+                                } else { // middle
+                                    territoryMap[j][i].adjacentTerritoryList[0] = territoryMap[j][i-1];
+                                    territoryMap[j][i].adjacentTerritoryList[1] = territoryMap[j+1][i-1];
+                                    territoryMap[j][i].adjacentTerritoryList[2] = territoryMap[j+1][i];
+                                    territoryMap[j][i].adjacentTerritoryList[3] = territoryMap[j][i+1];
+                                }
+                            } else if(i == 0) { //top
+                               territoryMap[j][i].adjacentTerritoryList[2] = territoryMap[j+1][i];
+                               territoryMap[j][i].adjacentTerritoryList[3] = territoryMap[j][i+1];
+                               territoryMap[j][i].adjacentTerritoryList[4] = territoryMap[j-1][i];
+                            } else if (i == ROWS - 1) { //bottom
+                               territoryMap[j][i].adjacentTerritoryList[0] = territoryMap[j][i-1];
+                               territoryMap[j][i].adjacentTerritoryList[1] = territoryMap[j+1][i-1];
+                               territoryMap[j][i].adjacentTerritoryList[2] = territoryMap[j+1][i];
+                               territoryMap[j][i].adjacentTerritoryList[4] = territoryMap[j-1][i];
+                               territoryMap[j][i].adjacentTerritoryList[5] = territoryMap[j-1][i-1];
+                            }
+                            else {
+                                System.out.println("Error in even edge cases");
+                            }
                             
                         }
                     } else { //odd column
                         if(j > 1 && i > 0 && i < ROWS - 1 && j < COLUMNS - 1) { //not edge
-                            (territoryMap[j][i]).adjacentTerritoryList.add(territoryMap[j-1][i-1]);
-                            (territoryMap[j][i]).adjacentTerritoryList.add(territoryMap[j-1][i]);
-                            (territoryMap[j][i]).adjacentTerritoryList.add(territoryMap[j][i+1]);
-                            (territoryMap[j][i]).adjacentTerritoryList.add(territoryMap[j+1][i+1]);
-                            (territoryMap[j][i]).adjacentTerritoryList.add(territoryMap[j+1][i]);
-                            (territoryMap[j][i]).adjacentTerritoryList.add(territoryMap[j][i-1]);
+                            territoryMap[j][i].adjacentTerritoryList[0] = territoryMap[j][i-1];
+                            territoryMap[j][i].adjacentTerritoryList[1] = territoryMap[j+1][i];
+                            territoryMap[j][i].adjacentTerritoryList[2] = territoryMap[j+1][i+1];
+                            territoryMap[j][i].adjacentTerritoryList[3] = territoryMap[j][i+1];
+                            territoryMap[j][i].adjacentTerritoryList[4] = territoryMap[j-1][i-1];
+                            territoryMap[j][i].adjacentTerritoryList[5] = territoryMap[j-1][i];
                         } else { //edge
-                            
+                            if (j == COLUMNS - 1) { //right edge
+                                if(i == 0) { //top
+                                   territoryMap[j][i].adjacentTerritoryList[3] = territoryMap[j][i+1];
+                                   territoryMap[j][i].adjacentTerritoryList[4] = territoryMap[j-1][i-1];
+                                   territoryMap[j][i].adjacentTerritoryList[5] = territoryMap[j-1][i];
+                                } else if (i == ROWS - 1) { //bottom
+                                   territoryMap[j][i].adjacentTerritoryList[0] = territoryMap[j][i-1];
+                                   territoryMap[j][i].adjacentTerritoryList[5] = territoryMap[j-1][i];
+                                } else { // middle
+                                   territoryMap[j][i].adjacentTerritoryList[0] = territoryMap[j][i-1];
+                                   territoryMap[j][i].adjacentTerritoryList[3] = territoryMap[j][i+1];
+                                   territoryMap[j][i].adjacentTerritoryList[4] = territoryMap[j-1][i-1];
+                                   territoryMap[j][i].adjacentTerritoryList[5] = territoryMap[j-1][i];
+                                }
+                            } else if(i == 0) { //top
+                               territoryMap[j][i].adjacentTerritoryList[1] = territoryMap[j+1][i];
+                               territoryMap[j][i].adjacentTerritoryList[2] = territoryMap[j+1][i+1];
+                               territoryMap[j][i].adjacentTerritoryList[3] = territoryMap[j][i+1];
+                               territoryMap[j][i].adjacentTerritoryList[4] = territoryMap[j-1][i-1];
+                               territoryMap[j][i].adjacentTerritoryList[5] = territoryMap[j-1][i];
+                            } else if (i == ROWS - 1) { //bottom
+                               territoryMap[j][i].adjacentTerritoryList[0] = territoryMap[j][i-1];
+                               territoryMap[j][i].adjacentTerritoryList[1] = territoryMap[j+1][i];
+                               territoryMap[j][i].adjacentTerritoryList[5] = territoryMap[j-1][i];
+                            }else {
+                                System.out.println("Error in odd edge cases");
+                            }
                         }
                     }
                     

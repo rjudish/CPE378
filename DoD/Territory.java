@@ -15,13 +15,14 @@ public class Territory extends Actor
     boolean isExterior = false;
     boolean isToggleSet = false;
     public ArrayList<Border> conflictedBorderList = new ArrayList<Border>();
-    public ArrayList<Territory> adjacentTerritoryList = new ArrayList<Territory>();
-
+    
+    //public ArrayList<Territory> adjacentTerritoryList = new ArrayList<Territory>();
+    public Territory[] adjacentTerritoryList = new Territory[6]; //Starts from N goes clockwise
     
     
     int lastTime = 0;
     int territoryID = 1;
-    Border[] borders = new Border[6];
+    Border[] borders = new Border[6]; //Starts from N goes clockwise
     
     
     
