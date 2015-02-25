@@ -12,8 +12,8 @@ public class Map extends DoDWorld
 {
     public static final int ROWS = 8;
     public static final int COLUMNS = 16;
-    
-    List<Territory> territories = new ArrayList<Territory>();    
+    public static final int NUM_FACTIONS = 4; //Don't change without modifying placeFactions method!
+
     private static final int START_X = 140;
     private static final int START_Y = 192;
     private static final int HEX_WIDTH = 120;
@@ -21,6 +21,8 @@ public class Map extends DoDWorld
     
     TerritoryStatistic tStat;
     ManpowerStatistic mpStat;
+   
+    
     /**
      * Constructor for objects of class Map.
      * 
@@ -28,10 +30,10 @@ public class Map extends DoDWorld
     public Map()
     {    
         
-        int numFactions = 4; //Don't change without modifying placeFactions method!
         HexTile[][] tileMap = new HexTile[COLUMNS][ROWS];
         placeMapFeatures(tileMap);
-        int[][] factionsMap = placeFactions(tileMap, numFactions);
+        initializeFactionMap();
+        int[][] factionsMap = placeFactions(tileMap, NUM_FACTIONS);
         int[][] terrainsMap = placeTerrains(tileMap);
         for (int i = 0; i < ROWS; i++) {
             for(int j = 0; j < COLUMNS; j++) {
@@ -59,7 +61,8 @@ public class Map extends DoDWorld
                 if (currTile.getTerrain() > 2) {
                     //NOT Map feature
                     Terrain terrainType = Terrain.getTerrain(currTile.getTerrain());
-                    Territory currTerritory = new Territory(new Faction(), territoryID, false, terrainType);
+                    Faction currFaction = factions.get(currTile.getFaction());
+                    Territory currTerritory = new Territory(currFaction, territoryID, false, terrainType);
                     currObject = currTerritory;
                     territories.add(currTerritory);
                 }
@@ -167,5 +170,13 @@ public class Map extends DoDWorld
     
     public void updateManpowerStatistic(int newCount) {
         mpStat.update(newCount);
+    }
+    
+    private void initializeFactionMap() {
+        for (int i = 1; i <= NUM_FACTIONS; i++) {
+            Faction newFaction = new Faction();
+            newFaction.setFlag(new GreenfootImage("faction" + i + ".png"));
+            factions.put(i, newFaction);
+        }
     }
 }

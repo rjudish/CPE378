@@ -25,7 +25,7 @@ public class Faction extends Actor
     public ArrayList<Territory> nonConflictedTerritoryList = new ArrayList<Territory>();
     
     int lastTime = 0;
-    
+   GreenfootImage flag;
     
     /**
      * Act - do whatever the Faction wants to do. This method is called whenever
@@ -52,4 +52,12 @@ public class Faction extends Actor
         System.out.println("Gave " + incoming + " units to Faction " + this.id + " for a total of " + troopList.size());
 
     }
+    
+    public GreenfootImage getFlag() {
+        return flag;
+    }
+    
+    public void setFlag(GreenfootImage flag) {
+        this.flag = flag;
+    }    
 }

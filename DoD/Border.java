@@ -1,5 +1,5 @@
 import greenfoot.*;
-
+import java.awt.Color;
 /**
  * Write a description of class Border here.
  * 
@@ -46,5 +46,14 @@ public class Border extends Actor
     public void addTroops(int incoming) {
         borderManCount += incoming;
         System.out.println("Border " + borderID + " gets " + incoming + " new units, for a total of " + borderManCount);
+    }
+
+    public void drawRiver() {
+            GreenfootImage parentImage = parentTerritory.getImage();
+            parentImage.setColor(new Color(112, 141, 241));
+            parentImage.drawLine(this.getX(), this.getY(), this.getX() + 100, this.getY() + 100);
+            //parentImage.drawPolygon();
+            parentTerritory.setImage(parentImage);
+
     }
 }

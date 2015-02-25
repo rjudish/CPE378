@@ -1,6 +1,7 @@
 import greenfoot.*;
 import java.util.ArrayList;
-
+import java.util.List;
+import java.util.HashMap;
 
 /**
  * Write a description of class DoDWorld here.
@@ -20,7 +21,9 @@ public class DoDWorld extends World
     private static final int START_Y = 152;
     private static final int HEX_WIDTH = 120;
     private static final int HEX_HEIGHT = 107;
-        
+    
+    List<Territory> territories = new ArrayList<Territory>();    
+    java.util.Map<Integer, Faction> factions = new HashMap<Integer, Faction>();
     /**
      * Constructor for objects of class DoDWorld.
      * 

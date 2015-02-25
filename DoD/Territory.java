@@ -25,7 +25,9 @@ public class Territory extends Actor
         new Border(this), new Border(this),
         new Border(this), new Border(this),
         new Border(this), new Border(this),
+   
     };
+    
     
     
     public Territory(Faction owner, int territoryID, boolean isExterior) {
@@ -41,7 +43,8 @@ public class Territory extends Actor
         //setImage(terrain.getImage());
         GreenfootImage image = new GreenfootImage(terrain.getImage());
         image.drawImage(new GreenfootImage("MP: " + recruitNumber, 20, Color.BLACK, Color.WHITE), 40, 30);
-        image.drawImage(new GreenfootImage("images/faction4.png"), 50, 50); //Change to Faction.image() or whereever faction-specific images will be held
+        GreenfootImage factionImage = owner.getFlag();
+        image.drawImage(factionImage, 50, 50);
         setImage(image);
     }
     
