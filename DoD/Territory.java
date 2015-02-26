@@ -98,10 +98,16 @@ public class Territory extends Actor
 
         // if territory has borders in conflict, set split troops between borders
         // Daniel points out that Andrew forgot that troops have to travel from the center to the border. This section will be updated appropriately.
-        if (isExterior) {
+        //if (isExterior) {
             int menLeft = incoming;
-            //System.out.println("Territory " + territoryID + " has " + conflictedBorderList.size() + " conflicted Borders.");
             int size = 0;
+            for (int i = 0; i < 6; i++) {
+                if (conflictedBorderList[i]) {
+                    size++;
+                }
+            }
+            //System.out.println("Territory " + territoryID + " has " + size + " conflicted Borders.");
+
             for (int i = 0; i < 6; i++) {
                 if (conflictedBorderList[i]) {
                     if (menLeft > (incoming / size)) {
@@ -115,7 +121,7 @@ public class Territory extends Actor
                     owner.addTroops(incoming, getX(), getY() );
                 }
             }
-        }
+        //}
     }
 
     public Terrain getTerrain() {

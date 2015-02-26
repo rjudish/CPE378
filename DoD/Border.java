@@ -16,12 +16,13 @@ public class Border extends Actor
     int borderID = 1;
     Border otherBorder = this;
     Territory parentTerritory;
-    Toggle toggle = new Toggle(this);
+    Toggle toggle;
     
     public Border(Territory parentTerritory) {
         this.parentTerritory = parentTerritory;
-        if (this.parentTerritory == null)
-            System.out.println("NULL");
+        this.toggle = new Toggle(this);
+        //if (this.parentTerritory == null)
+            //System.out.println("NULL");
     }
     
     protected void addedToWorld(World world) {

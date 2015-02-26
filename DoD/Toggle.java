@@ -17,7 +17,7 @@ public class Toggle extends Actor
         boolean done = false;
 
         //if (this.parentBorder.parentTerritory == null)
-        //    System.out.println("parentTerritory is null");
+            //System.out.println("parentTerritory is null");
         // why is parentTerritory null?!?!?
         
         /*
