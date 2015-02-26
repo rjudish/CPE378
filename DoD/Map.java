@@ -175,6 +175,7 @@ public class Map extends DoDWorld
     public void setupDisplayBar() {
         displayBar = new DisplayBar();
         addObject(displayBar, SCREEN_WIDTH/2, 40);
+        displayBar.setPlayer(factions.get(1));
     }
     
     private void initializeFactionMap() {
