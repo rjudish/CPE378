@@ -35,6 +35,11 @@ public class Faction extends Actor
        this.world = world;
     }
     
+   public Faction(World world, int id) {
+      this.world = world;
+      this.id = id;
+   }
+    
     /**
      * Act - do whatever the Faction wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.

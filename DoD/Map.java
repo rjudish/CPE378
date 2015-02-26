@@ -55,8 +55,9 @@ public class Map extends DoDWorld
         setPaintOrder(DisplayBar.class, Toggle.class, Troop.class, Actor.class);
         setupDisplayBar();
         
-        ai = new AI(factions);
+        ai = new AI(factions, territories);
         ai.defaultToggle();
+        //ai.setExterior();
         ai.initToggle();
     }
     
@@ -184,7 +185,7 @@ public class Map extends DoDWorld
     
     private void initializeFactionMap() {
         for (int i = 1; i <= NUM_FACTIONS; i++) {
-            Faction newFaction = new Faction(this);
+            Faction newFaction = new Faction(this, i - 1);
             newFaction.setFlag(new GreenfootImage("faction" + i + ".png"));
             factions.put(i, newFaction);
         }

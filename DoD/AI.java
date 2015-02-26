@@ -1,3 +1,4 @@
+import java.util.List;
 import java.util.ArrayList;
 
 /**
@@ -9,12 +10,14 @@ import java.util.ArrayList;
 public class AI {
     // instance variables - replace the example below with your own
     private java.util.Map<Integer, Faction> factions;
+    private List<Territory> territories;
 
     /**
      * Constructor for objects of class AI
      */
-    public AI(java.util.Map<Integer, Faction> factions) {
+    public AI(java.util.Map<Integer, Faction> factions, List<Territory> territories) {
         this.factions = factions;
+        this.territories = territories;
     }
     
     /*public AI(Faction player, int numAIFactions) {
@@ -23,12 +26,18 @@ public class AI {
         aiFactions = new ArrayList<Faction>(numAIFactions);
     }*/
     
+    public void setExterior() {
+        for (int i = 0; i < territories.size(); i++) {
+            territories.get(i).enemyBorder();
+        }
+    }
+    
     public void initToggle() {
-        System.out.println("AI factions size: " + factions.size());
+        //System.out.println("AI factions size: " + factions.size());
         for (int i = 1; i <= factions.size(); i++) {
-            System.out.println("\tAI: " + i);
+            //System.out.println("\tAI: " + i);
             Faction currFaction = factions.get(1);
-            System.out.println("\tnonConflictedTerrList: " + currFaction.nonConflictedTerritoryList.size());
+            //System.out.println("\tnonConflictedTerrList: " + currFaction.nonConflictedTerritoryList.size());
             ArrayList<Territory> interiorTerritoryQueue = (ArrayList<Territory>) currFaction.nonConflictedTerritoryList.clone();
             //go through each interior territory owned by currFaction
             while (interiorTerritoryQueue.size() > 0) {

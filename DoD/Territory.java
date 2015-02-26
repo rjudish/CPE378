@@ -71,6 +71,22 @@ public class Territory extends Actor
         }
     }  
     
+    //whether or not its shares a border with the enemy (sets exterior)
+    public boolean enemyBorder() {
+        for (int i = 0; i < adjacentTerritoryList.length; i++) {
+            System.out.println("Territory: Got here!");
+            if (this.owner != null) {
+                if (this.owner.id != adjacentTerritoryList[i].owner.id) {
+                    this.isExterior = true;
+                    return true;
+                }
+            }
+        }
+        
+        this.isExterior = false;
+        return false;
+    }
+    
     //gives this territory's shared border index based on another territory's border index (0-5)
     public int sharedBorderIndex(int otherBorderIndex) {
         return otherBorderIndex % 3 == otherBorderIndex ? otherBorderIndex + 3 : otherBorderIndex % 3;
