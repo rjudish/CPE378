@@ -54,6 +54,10 @@ public class Map extends DoDWorld
         setBackground("images/background.png");
         setPaintOrder(DisplayBar.class, Toggle.class, Troop.class, Actor.class);
         setupDisplayBar();
+        
+        ai = new AI(factions);
+        ai.defaultToggle();
+        ai.initToggle();
     }
     
     public void act() {

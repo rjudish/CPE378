@@ -24,11 +24,15 @@ public class AI {
     }*/
     
     public void initToggle() {
+        System.out.println("AI factions size: " + factions.size());
         for (int i = 1; i <= factions.size(); i++) {
+            System.out.println("\tAI: " + i);
             Faction currFaction = factions.get(1);
+            System.out.println("\tnonConflictedTerrList: " + currFaction.nonConflictedTerritoryList.size());
             ArrayList<Territory> interiorTerritoryQueue = (ArrayList<Territory>) currFaction.nonConflictedTerritoryList.clone();
             //go through each interior territory owned by currFaction
             while (interiorTerritoryQueue.size() > 0) {
+                System.out.println("\t\tqueue size: " + interiorTerritoryQueue.size());
                 Territory interiorTerritory = interiorTerritoryQueue.get(0);
                 Territory[] adjacentTerritoryList = interiorTerritory.adjacentTerritoryList;
                 int k = 0, otherK;
@@ -47,7 +51,7 @@ public class AI {
                     interiorTerritory.isToggleSet = true;
                     otherK = recv.sharedBorderIndex(k);
                     recv.borders[otherK].toggle.toggleVal = 1; //sharedBorderIndex in Territory
-                    //System.out.println("Works");
+                    System.out.println("Works");
                 }
                 else
                     interiorTerritoryQueue.add(interiorTerritoryQueue.remove(0));

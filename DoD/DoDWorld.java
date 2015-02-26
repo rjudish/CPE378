@@ -12,7 +12,7 @@ import java.util.HashMap;
 public class DoDWorld extends World
 {
     private Player player;
-    private AI ai;
+    public AI ai;
     private int gameTime = 0;
     private int deltaTime = 0;
     public DisplayBar displayBar;
@@ -46,10 +46,7 @@ public class DoDWorld extends World
         //Territory TEST_TERRITORY2 = new Territory(playerFaction, 2, false);
         //this.addObject(TEST_TERRITORY2, 300, 300);
         
-        ai = new AI(factions);
-        ai.defaultToggle();
-        ai.initToggle();
-        // parameter needs to be a list of factions for the alpha
+        
         
     }
     
