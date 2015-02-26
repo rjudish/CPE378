@@ -18,7 +18,7 @@ public class Faction extends Actor
             //int factionTroopCount = 0;
                 // which I then realized is just troopList.size
     
-    int factionManCount = 0; //includes men in troops as well as men at borders
+    private int factionManCount = 0; //includes men in troops as well as men at borders
     
     public ArrayList<Troop> troopList = new ArrayList<Troop>();    // does not include men at borders
     
@@ -69,5 +69,9 @@ public class Faction extends Actor
     
     public void setFlag(GreenfootImage flag) {
         this.flag = flag;
-    }    
+    }
+    
+    public int getFactionManCount() {
+        return factionManCount;
+    }
 }

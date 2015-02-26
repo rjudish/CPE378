@@ -17,7 +17,6 @@ public class Territory extends Actor
     public boolean[] conflictedBorderList = new boolean[6];
     public Territory[] adjacentTerritoryList = new Territory[6]; //Starts from N goes clockwise
     
-    
     int lastTime = 0;
     int territoryID = 1;
     Border[] borders = new Border[6]; //Starts from N goes clockwise
@@ -66,6 +65,7 @@ public class Territory extends Actor
     public void act() 
     {
         if ( ((DoDWorld)getWorld()).getGameTime() > lastTime) {
+            
             lastTime = ((DoDWorld)getWorld()).getGameTime();
             addUnits(recruitNumber);
         }
@@ -94,33 +94,30 @@ public class Territory extends Actor
     
     private void addUnits(int incoming) {
         //System.out.println("Territory " + territoryID + " spawns " + incoming + " units.");
-
-        // if territory has borders in conflict, set split troops between borders
-        // Daniel points out that Andrew forgot that troops have to travel from the center to the border. This section will be updated appropriately.
-        //if (isExterior) {
-            int menLeft = incoming;
-            int size = 0;
-            for (int i = 0; i < 6; i++) {
-                if (conflictedBorderList[i]) {
-                    size++;
-                }
+        //System.out.println("Territory " + territoryID + " isExterior? " + isExterior);
+        int menLeft = incoming;
+        int size = 0;
+        for (int i = 0; i < 6; i++) {
+            if (conflictedBorderList[i]) {
+                size++;
             }
-            //System.out.println("Territory " + territoryID + " has " + size + " conflicted Borders.");
+        }
+        //System.out.println("Territory " + territoryID + " has " + size + " conflicted Borders.");
 
-            for (int i = 0; i < 6; i++) {
-                if (conflictedBorderList[i]) {
-                    if (menLeft > (incoming / size)) {
-                        borders[i].addTroops(incoming / size);
-                        menLeft -= (incoming / size);
-                    } else {
-                        borders[i].addTroops(menLeft);
-                        menLeft = 0;
-                    }
-                } else { // else give territories to faction
-                    owner.addTroops(incoming, getX(), getY() );
+        for (int i = 0; i < 6; i++) {
+            if (conflictedBorderList[i]) {
+                if (menLeft > (incoming / size)) {
+                    borders[i].addTroops(incoming / size);
+                    menLeft -= (incoming / size);
+                } else {
+                    borders[i].addTroops(menLeft);
+                    menLeft = 0;
                 }
+            } else { // else give territories to faction
+                owner.addTroops(incoming, getX(), getY() );
             }
-        //}
+        }
+    
     }
 
     public Terrain getTerrain() {

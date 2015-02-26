@@ -317,6 +317,13 @@ public class Map extends DoDWorld
         if(territoryMap[x][y] != null) {
             
             territoryMap[j][i].adjacentTerritoryList[direction] = territoryMap[x][y];
+            
+            int oppositeDir = direction + 3;
+            if (oppositeDir > 5)
+                oppositeDir -=6;
+            
+            territoryMap[j][i].borders[direction].otherBorder = territoryMap[x][y].borders[oppositeDir];
+
         }
     }
     
@@ -326,7 +333,11 @@ public class Map extends DoDWorld
                 if(territoryMap[j][i] != null) {
                     for(int k=0; k < 6; k++) {
                         if(territoryMap[j][i].adjacentTerritoryList[k] != null && territoryMap[j][i].getOwner() != territoryMap[j][i].adjacentTerritoryList[k].getOwner()) {
-                            territoryMap[j][i].conflictedBorderList[k] = true; 
+                            territoryMap[j][i].conflictedBorderList[k] = true;
+                            territoryMap[j][i].isExterior = true;
+                            territoryMap[j][i].borders[k].toggle.setToggleVal(3);
+                        } else if (territoryMap[j][i].adjacentTerritoryList[k] == null) {
+                            territoryMap[j][i].borders[k].toggle.setToggleVal(0);
                         }
                     }
                 }

@@ -15,11 +15,11 @@ public class Toggle extends Actor
         this.parentBorder = parentBorder;
         boolean done = false;
 
-        System.out.println("Toggle:");
+        //System.out.println("Toggle:");
         
         for (Border bord : parentBorder.parentTerritory.getBorders()) {
             if (bord != null) {
-                System.out.println("Rotating 60");
+                //System.out.println("Rotating 60");
                 this.turn(60);
             }
         }
@@ -49,14 +49,14 @@ public class Toggle extends Actor
     public void toggleToggle() {
         //System.out.println("Toggling from val " + toggleVal);
         Toggle otherToggle = parentBorder.otherBorder.toggle;
-        // TODO: Post alpha: add conditionals to verify that it's an okay move
+        // TODO: Post alpha: add conditionals to verify that it's an okay move (use AI toggle method?)
         if (toggleVal == 1) {
             toggleVal = 2;
-            //otherToggle.setToggleVal(1); //won't work until otherBorder is init'd
+            otherToggle.setToggleVal(1);
         }
         else if (toggleVal == 2) {
             toggleVal = 1;
-            //otherToggle.setToggleVal(2);  //won't work until otherBorder is init'd
+            otherToggle.setToggleVal(2);
         }
     }
     
