@@ -269,12 +269,12 @@ public class Map extends DoDWorld
                                 adjacencyNullCheck(territoryMap, j, i, 5, j-1, i-1);
                             }
                             else {
-                                System.out.println("Error in even edge cases");
+                                System.out.println("Error in even edge cases j: "+j+" i: "+i);
                             }
                             
                         }
                     } else { //odd column
-                        if(j > 1 && i > 0 && i < ROWS - 1 && j < COLUMNS - 1) { //not edge
+                        if(j >= 1 && i > 0 && i < ROWS - 1 && j < COLUMNS - 1) { //not edge
                             adjacencyNullCheck(territoryMap, j, i, 0, j, i-1);
                             adjacencyNullCheck(territoryMap, j, i, 1, j+1, i);
                             adjacencyNullCheck(territoryMap, j, i, 2, j+1, i+1);
@@ -297,7 +297,7 @@ public class Map extends DoDWorld
                                    adjacencyNullCheck(territoryMap, j, i, 5, j-1, i);
                                 }
                             } else if(i == 0) { //top
-                                System.out.println("Top! j: "+j+" i: "+i);
+                                
                                 adjacencyNullCheck(territoryMap, j, i, 1, j+1, i);
                                 adjacencyNullCheck(territoryMap, j, i, 2, j+1, i+1);
                                 adjacencyNullCheck(territoryMap, j, i, 3, j, i+1);
@@ -308,7 +308,7 @@ public class Map extends DoDWorld
                                adjacencyNullCheck(territoryMap, j, i, 1, j+1, i);
                                adjacencyNullCheck(territoryMap, j, i, 5, j-1, i);
                             }else {
-                                System.out.println("Error in odd edge cases");
+                                System.out.println("Error in odd edge cases j: "+j+" i: "+i);
                             }
                         }
                     }
