@@ -36,13 +36,9 @@ public class DoDWorld extends World
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
         super(SCREEN_WIDTH, SCREEN_HEIGHT, 1, false); 
         player = new Player();
-        Faction[] factionList = new Faction[4];
         
         displayBar = new DisplayBar();
-        Faction playerFaction = factionList[0] = new Faction(this); // for testing purposes
-        for (int i = 1; i < 4; i++) {
-            factionList[i] = new Faction(this);
-        }
+        Faction playerFaction = new Faction(this); // for testing purposes
         
         //Territory TEST_TERRITORY = new Territory(playerFaction, 1, true);
         //this.addObject(TEST_TERRITORY, 400, 300);
@@ -50,7 +46,8 @@ public class DoDWorld extends World
         //Territory TEST_TERRITORY2 = new Territory(playerFaction, 2, false);
         //this.addObject(TEST_TERRITORY2, 300, 300);
         
-        ai = new AI(playerFaction); //or add an integer parameter for more than two factions
+        ai = new AI(factions);
+        ai.defaultToggle();
         ai.initToggle();
         // parameter needs to be a list of factions for the alpha
         

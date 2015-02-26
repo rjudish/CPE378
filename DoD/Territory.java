@@ -72,17 +72,9 @@ public class Territory extends Actor
         }
     }  
     
-    //gives the border shared between two neighboring territories
-    public Border sharedBorder(Territory neighbor) {
-        //FIX
-        for (int i = 0; i < 6; i++) {
-            for (int j = 0; j < 6; j++) {
-                if (this.borders[i].borderID == neighbor.borders[j].borderID)
-                    return this.borders[i];
-            }
-        }
-        
-        return null;
+    //gives this territory's shared border index based on another territory's border index (0-5)
+    public int sharedBorderIndex(int otherBorderIndex) {
+        return otherBorderIndex % 3 == otherBorderIndex ? otherBorderIndex + 3 : otherBorderIndex % 3;
     }
     
     public Faction getOwner() {
