@@ -13,12 +13,16 @@ public class DisplayBar extends Actor
     private static final String manpowerText = "Manpower: ";
     private int currentTerritories = Faction.INIT_TERRITORIES;
     private int currentManpower = 0;
+    //private Faction player = getWorld().
     private static GreenfootImage BASE_IMAGE = new GreenfootImage("images/DisplayBar.png");
     public DisplayBar() {
         BASE_IMAGE.scale(DoDWorld.SCREEN_WIDTH, 80);
         redrawDisplayBar();
     }
     
+//    public void act() {
+//        if currentTerritories !=
+//    }
     public void redrawDisplayBar() {
         GreenfootImage image = new GreenfootImage(BASE_IMAGE);
         image.drawImage(new GreenfootImage(territoryText + currentTerritories, 20,

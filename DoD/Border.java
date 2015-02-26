@@ -21,6 +21,8 @@ public class Border extends Actor
     public Border(Territory parentTerritory) {
         this.parentTerritory = parentTerritory;
         this.toggle = new Toggle(this);
+        this.getImage().scale(19, 19);
+        this.getImage().setTransparency(0);
         //if (this.parentTerritory == null)
             //System.out.println("NULL");
     }
