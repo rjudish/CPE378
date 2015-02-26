@@ -81,6 +81,7 @@ public class Map extends DoDWorld
                     Terrain terrainType = Terrain.getTerrain(currTile.getTerrain());
                     Faction currFaction = factions.get(currTile.getFaction());
                     Territory currTerritory = new Territory(currFaction, territoryID, false, terrainType);
+                    currFaction.territoryList.add(currTerritory);
                     currObject = currTerritory;
                     territories.add(currTerritory);
                     territoryMap[column][row] = currTerritory;
