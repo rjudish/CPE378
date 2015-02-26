@@ -37,7 +37,6 @@ public class Territory extends Actor
     public Territory(Faction owner, int territoryID, boolean isExterior, Terrain terrain) {
         this(owner, territoryID, isExterior);
         this.terrain = terrain;
-        //setImage(terrain.getImage());
         GreenfootImage image = new GreenfootImage(terrain.getImage());
         image.drawImage(new GreenfootImage("MP: " + recruitNumber, 20, Color.BLACK, Color.WHITE), 40, 30);
         GreenfootImage factionImage = owner.getFlag();

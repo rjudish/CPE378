@@ -2,6 +2,7 @@ import greenfoot.*;
 import java.util.Random;
 import java.util.List;
 import java.util.ArrayList;
+import java.awt.Color;
 /**
  * Write a description of class Map here.
  * 
@@ -49,6 +50,7 @@ public class Map extends DoDWorld
         addAdjacencyLists(territoryMap, terrainsMap);
         initConflictedBorders(territoryMap);
         
+        drawRivers(); //run this after river init
         setBackground("images/background.png");
         setPaintOrder(DisplayBar.class, Toggle.class, Troop.class, Actor.class);
         setupDisplayBar();
@@ -89,6 +91,7 @@ public class Map extends DoDWorld
                     addObject(currObject, x, y+offsetY);
                 }
                 zigzag = !zigzag;
+                territoryID++;
             }
         }
         return territoryMap;
@@ -340,36 +343,44 @@ public class Map extends DoDWorld
     }
 
     public void drawRivers() {
+        int offset = 3;
         for (Territory territory : territories) {
             Border[] borders = territory.getBorders();
             for (int i = 0; i < borders.length; i++) {
                 if (borders[i].hasRiver) {
-                    int centerX = territory.getX();
-                    int centerY = territory.getY();
-                    int x1 = 0;
-                    int x2 = 0;
-                    int y1 = 0;
-                    int y2 = 0;
-                    //Center to flat is 53px
+                    int[] xs = null;
+                    int[] ys = null;
+                    //Center to flat is 53px; 106 tall
+                    //Center to point is 60px; 120 wide
                     switch (i) {
                     case 0: //N
+                        xs = new int[] {30, 30-offset, 90+offset, 90};
+                        ys = new int[] {0, offset, offset, 0};
                         break;
                     case 1: //NE
+                        xs = new int[] {90, 90-offset, 120-offset, 120};
+                        ys = new int[] {0, 0, 53 + offset, 53};
                         break;
                     case 2: //SE
+                        xs = new int[] {120, 120-offset-2, 90-offset-2, 90};
+                        ys = new int[] {53, 53 - offset, 106, 106};
                         break;
                     case 3: //S
+                        xs = new int[] {90, 90+offset, 30-offset, 30};
+                        ys = new int[] {106, 106-offset-1, 106-offset-1, 106};
                         break;
                     case 4: //SW
+                        xs = new int[] {30, 30+offset, offset, 0};
+                        ys = new int[] {106, 106, 53 - offset, 53};
                         break;
                     case 5: //NW
+                        xs = new int[] {0, offset, 30 + offset, 30};
+                        ys = new int[] {53, 53 + offset, 0, 0};
                         break;
                     }
-                    //GreenfootImage parentImage = parentTerritory.getImage();
-                    //parentImage.setColor(new Color(112, 141, 241));
-                    //parentImage.drawLine(this.getX(), this.getY(), this.getX() + 100, this.getY() + 100);
-                    //parentImage.drawPolygon();
-                    //parentTerritory.setImage(parentImage);
+                    GreenfootImage parentImage = territory.getImage();
+                    parentImage.setColor(new Color(112, 141, 241));
+                    parentImage.fillPolygon(xs, ys, 4);
                 }
             }
         }
