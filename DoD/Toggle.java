@@ -13,22 +13,17 @@ public class Toggle extends Actor
     
     public Toggle(Border parentBorder) {
         this.parentBorder = parentBorder;
-
         boolean done = false;
 
-        //if (this.parentBorder.parentTerritory == null)
-            //System.out.println("parentTerritory is null");
-        // why is parentTerritory null?!?!?
+        System.out.println("Toggle:");
         
-        /*
         for (Border bord : parentBorder.parentTerritory.getBorders()) {
-            if (bord == parentBorder)
-                done = true;
-            if (!done) {
-                turn(60);
+            if (bord != null) {
+                System.out.println("Rotating 60");
+                this.turn(60);
             }
         }
-        */
+        
     }
     
     /**
