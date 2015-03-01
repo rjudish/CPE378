@@ -56,8 +56,6 @@ public class Map extends DoDWorld
         setupDisplayBar();
         
         ai = new AI(factions, territories);
-        ai.defaultToggle();
-        //ai.setExterior();
         ai.initToggle();
     }
     

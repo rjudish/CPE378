@@ -10,7 +10,7 @@ import java.awt.Color;
 public class Territory extends Actor
 {
     int recruitNumber = 10;
-    private Faction owner;
+    public Faction owner;
     Terrain terrain;
     boolean isExterior = false;
     boolean isToggleSet = false;
@@ -74,8 +74,7 @@ public class Territory extends Actor
     //whether or not its shares a border with the enemy (sets exterior)
     public boolean enemyBorder() {
         for (int i = 0; i < adjacentTerritoryList.length; i++) {
-            System.out.println("Territory: Got here!");
-            if (this.owner != null) {
+            if (this.owner != null && adjacentTerritoryList[i] != null) {
                 if (this.owner.id != adjacentTerritoryList[i].owner.id) {
                     this.isExterior = true;
                     return true;

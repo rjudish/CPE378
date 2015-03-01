@@ -26,32 +26,38 @@ public class AI {
         aiFactions = new ArrayList<Faction>(numAIFactions);
     }*/
     
-    public void setExterior() {
+    /*public void setExterior() {
         for (int i = 0; i < territories.size(); i++) {
             territories.get(i).enemyBorder();
         }
-    }
+    }*/
     
     public void initToggle() {
-        //System.out.println("AI factions size: " + factions.size());
+        setNonConflictedTerritoryList();
+        
         for (int i = 1; i <= factions.size(); i++) {
-            //System.out.println("\tAI: " + i);
-            Faction currFaction = factions.get(1);
-            //System.out.println("\tnonConflictedTerrList: " + currFaction.nonConflictedTerritoryList.size());
+            Faction currFaction = factions.get(i);
             ArrayList<Territory> interiorTerritoryQueue = (ArrayList<Territory>) currFaction.nonConflictedTerritoryList.clone();
+            
             //go through each interior territory owned by currFaction
             while (interiorTerritoryQueue.size() > 0) {
-                System.out.println("\t\tqueue size: " + interiorTerritoryQueue.size());
                 Territory interiorTerritory = interiorTerritoryQueue.get(0);
                 Territory[] adjacentTerritoryList = interiorTerritory.adjacentTerritoryList;
-                int k = 0, otherK;
+                int k = 0, otherK, backUpIndex = 0;
                 Territory recv = null;
+                Territory backUp = null;
                 
                 //find an exterior territory or one that has a toggled border
                 for (k = 0; k < adjacentTerritoryList.length; k++) {
                     Territory temp = adjacentTerritoryList[k];
-                    if (temp.isExterior || temp.isToggleSet)
-                        break;
+                    if (temp != null) {
+                        if (temp.isExterior)
+                            break;
+                        if (temp.isToggleSet) {
+                            backUp = temp;
+                            backUpIndex = k;
+                        }
+                    }
                 }
                 
                 if (k < adjacentTerritoryList.length) {
@@ -60,7 +66,15 @@ public class AI {
                     interiorTerritory.isToggleSet = true;
                     otherK = recv.sharedBorderIndex(k);
                     recv.borders[otherK].toggle.toggleVal = 1; //sharedBorderIndex in Territory
-                    System.out.println("Works");
+                    interiorTerritoryQueue.remove(0);
+                }
+                else if (backUp != null) {
+                    recv = backUp;
+                    interiorTerritory.borders[backUpIndex].toggle.toggleVal = 2;
+                    interiorTerritory.isToggleSet = true;
+                    otherK = recv.sharedBorderIndex(backUpIndex);
+                    recv.borders[otherK].toggle.toggleVal = 1; //sharedBorderIndex in Territory
+                    interiorTerritoryQueue.remove(0);
                 }
                 else
                     interiorTerritoryQueue.add(interiorTerritoryQueue.remove(0));
@@ -68,8 +82,24 @@ public class AI {
         }
     }
     
-    public void defaultToggle() {
-        
+    //defaults toggle too
+    public void setNonConflictedTerritoryList() {
+        for (int i = 0; i < territories.size(); i++) {
+            Territory temp = territories.get(i);
+            if (!temp.isExterior) {
+                temp.owner.nonConflictedTerritoryList.add(temp);
+            }
+            else {
+                temp.owner.conflictedTerritoryList.add(temp);
+            }
+            
+            for (int j = 0; j < temp.borders.length; j++) {
+                if (temp.adjacentTerritoryList[j] == null)
+                    temp.borders[j].toggle.toggleVal = 0;
+                else
+                    temp.borders[j].toggle.toggleVal = 3;
+            }
+        }
     }
     
     /*public void act() {

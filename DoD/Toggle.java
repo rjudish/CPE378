@@ -14,8 +14,6 @@ public class Toggle extends Actor
     public Toggle(Border parentBorder) {
         this.parentBorder = parentBorder;
         boolean done = false;
-
-        //System.out.println("Toggle:");
         
         for (Border bord : parentBorder.parentTerritory.getBorders()) {
             if (bord != null) {

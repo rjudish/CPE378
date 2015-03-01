@@ -23,7 +23,7 @@ public class Faction extends Actor
     public ArrayList<Troop> troopList = new ArrayList<Troop>();    // does not include men at borders
     
     public ArrayList<Territory> territoryList = new ArrayList<Territory>();
-    private ArrayList<Territory> conflictedTerritoryList = new ArrayList<Territory>();
+    public ArrayList<Territory> conflictedTerritoryList = new ArrayList<Territory>();
     public ArrayList<Territory> nonConflictedTerritoryList = new ArrayList<Territory>();
     
     int lastTime = 0;
