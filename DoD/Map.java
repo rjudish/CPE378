@@ -39,6 +39,7 @@ public class Map extends DoDWorld
         initializeFactionMap();
         int[][] factionsMap = placeFactions(tileMap, NUM_FACTIONS);
         int[][] terrainsMap = placeTerrains(tileMap);
+        int[][] resourcesMap = placeResources(terrainsMap, NUM_FACTIONS);
         for (int i = 0; i < ROWS; i++) {
             for(int j = 0; j < COLUMNS; j++) {
                 if(tileMap[j][i] == null) {
@@ -46,7 +47,7 @@ public class Map extends DoDWorld
                 }
             }
         }
-        Territory[][] territoryMap = buildMap(tileMap);
+        Territory[][] territoryMap = buildMap(tileMap, resourcesMap);
         addAdjacencyLists(territoryMap, terrainsMap);
         initConflictedBorders(territoryMap);
         
@@ -64,7 +65,7 @@ public class Map extends DoDWorld
         scroll();
     }
     
-    private Territory[][] buildMap(HexTile[][] tileMap) {
+    private Territory[][] buildMap(HexTile[][] tileMap, int[][] resourcesMap) {
         boolean zigzag = false;
         //random numbers to make things line up. No idea why.
         int offsetY = HEX_WIDTH/2-8;
@@ -78,7 +79,7 @@ public class Map extends DoDWorld
                     //NOT Map feature
                     Terrain terrainType = Terrain.getTerrain(currTile.getTerrain());
                     Faction currFaction = factions.get(currTile.getFaction());
-                    Territory currTerritory = new Territory(currFaction, territoryID, false, terrainType);
+                    Territory currTerritory = new Territory(currFaction, territoryID, false, terrainType, resourcesMap[column][row]);
                     currFaction.territoryList.add(currTerritory);
                     currObject = currTerritory;
                     territories.add(currTerritory);
@@ -158,6 +159,27 @@ public class Map extends DoDWorld
             }
         }
         return factionsMap;
+    }
+    
+    public int[][] placeResources(int[][] terrainsMap, int numFactions) {
+        Random rand = new Random();
+        int[][] resourcesMap = new int[COLUMNS][ROWS];
+        int horsesLeft = 8+numFactions%2, leatherLeft = 8+numFactions%2, ironLeft = 4+numFactions%2;
+        while(ironLeft > 0 || horsesLeft > 0 || leatherLeft > 0) {
+            int row = rand.nextInt(ROWS);
+            int column = rand.nextInt(COLUMNS);
+            if(ironLeft != 0 && (terrainsMap[column][row] == 3 || terrainsMap[column][row] == 4)) {
+                resourcesMap[column][row] = 1;//Iron
+                ironLeft--;
+            } else if (horsesLeft != 0 && (terrainsMap[column][row] == 5 || terrainsMap[column][row] == 6)) {
+                resourcesMap[column][row] = 2;//Horses
+                horsesLeft--;
+            } else if (leatherLeft != 0 && (terrainsMap[column][row] == 5 || terrainsMap[column][row] == 6)) {
+                resourcesMap[column][row] = 3;//Leather
+                leatherLeft--;
+            }
+        }
+        return resourcesMap;
     }
     
     /**

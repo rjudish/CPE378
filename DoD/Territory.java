@@ -10,6 +10,7 @@ import java.awt.Color;
 public class Territory extends Actor
 {
     int recruitNumber = 10;
+    int resource = 0; //0 nothing, 1 iron, 2 horses, 3 leather
     public Faction owner;
     Terrain terrain;
     boolean isExterior = false;
@@ -33,9 +34,10 @@ public class Territory extends Actor
         }
     }
     
-    public Territory(Faction owner, int territoryID, boolean isExterior, Terrain terrain) {
+    public Territory(Faction owner, int territoryID, boolean isExterior, Terrain terrain, int resource) {
         this(owner, territoryID, isExterior);
         this.terrain = terrain;
+        this.resource = resource;
         GreenfootImage image = new GreenfootImage(terrain.getImage());
         image.drawImage(new GreenfootImage("MP: " + recruitNumber, 20, Color.BLACK, Color.WHITE), 40, 30);
         GreenfootImage factionImage = owner.getFlag();
