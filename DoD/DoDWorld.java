@@ -16,7 +16,7 @@ public class DoDWorld extends World
     private int gameTime = 0;
     private int deltaTime = 0;
     public DisplayBar displayBar;
-    private ArrayList<Territory> conflictedTerritoryList = new ArrayList<Territory>();
+    public ArrayList<Territory> conflictedTerritoryList = new ArrayList<Territory>();
     private static final int START_X = 140;
     private static final int START_Y = 152;
     private static final int HEX_WIDTH = 120;
@@ -59,9 +59,11 @@ public class DoDWorld extends World
         if (deltaTime == 0) {
             gameTime++;
             //System.out.println("Game Time: " + gameTime);
-            Battle.step(conflictedTerritoryList);
-            //System.out.println("Executing Spawn Code...");
-            
+            if (gameTime > 3)   //Give the initial wave of troops time to get to a conflicted Border
+                Battle.step(conflictedTerritoryList);
         }
+        
+        //System.out.println(conflictedTerritoryList.size() + " conflicted territories");
+
     }
 }

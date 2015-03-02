@@ -53,7 +53,7 @@ public class Map extends DoDWorld
         
         drawRivers(); //run this after river init
         setBackground("images/background.png");
-        setPaintOrder(DisplayBar.class, Toggle.class, Troop.class, Actor.class);
+        setPaintOrder(DisplayBar.class, Toggle.class, NumDisplay.class, Troop.class, Actor.class);
         setupDisplayBar();
         
         ai = new AI(factions, territories);
@@ -207,6 +207,7 @@ public class Map extends DoDWorld
     private void initializeFactionMap() {
         for (int i = 1; i <= NUM_FACTIONS; i++) {
             Faction newFaction = new Faction(this, i - 1);
+            //addObject(newFaction, 10, 10);    // This was so I could use the faction's act method for test output
             newFaction.setFlag(new GreenfootImage("faction" + i + ".png"));
             factions.put(i, newFaction);
         }
@@ -360,6 +361,7 @@ public class Map extends DoDWorld
                     for(int k=0; k < 6; k++) {
                         if(territoryMap[j][i].adjacentTerritoryList[k] != null && territoryMap[j][i].getOwner() != territoryMap[j][i].adjacentTerritoryList[k].getOwner()) {
                             territoryMap[j][i].conflictedBorderList[k] = true;
+                            territoryMap[j][i].borders[k].inConflict = true;
                             territoryMap[j][i].isExterior = true;
                             territoryMap[j][i].borders[k].toggle.setToggleVal(3);
                         } else if (territoryMap[j][i].adjacentTerritoryList[k] == null) {

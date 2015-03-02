@@ -30,7 +30,7 @@ public class Territory extends Actor
         this.territoryID = territoryID;
         this.isExterior = isExterior;
         for( int i = 0; i < 6; i++ ) {
-            this.borders[i] = new Border(this);
+            this.borders[i] = new Border(this, i);
         }
     }
     
@@ -38,11 +38,18 @@ public class Territory extends Actor
         this(owner, territoryID, isExterior);
         this.terrain = terrain;
         this.resource = resource;
+        setDisplay();
+    }
+    
+    private void setDisplay() {
         GreenfootImage image = new GreenfootImage(terrain.getImage());
-        image.drawImage(new GreenfootImage("MP: " + recruitNumber, 20, Color.BLACK, Color.WHITE), 40, 30);
-        GreenfootImage factionImage = owner.getFlag();
-        image.drawImage(factionImage, 50, 50);
+        //image.drawImage(new GreenfootImage("MP: " + recruitNumber, 20, Color.BLACK, Color.WHITE), 40, 30);
+            //image.drawImage(new GreenfootImage("MP: " + recruitNumber, 15, Color.BLACK, Color.WHITE), 45, 30);    // I like this more
+        //GreenfootImage factionImage = owner.getFlag();
+        //image.drawImage(factionImage, 50, 50);
         setImage(image);
+        image.drawImage(new GreenfootImage("MP: " + recruitNumber, 20, owner.fgColor, owner.bgColor), 40, 40);    // I like this more
+        
     }
     
     protected void addedToWorld(World world) {
@@ -52,24 +59,32 @@ public class Territory extends Actor
         //conflictedBorderList.add(borders[1]); // for testing
     
         // Clockwise from N
-        world.addObject(borders[0], getX(), getY() - 40);
-        world.addObject(borders[1], getX() + 35, getY() - 25);
-        world.addObject(borders[2], getX() + 35, getY() + 25);
-        world.addObject(borders[3], getX(), getY() + 40);
-        world.addObject(borders[4], getX() - 35, getY() + 25);
-        world.addObject(borders[5], getX() - 35, getY() - 25);
+        world.addObject(borders[0], getX(), getY() - 53);
+        world.addObject(borders[1], getX() + 45, getY() - 27);
+        world.addObject(borders[2], getX() + 45, getY() + 26);
+        world.addObject(borders[3], getX(), getY() + 52);
+        world.addObject(borders[4], getX() - 45, getY() + 26);
+        world.addObject(borders[5], getX() - 45, getY() - 27);
     }
     
     /**
      * Act - do whatever the Territory wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
+    int birthControl = 1;
     public void act() 
     {
+        //System.out.println("Territory " + territoryID + " acting.");
+        
         if ( ((DoDWorld)getWorld()).getGameTime() > lastTime) {
-            
             lastTime = ((DoDWorld)getWorld()).getGameTime();
-            addUnits(recruitNumber);
+            //if (territoryID == 123)    // To limit troops for testing
+                
+                //if( birthControl-- == 0) {
+                    //if(birthControl < 0)
+                        //birthControl = 5;
+                    addUnits(recruitNumber);
+                //}
         }
     }  
     
@@ -100,9 +115,56 @@ public class Territory extends Actor
     public void newOwner(Faction newFaction) {
         //Update territory owner
         owner = newFaction;
-        //Update borders in conflict
+        setDisplay();
+        
+        //Update a crapton of other stuff
+        isExterior = false;
+        for(int k=0; k < 6; k++) {
+            conflictedBorderList[k] = false;
+            borders[k].inConflict = false;
+            borders[k].setBorderManCount(0);
+            //borders[k].bd.getImage().clear();
+            
+            if(adjacentTerritoryList[k] != null) {
+                adjacentTerritoryList[k].isExterior = false;
+                //owner.world.conflictedTerritoryList.remove(adjacentTerritoryList[k]); // can't remove why we're iterating on this list, so we're going to add a second and remove later
+                owner.conflictedTerritoryList.remove(adjacentTerritoryList[k]);
+                owner.nonConflictedTerritoryList.remove(adjacentTerritoryList[k]);
+                
+                //Deal with this territory's changes
+                if (owner != adjacentTerritoryList[k].getOwner()) {
+                    conflictedBorderList[k] = true;
+                    borders[k].inConflict = true;
+                    isExterior = true;
+                    borders[k].toggle.setToggleVal(3);
+                }
+                
+                
+                //And deal with its adjacent territorys' changes
+                for (int i = 0; i < 6; i++ ) {
+                    adjacentTerritoryList[k].conflictedBorderList[i] = false;
+                    if (adjacentTerritoryList[k].borders[i].getOwner() != adjacentTerritoryList[k].borders[i].otherBorder.getOwner()) {
+                        adjacentTerritoryList[k].conflictedBorderList[i] = true;
+                        adjacentTerritoryList[k].isExterior = true;
+                       //owner.world.conflictedTerritoryList.add(adjacentTerritoryList[k]);
+                        owner.conflictedTerritoryList.add(adjacentTerritoryList[k]);
+                        adjacentTerritoryList[k].borders[i].inConflict = true;
+                        adjacentTerritoryList[k].borders[i].toggle.setToggleVal(3);
+
+                    }
+                }
+                
+                if (!adjacentTerritoryList[k].isExterior)
+                    owner.nonConflictedTerritoryList.add(adjacentTerritoryList[k]);
+                
+            }// else {
+            //    borders[k].toggle.setToggleVal(0);
+            //}
+        }
+        
+        
         //Update adjacent territories' borders in conflict
-        //Update toggles (use AI?)
+        
         // Update faction's manpower
 
  
@@ -112,6 +174,7 @@ public class Territory extends Actor
     private void addUnits(int incoming) {
         //System.out.println("Territory " + territoryID + " spawns " + incoming + " units.");
         //System.out.println("Territory " + territoryID + " isExterior? " + isExterior);
+        /*
         int menLeft = incoming;
         int size = 0;
         for (int i = 0; i < 6; i++) {
@@ -119,7 +182,8 @@ public class Territory extends Actor
                 size++;
             }
         }
-        //System.out.println("Territory " + territoryID + " has " + size + " conflicted Borders.");
+        if (territoryID == 2)
+            System.out.println("Territory " + territoryID + " has " + size + " conflicted Borders.");
 
         for (int i = 0; i < 6; i++) {
             if (conflictedBorderList[i]) {
@@ -131,9 +195,11 @@ public class Territory extends Actor
                     menLeft = 0;
                 }
             } else { // else give territories to faction
+        */
+                //System.out.println("Territory " + territoryID + " gets " + incoming + " new units (1 troop).");
                 owner.addTroops(incoming, getX(), getY() );
-            }
-        }
+        //    }
+        //}
     
     }
 

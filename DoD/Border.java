@@ -10,25 +10,38 @@ public class Border extends Actor
 {
     boolean inConflict = false;
     boolean hasRiver = false;
-    int borderManCount = 0;
+    private int borderManCount = 0;
+    NumDisplay bd;
     
     int lastTime = 0;
-    int borderID = 1;
+    int borderID = 0;
     Border otherBorder = this;
     Territory parentTerritory;
     Toggle toggle;
     
-    public Border(Territory parentTerritory) {
+    public Border(Territory parentTerritory, int borderID) {
         this.parentTerritory = parentTerritory;
+        this.borderID = borderID;
         this.toggle = new Toggle(this);
-        this.getImage().scale(19, 19);
+        
+        this.bd = new NumDisplay(this);
+        
+        //Fixing border collisions
+        this.getImage().scale(80, 10);
+        int idCounter = borderID;
+        while (idCounter-- > 0) {
+            //System.out.println("Rotating 60");
+            this.turn(60);
+        }
+
         this.getImage().setTransparency(0);
-        //if (this.parentTerritory == null)
-            //System.out.println("NULL");
     }
     
     protected void addedToWorld(World world) {
         world.addObject(toggle, getX(), getY());
+        int dx = getX() - parentTerritory.getX();
+        int dy = getY() - parentTerritory.getY();
+        world.addObject(bd, getX() - dx/4, getY() - dy/4);
     }
     
     
@@ -38,6 +51,9 @@ public class Border extends Actor
      */
     public void act() 
     {
+        //System.out.println("Border " + borderID
+        //    + " of Terr " + parentTerritory.territoryID
+        //    + " conflicted: " + inConflict);
     }
     
     public Faction getOwner() {
@@ -48,8 +64,23 @@ public class Border extends Actor
         return otherBorder;
     }
     
+    public int getBorderManCount() {
+        return borderManCount;
+    }
+    
+    public void setBorderManCount(int newManCount) {
+        this.borderManCount = newManCount;
+        this.bd.setDisplayNum(newManCount);
+    }
+    
     public void addTroops(int incoming) {
         borderManCount += incoming;
+        bd.setDisplayNum(borderManCount);
         //System.out.println("Border " + borderID + " gets " + incoming + " new units, for a total of " + borderManCount);
+    }
+    
+    public void battleWon() {
+        otherBorder.borderManCount *= 0.5;
+        borderManCount -= otherBorder.borderManCount;
     }
 }

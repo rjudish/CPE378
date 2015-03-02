@@ -91,6 +91,7 @@ public class AI {
             }
             else {
                 temp.owner.conflictedTerritoryList.add(temp);
+                temp.owner.world.conflictedTerritoryList.add(temp);
             }
             
             for (int j = 0; j < temp.borders.length; j++) {
