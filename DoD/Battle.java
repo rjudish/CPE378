@@ -14,7 +14,7 @@ final public class Battle
     {
     }
     
-    static void step(ArrayList<Territory> conflictedTerritoryList) {
+    static void step(ArrayList<Territory> conflictedTerritoryList, AI ai) {
         //System.out.println("Executing Battle Code.");
         //Territory terr = null;
         for(Territory terr : conflictedTerritoryList) {
@@ -34,16 +34,15 @@ final public class Battle
                         
                         int aCount = bord.getBorderManCount();
                         int bCount = other.getBorderManCount();
-                        
                         //System.out.println(aCount + " vs. " + bCount);
                         
                         if (aCount / 10 > bCount) {
                             // A wins territory
                             //System.out.println("Territory " + terr.territoryID + " has changed ownership!");
                             
-                            //TODO: this is where I need archit's AI to set toggles
-                            other.toggle.setToggleVal(1);
-                            bord.toggle.setToggleVal(2);
+                            ai.battleOutcome(other.parentTerritory, bord.parentTerritory.owner); //lostTerritory, winningFaction
+                            //other.toggle.setToggleVal(1);
+                            //bord.toggle.setToggleVal(2);
                             
                             //Disperse troops remaining at victorious border
                             owner.addTroops(bord.getBorderManCount(), bord.getX(), bord.getY());

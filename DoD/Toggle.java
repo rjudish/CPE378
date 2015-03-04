@@ -24,7 +24,8 @@ public class Toggle extends Actor
     public void act() 
     {
         if (Greenfoot.mouseClicked(this)) {
-            this.toggleToggle();
+            //this.toggleToggle();
+            AI.toggleAI(parentBorder);
         }
         if (toggleVal == 0) {
             this.getImage().clear();
