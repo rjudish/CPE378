@@ -68,4 +68,12 @@ public class DoDWorld extends World
         //System.out.println(conflictedTerritoryList.size() + " conflicted territories");
 
     }
+    
+    public void playerWin() {
+        Greenfoot.setWorld(new EndScreen(true));
+    }
+    
+    public void playerLoss() {
+        Greenfoot.setWorld(new EndScreen(false));
+    }
 }
