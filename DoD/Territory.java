@@ -14,6 +14,7 @@ public class Territory extends Actor
     public Faction owner;
     Terrain terrain;
     boolean isExterior = false;
+    boolean hasChangedOwner = false;
     boolean isToggleSet = false;
     public boolean[] conflictedBorderList = new boolean[6];
     public Territory[] adjacentTerritoryList = new Territory[6]; //Starts from N goes clockwise
@@ -116,6 +117,7 @@ public class Territory extends Actor
     public void newOwner(Faction newFaction) {
         //Update territory owner
         owner = newFaction;
+        this.hasChangedOwner = true;
         setDisplay();
         
         //Update a crapton of other stuff
