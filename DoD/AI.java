@@ -26,15 +26,13 @@ public class AI {
         Territory otherTerritory = border.otherBorder.parentTerritory;
         
         if (curToggle.getToggleVal() == 3 && !curTerritory.isExterior) {
-            int i;
-            Border temp = null;
+            Territory temp = otherTerritory;
             
-            //find the current outward toggle border & set it to inactive toggle
-            for (i = 0; i < curTerritory.borders.length; i++) {
-                temp = curTerritory.borders[i];
-                if (temp != null && temp.toggle.getToggleVal() == 2)
-                    break;
-            }
+            /*while (temp != null && !temp.isExterior) {
+                if (temp.territoryID == curTerritory.territoryID)
+                    return;
+                temp = temp.outwardToggleBorder.parentTerritory;
+            }*/
             
             curTerritory.pastOutwardToggleBorder = curTerritory.outwardToggleBorder;
             curTerritory.pastOutwardToggleBorder.toggle.setToggleVal(3);
@@ -44,22 +42,66 @@ public class AI {
             curToggle.setToggleVal(2);
             border.otherBorder.toggle.setToggleVal(1);
         }
+        else if (curToggle.getToggleVal() == 3 && !otherTerritory.isExterior) {
+            Territory temp = curTerritory;
+            
+            /*while (temp != null && !temp.isExterior) {
+                if (temp.territoryID == otherTerritory.territoryID)
+                    return;
+                temp = temp.outwardToggleBorder.parentTerritory;
+            }*/
+            
+            otherTerritory.pastOutwardToggleBorder = otherTerritory.outwardToggleBorder;
+            otherTerritory.pastOutwardToggleBorder.toggle.setToggleVal(3);
+            otherTerritory.pastOutwardToggleBorder.otherBorder.toggle.setToggleVal(3);
+            
+            otherTerritory.outwardToggleBorder = border.otherBorder;
+            curToggle.setToggleVal(1);
+            border.otherBorder.toggle.setToggleVal(2);
+        }
         else if (curToggle.getToggleVal() == 2 && curTerritory.pastOutwardToggleBorder != null && !otherTerritory.isExterior) {
+            Territory temp = curTerritory.pastOutwardToggleBorder.parentTerritory;
+            
+            /*while (temp != null && !temp.isExterior) {
+                if (temp.territoryID == otherTerritory.territoryID)
+                    return;
+                temp = temp.outwardToggleBorder.parentTerritory;
+            }*/
+            
             curToggle.setToggleVal(1);
             border.otherBorder.toggle.setToggleVal(2);
             
+            otherTerritory.pastOutwardToggleBorder = otherTerritory.outwardToggleBorder;
             otherTerritory.outwardToggleBorder.toggle.setToggleVal(3);
             otherTerritory.outwardToggleBorder.otherBorder.toggle.setToggleVal(3);
             otherTerritory.outwardToggleBorder = border.otherBorder;
             
             curTerritory.pastOutwardToggleBorder.toggle.setToggleVal(2);
             curTerritory.pastOutwardToggleBorder.otherBorder.toggle.setToggleVal(1);
-            
             curTerritory.outwardToggleBorder = curTerritory.pastOutwardToggleBorder;
             curTerritory.pastOutwardToggleBorder = border;
         }
-        else if (curToggle.getToggleVal() == 1 && border.otherBorder.parentTerritory.pastOutwardToggleBorder != null && !curTerritory.isExterior) {
+        else if (curToggle.getToggleVal() == 1 && otherTerritory.pastOutwardToggleBorder != null && !curTerritory.isExterior) {
+            Territory temp = otherTerritory.pastOutwardToggleBorder.parentTerritory;
             
+            /*while (temp != null && !temp.isExterior) {
+                if (temp.territoryID == curTerritory.territoryID)
+                    return;
+                temp = temp.outwardToggleBorder.parentTerritory;
+            }*/
+            
+            curToggle.setToggleVal(2);
+            border.otherBorder.toggle.setToggleVal(1);
+            
+            curTerritory.pastOutwardToggleBorder = curTerritory.outwardToggleBorder;
+            curTerritory.outwardToggleBorder.toggle.setToggleVal(3);
+            curTerritory.outwardToggleBorder.otherBorder.toggle.setToggleVal(3);
+            curTerritory.outwardToggleBorder = border;
+            
+            otherTerritory.pastOutwardToggleBorder.toggle.setToggleVal(2);
+            otherTerritory.pastOutwardToggleBorder.otherBorder.toggle.setToggleVal(1);
+            otherTerritory.outwardToggleBorder = otherTerritory.pastOutwardToggleBorder;
+            otherTerritory.pastOutwardToggleBorder = border.otherBorder;
         }
     }
     
