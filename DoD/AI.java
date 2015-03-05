@@ -23,23 +23,43 @@ public class AI {
     public static void toggleAI(Border border) {
         Toggle curToggle = border.toggle;
         Territory curTerritory = border.parentTerritory;
+        Territory otherTerritory = border.otherBorder.parentTerritory;
         
         if (curToggle.getToggleVal() == 3 && !curTerritory.isExterior) {
             int i;
             Border temp = null;
             
+            //find the current outward toggle border & set it to inactive toggle
             for (i = 0; i < curTerritory.borders.length; i++) {
                 temp = curTerritory.borders[i];
                 if (temp != null && temp.toggle.getToggleVal() == 2)
                     break;
             }
-            if (i != curTerritory.borders.length) {
-                temp.toggle.setToggleVal(3);
-                temp.otherBorder.toggle.setToggleVal(3);
-            }
             
+            curTerritory.pastOutwardToggleBorder = curTerritory.outwardToggleBorder;
+            curTerritory.pastOutwardToggleBorder.toggle.setToggleVal(3);
+            curTerritory.pastOutwardToggleBorder.otherBorder.toggle.setToggleVal(3);
+            
+            curTerritory.outwardToggleBorder = border;
             curToggle.setToggleVal(2);
             border.otherBorder.toggle.setToggleVal(1);
+        }
+        else if (curToggle.getToggleVal() == 2 && curTerritory.pastOutwardToggleBorder != null && !otherTerritory.isExterior) {
+            curToggle.setToggleVal(1);
+            border.otherBorder.toggle.setToggleVal(2);
+            
+            otherTerritory.outwardToggleBorder.toggle.setToggleVal(3);
+            otherTerritory.outwardToggleBorder.otherBorder.toggle.setToggleVal(3);
+            otherTerritory.outwardToggleBorder = border.otherBorder;
+            
+            curTerritory.pastOutwardToggleBorder.toggle.setToggleVal(2);
+            curTerritory.pastOutwardToggleBorder.otherBorder.toggle.setToggleVal(1);
+            
+            curTerritory.outwardToggleBorder = curTerritory.pastOutwardToggleBorder;
+            curTerritory.pastOutwardToggleBorder = border;
+        }
+        else if (curToggle.getToggleVal() == 1 && border.otherBorder.parentTerritory.pastOutwardToggleBorder != null && !curTerritory.isExterior) {
+            
         }
     }
     
@@ -50,7 +70,7 @@ public class AI {
     public void battleOutcome(Territory lost, Faction winner) {
          Faction loser = lost.owner;
          Territory[] adjLostTerrList = lost.adjacentTerritoryList;
-         System.out.println("Battle it out!");
+         //System.out.println("Battle it out!");
          
          lost.owner = winner;
          winner.territoryList.add(lost);
@@ -81,6 +101,8 @@ public class AI {
                     //winner.world.conflictedTerritoryList.remove(adjTerr);
                     lost.borders[i].toggle.setToggleVal(1);
                     adjTerr.borders[this.getInverseIndex(i)].toggle.setToggleVal(2);
+                    adjTerr.borders[this.getInverseIndex(i)].parentTerritory.outwardToggleBorder = adjTerr.borders[this.getInverseIndex(i)];
+                    adjTerr.borders[this.getInverseIndex(i)].parentTerritory.pastOutwardToggleBorder = null;
                  }
              }
              else { //other factions adjacent Territory
@@ -138,6 +160,7 @@ public class AI {
                     recv = adjacentTerritoryList[k];
                     interiorTerritory.borders[k].toggle.toggleVal = 2; //points outside
                     interiorTerritory.isToggleSet = true;
+                    interiorTerritory.outwardToggleBorder = interiorTerritory.borders[k];
                     otherK = recv.sharedBorderIndex(k);
                     recv.borders[otherK].toggle.toggleVal = 1; //sharedBorderIndex in Territory, points inside
                     interiorTerritoryQueue.remove(0);
@@ -146,6 +169,7 @@ public class AI {
                     recv = backUp;
                     interiorTerritory.borders[backUpIndex].toggle.toggleVal = 2;
                     interiorTerritory.isToggleSet = true;
+                    interiorTerritory.outwardToggleBorder = interiorTerritory.borders[backUpIndex];
                     otherK = recv.sharedBorderIndex(backUpIndex);
                     recv.borders[otherK].toggle.toggleVal = 1; //sharedBorderIndex in Territory
                     interiorTerritoryQueue.remove(0);
