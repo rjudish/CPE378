@@ -42,8 +42,6 @@ final public class Battle
                                 //System.out.println("Territory " + terr.territoryID + " has changed ownership!");
                                 
                                 ai.battleOutcome(other.parentTerritory, bord.parentTerritory.owner); //lostTerritory, winningFaction
-                                //other.toggle.setToggleVal(1);
-                                //bord.toggle.setToggleVal(2);
                                 
                                 //Disperse troops remaining at victorious border
                                 owner.addTroops(bord.getBorderManCount(), bord.getX(), bord.getY());
