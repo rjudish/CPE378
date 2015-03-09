@@ -31,9 +31,9 @@ public class DisplayBar extends Actor
     public void redrawDisplayBar() {
         GreenfootImage image = new GreenfootImage(BASE_IMAGE);
         image.drawImage(new GreenfootImage(territoryText + currentTerritories, 20,
-            Color.BLACK, Color.WHITE), 60, 40);
+            Color.BLACK, Color.WHITE), 10, 15);
         image.drawImage(new GreenfootImage(manpowerText + currentManpower, 20,
-            Color.BLACK, Color.WHITE), 750, 40); 
+            Color.BLACK, Color.WHITE), 10, 45); 
         setImage(image);
     }
     
