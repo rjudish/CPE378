@@ -24,6 +24,8 @@ public class Map extends DoDWorld
     int cameraX = 0;
     int cameraY = 0;
     public static final int SCROLL_SPEED = 10;
+    
+    int numFactions;
 
     DisplayBar displayBar;
 
@@ -31,12 +33,12 @@ public class Map extends DoDWorld
      * Constructor for objects of class Map.
      * 
      */
-    public Map()
+    public Map(int numFactions)
     {    
-        
+        this.numFactions = numFactions;
         HexTile[][] tileMap = new HexTile[COLUMNS][ROWS];
         placeMapFeatures(tileMap);
-        initializeFactionMap();
+        initializeFactionMap(NUM_FACTIONS);
         int[][] factionsMap = placeFactions(tileMap, NUM_FACTIONS);
         int[][] terrainsMap = placeTerrains(tileMap);
         int[][] resourcesMap = placeResources(terrainsMap, NUM_FACTIONS);
@@ -53,7 +55,7 @@ public class Map extends DoDWorld
         
         drawRivers(); //run this after river init
         setBackground("images/background.png");
-        setPaintOrder(DisplayBar.class, Toggle.class, NumDisplay.class, Troop.class, Actor.class);
+        setPaintOrder(DisplayBar.class, Toggle.class, NumDisplay.class, TroopIcon.class, Actor.class);
         setupDisplayBar();
         
         ai = new AI(factions, territories);
@@ -204,8 +206,8 @@ public class Map extends DoDWorld
         displayBar.setPlayer(factions.get(1));
     }
     
-    private void initializeFactionMap() {
-        for (int i = 1; i <= NUM_FACTIONS; i++) {
+    private void initializeFactionMap(int numFactions) {
+        for (int i = 1; i <= numFactions; i++) {
             Faction newFaction = new Faction(this, i - 1);
             //addObject(newFaction, 10, 10);    // This was so I could use the faction's act method for test output
             newFaction.setFlag(new GreenfootImage("faction" + i + ".png"));

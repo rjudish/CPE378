@@ -6,7 +6,7 @@ import greenfoot.*;
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class TitleScreen extends World
+public class TitleScreen extends Screen
 {
 
     /**
@@ -15,14 +15,21 @@ public class TitleScreen extends World
      */
     public TitleScreen()
     {    
-        // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
-        super(900, 600, 1);
+        super();
         setBackground("images/titleScreen.png");
     }
     
-    public void act() {
-        if (Greenfoot.mousePressed(this)) {
-            Greenfoot.setWorld(new Map());
+    void checkClick(MouseInfo mouse) {
+        if (mouse.getX() >= 310 && mouse.getY() <= 600) {
+            if (mouse.getY() >= 305 && mouse.getY() <= 380) {
+                Greenfoot.setWorld(new FactionSelectScreen());
+            }
+            else if (mouse.getY() >= 380 && mouse.getY() <= 470) {
+                Greenfoot.setWorld(new InstructionsScreen());
+            }
+            else if (mouse.getY() >= 470 && mouse.getY() <= 540) {
+                Greenfoot.setWorld(new CreditsScreen());
+            }
         }
     }
 }

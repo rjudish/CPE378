@@ -19,6 +19,7 @@ public class Troop extends Actor
     Territory lastTerr;
     
     Border targetBord = null;
+    TroopIcon icon;
     
     public Troop(Faction faction, int incoming) {
         super();
@@ -26,7 +27,9 @@ public class Troop extends Actor
         this.troopManCount = incoming;
         this.currTerr = null;
         this.lastTerr = null;
-        setImage(new GreenfootImage(Integer.toString(incoming), 15, faction.fgColor, faction.bgColor));
+        getImage().setTransparency(0);
+        icon = new TroopIcon(this, troopManCount, this.owner.fgColor, this.owner.bgColor);
+            //setImage(new GreenfootImage(Integer.toString(incoming), 15, faction.fgColor, faction.bgColor));
             // should eventually change this to drawImage [text] on top of the actual troop sprite with a transparent (null) background color
             // Might want to use NumDisplay class that I used for borders to separate the text image object from troop sprite, to set rotation of number back to normal
         
@@ -91,6 +94,7 @@ public class Troop extends Actor
                 
                 if (currTerr != null && currTerr.owner != this.owner) {
                     //System.out.println("Problem: Troop in enemy territory! " + currTerr.territoryID);     //expected now that battle code changes territory ownership
+                    owner.world.removeObject(this.icon);
                     owner.world.removeObject(this);
                     cont = false;
                 }
@@ -118,6 +122,7 @@ public class Troop extends Actor
                     } else {
                         System.out.println("Problem: Troop went off the map!");
                             //Only happens when toggle AI is broken
+                        owner.world.removeObject(this.icon);
                         owner.world.removeObject(this);
                         cont = false;
                     }
@@ -125,8 +130,10 @@ public class Troop extends Actor
                     //System.out.println("Same territory");
                 }
             //}
-            if (cont)
+            if (cont) {
                 move(speed);
+                icon.update();
+            }
         }
     }
       
@@ -144,6 +151,7 @@ public class Troop extends Actor
         if (!hasTarget) {
             System.out.println("Problem: No borders in territory are viable target " + currTerr.territoryID);
                 //Should be fixed by toggle AI
+            owner.world.removeObject(this.icon);
             owner.world.removeObject(this);
         }
     }
@@ -172,12 +180,14 @@ public class Troop extends Actor
                     menLeft = 0;
                 }
                 owner.world.addObject(troop, getX(), getY());
+                owner.world.addObject(troop.getIcon(), getX(), getY());
                 troop.turnTowards( currTerr.borders[i].getX(), currTerr.borders[i].getY());
                 //System.out.println("Troop of size " + troop.troopManCount + " turning from ("+ getX() +", "+ getY() +") toward ("+ currTerr.borders[i].getX() +", "+ currTerr.borders[i].getY() +") [toggleVal: "+ currTerr.borders[i].toggle.getToggleVal() +"]");
 
             }
         }
         owner.world.removeObject(this);
+        owner.world.removeObject(this.icon);
         return false;
     }
     
@@ -188,6 +198,7 @@ public class Troop extends Actor
 
             targetBord.addTroops(troopManCount);
             owner.troopList.remove(this);
+            owner.world.removeObject(this.icon);
             owner.world.removeObject(this);
             return false;
         }
@@ -233,5 +244,9 @@ public class Troop extends Actor
             }
         }
         return rightTerr;
+    }
+    
+    public TroopIcon getIcon() {
+        return icon;
     }
 }

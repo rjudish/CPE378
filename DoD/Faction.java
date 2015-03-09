@@ -79,6 +79,7 @@ public class Faction //extends Actor
         factionManCount += incoming;
         
         world.addObject(newTroop, xPos, yPos); // HALP
+        world.addObject(newTroop.getIcon(), xPos, yPos);
         //System.out.println("Gave " + incoming + " units to Faction " + this.id + " for a total of " + troopList.size());
 
     }

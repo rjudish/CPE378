@@ -6,7 +6,7 @@ import greenfoot.*;
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class EndScreen extends World
+public class EndScreen extends Screen
 {
 
     /**
@@ -16,7 +16,7 @@ public class EndScreen extends World
     public EndScreen(boolean win)
     {    
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
-        super(900, 600, 1);
+        super();
         if (win) {
             setBackground("images/winScreen.png");
         }
@@ -24,5 +24,13 @@ public class EndScreen extends World
             setBackground("images/loseScreen.png");
         }
         Greenfoot.stop();
+    }
+    
+    void checkClick(MouseInfo mouse) {
+        if (mouse.getX() >= 340 && mouse.getX() <= 560) {
+            if (mouse.getY() >= 550 && mouse.getY() <= 585) {
+                Greenfoot.setWorld(new TitleScreen());
+            }
+        }
     }
 }
