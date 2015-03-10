@@ -1,6 +1,7 @@
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Random;
+import greenfoot.*;
 
 /**
  * Write a description of class AI here.
@@ -29,13 +30,14 @@ public class AI {
                 System.out.println("loop for " + original.territoryID);
                 return true;
             }
+            if (temp.outwardToggleBorder == null)
+                break;
             temp = temp.outwardToggleBorder.otherBorder.parentTerritory;
         }
         
         if (temp == null)
             System.out.println("AI loop an outward border leads to a null territory");
         
-        //System.out.println("no loop!");
         return false;
     }
     
@@ -57,6 +59,17 @@ public class AI {
         return null;
     }
     
+    public static void resetAllOutwardToggles(Territory terr) {
+        for (int i = 0; i < terr.borders.length; i++) {
+            Territory adj = terr.adjacentTerritoryList[i];
+            
+            if (adj != null && (terr.borders[i].toggle.getToggleVal() == 2 || adj.owner.id != terr.owner.id)) {
+                terr.borders[i].toggle.setToggleVal(3);
+                terr.borders[i].otherBorder.toggle.setToggleVal(3);
+            }
+        }
+    }
+    
     public static void toggleAI(Border border) {
         Toggle curToggle = border.toggle;
         Territory curTerritory = border.parentTerritory;
@@ -69,6 +82,7 @@ public class AI {
                 curTerritory.outwardToggleBorder.otherBorder.toggle.setToggleVal(3);
                 curTerritory.outwardToggleBorder = border;
                 
+                resetAllOutwardToggles(curTerritory);
                 curToggle.setToggleVal(2);
                 border.otherBorder.toggle.setToggleVal(1);
                 return;
@@ -82,6 +96,7 @@ public class AI {
                 otherTerritory.outwardToggleBorder.otherBorder.toggle.setToggleVal(3);
                 otherTerritory.outwardToggleBorder = border.otherBorder;
                 
+                resetAllOutwardToggles(otherTerritory);
                 curToggle.setToggleVal(1);
                 border.otherBorder.toggle.setToggleVal(2);
             }
@@ -93,6 +108,9 @@ public class AI {
                 otherTerritory.outwardToggleBorder.toggle.setToggleVal(3); //make old outward toggle inactive for other territory
                 otherTerritory.outwardToggleBorder.otherBorder.toggle.setToggleVal(3);
                 otherTerritory.outwardToggleBorder = border.otherBorder; //new outward toggle border
+                
+                resetAllOutwardToggles(curTerritory);
+                resetAllOutwardToggles(otherTerritory);
                 
                 curTerritory.outwardToggleBorder = newOutwardToggleBorder; //new outward toggle for cur territory
                 newOutwardToggleBorder.toggle.setToggleVal(2);
@@ -110,6 +128,9 @@ public class AI {
                 curTerritory.outwardToggleBorder.otherBorder.toggle.setToggleVal(3);
                 curTerritory.outwardToggleBorder = border; //new outward toggle border
                 
+                resetAllOutwardToggles(curTerritory);
+                resetAllOutwardToggles(otherTerritory);
+                
                 otherTerritory.outwardToggleBorder = newOtherOutwardToggleBorder; //new outward toggle for other territory
                 newOtherOutwardToggleBorder.toggle.setToggleVal(2);
                 newOtherOutwardToggleBorder.otherBorder.toggle.setToggleVal(1);
@@ -124,17 +145,17 @@ public class AI {
         return index > 2 ? index % 3 : index + 3;
     }
     
-    public void battleOutcome(Territory lost, Faction winner) {
+    public boolean battleOutcome(Territory lost, Faction winner) {
          Faction loser = lost.owner;
          Territory[] adjLostTerrList = lost.adjacentTerritoryList;
+         boolean noEnemies = true;
          //System.out.println("Battle it out!");
          
          lost.owner = winner;
-         winner.territoryList.add(lost);
+         //winner.territoryList.add(lost);
          loser.territoryList.remove(lost);
          loser.conflictedTerritoryList.remove(lost);
-         //lost.isExterior = true; //FIX
-         //winner.conflictedTerritoryList.add(lost); //FIX
+         resetAllOutwardToggles(lost);
          for (int i = 0; i < adjLostTerrList.length; i++) { //for all adjacent territories to the lost territory
              Territory adjTerr = adjLostTerrList[i];
              
@@ -152,15 +173,16 @@ public class AI {
                         break;
                  }
                  if (index == adjTerr.conflictedBorderList.length && adjTerr.isExterior) { //interior territory now
-                    adjTerr.isExterior = false;
+                    //adjTerr.isExterior = false;
                     winner.conflictedTerritoryList.remove(adjTerr);
-                    winner.nonConflictedTerritoryList.add(adjTerr);
+                    //winner.nonConflictedTerritoryList.add(adjTerr);
                     lost.borders[i].toggle.setToggleVal(1);
                     adjTerr.borders[this.getInverseIndex(i)].toggle.setToggleVal(2);
                     adjTerr.borders[this.getInverseIndex(i)].parentTerritory.outwardToggleBorder = adjTerr.borders[this.getInverseIndex(i)];
                  }
              }
              else { //other factions adjacent Territory
+                 noEnemies = false;
                  lost.conflictedBorderList[i] = true;
                  adjTerr.conflictedBorderList[this.getInverseIndex(i)] = true;
                  
@@ -179,10 +201,94 @@ public class AI {
                  }
              }
          }
+         
+         lost.outwardToggleBorder = null;
+         return noEnemies;
+    }
+    
+    public static int isNeighborExterior(Territory terr) {
+        for (int i = 0; i < terr.borders.length; i++) {
+            Territory adj = terr.adjacentTerritoryList[i];
+            
+            if (adj != null && adj.owner.id == terr.owner.id && adj.isExterior)
+                return i;
+        }
+        
+        return -1;
+    }
+    
+    public void reToggle(Territory start) {
+        Faction faction = start.owner;
+        Random rand = new Random();
+        int neigh = isNeighborExterior(start);
+        
+        /*System.out.println("Big changes Incoming! " + start.territoryID + " r: " + start.territoryID / 16 + " c: " + start.territoryID % 16);
+        System.out.print(start.territoryID + " isExterior: " + start.isExterior + " outwardToggleBorder: ");
+        if (start.outwardToggleBorder != null)
+            System.out.println(start.outwardToggleBorder.otherBorder.parentTerritory.territoryID);
+        else
+            System.out.println("null");
+        
+        for (int i = 0; i < 6; i++) {
+            System.out.println(start.territoryID + " conflictedBorderList: " + i + " " + start.conflictedBorderList[i]);
+        }*/
+        
+        if (start.outwardToggleBorder != null || start.isExterior)
+            return;
+        
+        
+        if (neigh >= 0 && neigh < 6) {
+            start.outwardToggleBorder = start.borders[neigh];
+            start.borders[neigh].toggle.setToggleVal(2);
+            start.borders[neigh].otherBorder.toggle.setToggleVal(1);
+            return;
+        }
+        
+        //reset all toggles for territories sending troops to the wrong territory;
+        ArrayList<Territory> resetList = new ArrayList<Territory>();
+        resetToggle(resetList, start);
+        
+        while(resetList.size() > 0) {
+            Territory terr = resetList.get(0);
+            int index = 0;
+            
+            for (index = 0; index < terr.adjacentTerritoryList.length; index++) {
+                Territory adj = terr.adjacentTerritoryList[index];
+                if (adj != null && (adj.isExterior || adj.isToggleSet)) {
+                    terr.outwardToggleBorder = terr.borders[index];
+                    terr.borders[index].toggle.setToggleVal(2);
+                    terr.borders[index].otherBorder.toggle.setToggleVal(1);
+                    terr.isToggleSet = true;
+                    break;
+                }
+            }
+            
+            if (terr.isToggleSet)
+                resetList.remove(0);
+            else
+                resetList.add(resetList.remove(0));
+        }
+    }
+    
+    public static void resetToggle(ArrayList<Territory> resetList, Territory terr) {
+        resetList.add(terr);
+        terr.outwardToggleBorder = null;
+        terr.isToggleSet = false;
+        
+        for (int i = 0; i < terr.adjacentTerritoryList.length; i++) {
+            Territory adj = terr.adjacentTerritoryList[i];
+            
+            if (adj != null && adj.outwardToggleBorder != null && adj.outwardToggleBorder.otherBorder.parentTerritory.territoryID == terr.territoryID) {
+                terr.borders[i].toggle.setToggleVal(3);
+                terr.borders[i].otherBorder.toggle.setToggleVal(3);
+                resetToggle(resetList, adj);
+            }
+        }
     }
     
     public void initToggle() {
         setNonConflictedTerritoryList();
+        Random rand = new Random();
         
         for (int i = 1; i <= factions.size(); i++) {
             Faction currFaction = factions.get(i);
@@ -190,7 +296,8 @@ public class AI {
             
             //go through each interior territory owned by currFaction
             while (interiorTerritoryQueue.size() > 0) {
-                Territory interiorTerritory = interiorTerritoryQueue.get(0);
+                int j = rand.nextInt(interiorTerritoryQueue.size());
+                Territory interiorTerritory = interiorTerritoryQueue.get(j);
                 Territory[] adjacentTerritoryList = interiorTerritory.adjacentTerritoryList;
                 int k = 0, otherK, backUpIndex = 0;
                 Territory recv = null;
@@ -207,7 +314,6 @@ public class AI {
                 }
                 
                 if (sendList.size() > 0) {
-                    Random rand = new Random();
                     k = sendList.get(rand.nextInt(sendList.size()));
                     recv = adjacentTerritoryList[k];
                     interiorTerritory.borders[k].toggle.toggleVal = 2; //points outside
@@ -215,11 +321,12 @@ public class AI {
                     interiorTerritory.outwardToggleBorder = interiorTerritory.borders[k];
                     otherK = recv.sharedBorderIndex(k);
                     recv.borders[otherK].toggle.toggleVal = 1; //sharedBorderIndex in Territory, points inside
-                    interiorTerritoryQueue.remove(0);
+                    interiorTerritoryQueue.remove(j);
                 }
-                else
-                    interiorTerritoryQueue.add(interiorTerritoryQueue.remove(0));
             }
+            
+            for (int j = 0; j < currFaction.conflictedTerritoryList.size(); j++)
+                currFaction.conflictedTerritoryList.get(j).isToggleSet = true;
         }
     }
     

@@ -22,7 +22,6 @@ public class Territory extends Actor
     int lastTime = 0;
     int territoryID = 1;
     Border[] borders = new Border[6]; //Starts from N goes clockwise
-    Border pastOutwardToggleBorder = null;
     Border outwardToggleBorder = null;
     
     
