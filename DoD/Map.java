@@ -219,8 +219,8 @@ public class Map extends DoDWorld
     }
     
     private void initializeFactionMapping(int numFactions) {
-        for (int i = 1; i <= numFactions; i++) {
-            Faction newFaction = new Faction(this, i - 1);
+        for (int i = 1; i <= 8; i++) {
+            Faction newFaction = new Faction(this, i);
             //addObject(newFaction, 10, 10);    // This was so I could use the faction's act method for test output
             newFaction.setFlag(new GreenfootImage("faction" + i + ".png"));
             factions.put(i, newFaction);
