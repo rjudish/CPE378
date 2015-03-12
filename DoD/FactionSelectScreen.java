@@ -21,28 +21,19 @@ public class FactionSelectScreen extends Screen
     }
     
     void checkClick(MouseInfo mouse){ //Only odd number of opponents
-        if (mouse.getX() >= 330 && mouse.getX() <= 450) {
-            /*if (mouse.getY() >= 190 && mouse.getY() <= 265) {
-                Greenfoot.setWorld(new Map(2));
-            }*/
-            if (mouse.getY() >= 265 && mouse.getY() <= 350) {
+        if (mouse.getX() >= 390 && mouse.getX() <= 510) {
+            if (mouse.getY() >= 170 && mouse.getY() <= 265) {
+                Greenfoot.setWorld(new Map(1));
+            }
+            else if (mouse.getY() >= 265 && mouse.getY() <= 350) {
                 Greenfoot.setWorld(new Map(3));
             }
-            /*else if (mouse.getY() >= 350 && mouse.getY() <= 435) {
-                Greenfoot.setWorld(new Map(4));
-            }*/
-        }
-        else if (mouse.getX() >= 450 && mouse.getX() <= 570) {
-            if (mouse.getY() >= 190 && mouse.getY() <= 265) {
+            else if (mouse.getY() >= 350 && mouse.getY() <= 435) {
                 Greenfoot.setWorld(new Map(5));
             }
-            /*else if (mouse.getY() >= 265 && mouse.getY() <= 350) {
-                Greenfoot.setWorld(new Map(6));
-            }*/
-            else if (mouse.getY() >= 350 && mouse.getY() <= 435) {
+            else if (mouse.getY() >= 435 && mouse.getY() <= 520) {
                 Greenfoot.setWorld(new Map(7));
             }
-        
         }
     }
 }

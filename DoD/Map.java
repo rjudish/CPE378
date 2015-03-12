@@ -139,96 +139,7 @@ public class Map extends DoDWorld
         }
     }
     
-    /**
-     * Psuedo-randomly generates the locations of factions in the world.
-     *
-     */
-    /*public int[][] placeFactions(HexTile[][] tiles, int numFactions) {
-        int[][] factionsMap = new int[COLUMNS][ROWS];
-        int[] factionTerritoryCounts = new int[numFactions];
-        int spacing = (COLUMNS*2+ROWS*2-4)/numFactions;
-        int curFac = 0, column = 0, row = 0;
-        boolean finished = false, search = true;
-        Random rand = new Random();
-        
-        do{
-            for(int i=0; i < numFactions; i++) { //clear territory counting array
-                factionTerritoryCounts[i] = 0;
-            }
-        
-        for (int i = 0; i < ROWS; i++) { // clear faction map
-            for(int j = 0; j < COLUMNS; j++) {
-                factionsMap[j][i] = -1;
-            }
-        }
-        
-        curFac = -1;
-        for(int i=0; i < COLUMNS*2+ROWS*2-4; i++) { //starting edge areas
-            if(i%spacing==0) {
-                if(curFac < numFactions-1) {
-                    curFac++;
-                }
-            }
-            if(i < COLUMNS) {
-                factionsMap[i][0] = curFac;
-                factionTerritoryCounts[curFac]++;
-            } else if(i < COLUMNS+ROWS-2) {
-                factionsMap[COLUMNS-1][i-COLUMNS] = curFac;
-                factionTerritoryCounts[curFac]++;
-            } else if(i < COLUMNS*2+ROWS-2) {
-                factionsMap[COLUMNS-(i-COLUMNS-ROWS+3)][ROWS-1] = curFac;
-                factionTerritoryCounts[curFac]++;
-            } else {
-                System.out.println(i+" "+curFac);
-                factionsMap[ROWS-(i-COLUMNS*2-ROWS+3)][0] = curFac;
-                factionTerritoryCounts[curFac]++;
-            }
-                
-        }
-        
-        curFac = -1;
-        while(!finished) {
-    
-            
-            
-            
-            if(++curFac == numFactions) {
-                curFac = 0;
-            }
-            
-            search = true;
-            while(search) {
-                column = rand.nextInt(COLUMNS-2) + 1;
-                row = rand.nextInt(ROWS-2) + 1;
-                if(factionsMap[column][row] == -1) {
-                    if(factionsMap[column-1][row] == curFac || factionsMap[column+1][row] == curFac || factionsMap[column][row-1] == curFac || factionsMap[column][row+1] == curFac) {
-                        factionsMap[column][row] = curFac;
-                        search = false;
-                    }
-                }
-            }
-            
-            
-            
-            finished = true;
-            for (int i = 0; i < ROWS && finished == true; i++) { // if not finished
-                for(int j = 0; j < COLUMNS; j++) {
-                    if(factionsMap[j][i] == -1) {
-                        finished = false;
-                        break;
-                    }
-                }
-            }
-        }
-        
-
-        
-        Arrays.sort(factionTerritoryCounts);
-        }while(factionTerritoryCounts[numFactions-1]-factionTerritoryCounts[0] > 2);
-        return factionsMap;
-    }*/
-    
-    
+       
     public int[][] placeFactions(int numFactions) {
         int[][] factionsMap = new int[COLUMNS][ROWS];
         int spacing = COLUMNS/(numFactions/2);
@@ -240,15 +151,7 @@ public class Map extends DoDWorld
                     factionsMap[j][i] = j/spacing+numFactions/2+1;
                 }
             }
-        }
-        
-        for (int i = 0; i < ROWS; i++) { // if not finished
-                for(int j = 0; j < COLUMNS; j++) {
-                        System.out.print(factionsMap[j][i]+" ");
-                }
-                System.out.println("");
-        }
-            
+        }            
         
         return factionsMap;
     }
@@ -316,8 +219,8 @@ public class Map extends DoDWorld
     }
     
     private void initializeFactionMapping(int numFactions) {
-        for (int i = 1; i <= numFactions; i++) {
-            Faction newFaction = new Faction(this, i - 1);
+        for (int i = 1; i <= 8; i++) {
+            Faction newFaction = new Faction(this, i);
             //addObject(newFaction, 10, 10);    // This was so I could use the faction's act method for test output
             newFaction.setFlag(new GreenfootImage("faction" + i + ".png"));
             factions.put(i, newFaction);

@@ -43,17 +43,29 @@ public class Faction //extends Actor
         this(world);
         this.id = id;
         switch (id) {
-            case 0:  bgColor = Color.RED;
+            case 1: bgColor = Color.RED;
                     fgColor = Color.WHITE;
                      break;
-            case 1:  bgColor = Color.YELLOW;
+            case 2: bgColor = Color.YELLOW;
                     fgColor = Color.BLACK;
                     break;
-            case 2:  bgColor = Color.GREEN;
+            case 3: bgColor = Color.GREEN;
                     fgColor = Color.BLACK;
                     break;
-            case 3:  bgColor = Color.BLUE;
+            case 4: bgColor = Color.BLUE;
                     fgColor = Color.WHITE;
+                    break;
+            case 5: bgColor = Color.CYAN;
+                    fgColor = Color.BLACK;
+                    break;
+            case 6: bgColor = Color.ORANGE;
+                    fgColor = Color.BLACK;
+                    break;
+            case 7: bgColor = Color.DARK_GRAY;
+                    fgColor = Color.WHITE;
+                    break;
+            case 8: bgColor = Color.MAGENTA;
+                    fgColor = Color.BLACK;
                     break;
         }   
     }
