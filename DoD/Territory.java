@@ -9,7 +9,7 @@ import java.awt.Color;
  */
 public class Territory extends Actor
 {
-    int recruitNumber = 10;
+    public int recruitNumber = 10;
     int resource = 0; //0 nothing, 1 iron, 2 horses, 3 leather
     public Faction owner;
     Terrain terrain;

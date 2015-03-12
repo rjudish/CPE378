@@ -2,6 +2,7 @@ import greenfoot.*;
 import java.util.Random;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.awt.Color;
 /**
  * Write a description of class Map here.
@@ -13,7 +14,6 @@ public class Map extends DoDWorld
 {
     public static final int ROWS = 8;
     public static final int COLUMNS = 16;
-    public static final int NUM_FACTIONS = 4; //Don't change without modifying placeFactions method!
     public static final int NUM_MAP_FEATURES = 3;
 
     private static final int START_X = 140;
@@ -35,13 +35,13 @@ public class Map extends DoDWorld
      */
     public Map(int numFactions)
     {    
-        this.numFactions = numFactions;
+        this.numFactions = ++numFactions;
         HexTile[][] tileMap = new HexTile[COLUMNS][ROWS];
         placeMapFeatures(tileMap);
-        initializeFactionMap(NUM_FACTIONS);
-        int[][] factionsMap = placeFactions(tileMap, NUM_FACTIONS);
+        initializeFactionMap(numFactions);
+        int[][] factionsMap = placeFactions(numFactions);
         int[][] terrainsMap = placeTerrains(tileMap);
-        int[][] resourcesMap = placeResources(terrainsMap, NUM_FACTIONS);
+        int[][] resourcesMap = placeResources(terrainsMap, numFactions);
         for (int i = 0; i < ROWS; i++) {
             for(int j = 0; j < COLUMNS; j++) {
                 if(tileMap[j][i] == null) {
@@ -52,6 +52,9 @@ public class Map extends DoDWorld
         Territory[][] territoryMap = buildMap(tileMap, resourcesMap);
         addAdjacencyLists(territoryMap, terrainsMap);
         initConflictedBorders(territoryMap);
+        for(int i=0; i<numFactions; i++) {
+            setRecruits(factions, numFactions);
+        }
         
         drawRivers(); //run this after river init
         setBackground("images/background.png");
@@ -137,31 +140,132 @@ public class Map extends DoDWorld
     
     /**
      * Psuedo-randomly generates the locations of factions in the world.
-     * ALPHA: 4 factions everytime
+     *
      */
-    public int[][] placeFactions(HexTile[][] tiles, int numFactions) {
+    /*public int[][] placeFactions(HexTile[][] tiles, int numFactions) {
         int[][] factionsMap = new int[COLUMNS][ROWS];
-        for (int i = 0; i < ROWS; i++) {
+        int[] factionTerritoryCounts = new int[numFactions];
+        int spacing = (COLUMNS*2+ROWS*2-4)/numFactions;
+        int curFac = 0, column = 0, row = 0;
+        boolean finished = false, search = true;
+        Random rand = new Random();
+        
+        do{
+            for(int i=0; i < numFactions; i++) { //clear territory counting array
+                factionTerritoryCounts[i] = 0;
+            }
+        
+        for (int i = 0; i < ROWS; i++) { // clear faction map
             for(int j = 0; j < COLUMNS; j++) {
-                if(tiles[j][i] == null) {
-                    if(i < ROWS / 2) {
-                        if(j < COLUMNS / 2) {
-                            factionsMap[j][i] = 1;
-                        } else {
-                            factionsMap[j][i] = 2;
-                        }
-                    } else {
-                        if(j < COLUMNS / 2) {
-                            factionsMap[j][i] = 3;
-                        } else {
-                            factionsMap[j][i] = 4;
-                        }
-                    }
-                } 
+                factionsMap[j][i] = -1;
             }
         }
+        
+        curFac = -1;
+        for(int i=0; i < COLUMNS*2+ROWS*2-4; i++) { //starting edge areas
+            if(i%spacing==0) {
+                if(curFac < numFactions-1) {
+                    curFac++;
+                }
+            }
+            if(i < COLUMNS) {
+                factionsMap[i][0] = curFac;
+                factionTerritoryCounts[curFac]++;
+            } else if(i < COLUMNS+ROWS-2) {
+                factionsMap[COLUMNS-1][i-COLUMNS] = curFac;
+                factionTerritoryCounts[curFac]++;
+            } else if(i < COLUMNS*2+ROWS-2) {
+                factionsMap[COLUMNS-(i-COLUMNS-ROWS+3)][ROWS-1] = curFac;
+                factionTerritoryCounts[curFac]++;
+            } else {
+                System.out.println(i+" "+curFac);
+                factionsMap[ROWS-(i-COLUMNS*2-ROWS+3)][0] = curFac;
+                factionTerritoryCounts[curFac]++;
+            }
+                
+        }
+        
+        curFac = -1;
+        while(!finished) {
+    
+            
+            
+            
+            if(++curFac == numFactions) {
+                curFac = 0;
+            }
+            
+            search = true;
+            while(search) {
+                column = rand.nextInt(COLUMNS-2) + 1;
+                row = rand.nextInt(ROWS-2) + 1;
+                if(factionsMap[column][row] == -1) {
+                    if(factionsMap[column-1][row] == curFac || factionsMap[column+1][row] == curFac || factionsMap[column][row-1] == curFac || factionsMap[column][row+1] == curFac) {
+                        factionsMap[column][row] = curFac;
+                        search = false;
+                    }
+                }
+            }
+            
+            
+            
+            finished = true;
+            for (int i = 0; i < ROWS && finished == true; i++) { // if not finished
+                for(int j = 0; j < COLUMNS; j++) {
+                    if(factionsMap[j][i] == -1) {
+                        finished = false;
+                        break;
+                    }
+                }
+            }
+        }
+        
+
+        
+        Arrays.sort(factionTerritoryCounts);
+        }while(factionTerritoryCounts[numFactions-1]-factionTerritoryCounts[0] > 2);
+        return factionsMap;
+    }*/
+    
+    
+    public int[][] placeFactions(int numFactions) {
+        int[][] factionsMap = new int[COLUMNS][ROWS];
+        int spacing = COLUMNS/(numFactions/2);
+        for (int i = 0; i < ROWS; i++) { 
+            for(int j = 0; j < COLUMNS; j++) {
+                if(i < ROWS/2) {
+                   factionsMap[j][i] = j/spacing+1;
+                }else {
+                    factionsMap[j][i] = j/spacing+numFactions/2+1;
+                }
+            }
+        }
+        
+        for (int i = 0; i < ROWS; i++) { // if not finished
+                for(int j = 0; j < COLUMNS; j++) {
+                        System.out.print(factionsMap[j][i]+" ");
+                }
+                System.out.println("");
+        }
+            
+        
         return factionsMap;
     }
+    
+    public void setRecruits(java.util.Map<Integer, Faction> factions, int numFactions) {
+        Random rand = new Random();
+        for (int i = 1; i <= factions.size(); i++) {
+            Faction currFaction = factions.get(i);
+            for(int j=0; j < currFaction.territoryList.size(); j++) {
+                if(rand.nextInt(10) < 1) {
+                    currFaction.territoryList.get(j).recruitNumber = 800 + rand.nextInt(150);
+                } else {
+                    currFaction.territoryList.get(j).recruitNumber = 50 + rand.nextInt(100);
+                }
+            }
+        }
+    }
+
     
     public int[][] placeResources(int[][] terrainsMap, int numFactions) {
         Random rand = new Random();
