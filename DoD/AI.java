@@ -152,7 +152,7 @@ public class AI {
          //System.out.println("Battle it out!");
          
          lost.owner = winner;
-         //winner.territoryList.add(lost);
+         winner.territoryList.add(lost);
          loser.territoryList.remove(lost);
          loser.conflictedTerritoryList.remove(lost);
          resetAllOutwardToggles(lost);
@@ -203,6 +203,10 @@ public class AI {
          }
          
          lost.outwardToggleBorder = null;
+         //FIX add reference to Player in Map once added
+         if (loser.id == 0 && loser.territoryList.size() == 0)
+            Greenfoot.setWorld(new EndScreen(false));
+         
          return noEnemies;
     }
     
