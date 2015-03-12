@@ -28,7 +28,7 @@ public class Map extends DoDWorld
     int numFactions;
 
     DisplayBar displayBar;
-
+    java.util.Map<Integer, String> resourceTypes;
     /**
      * Constructor for objects of class Map.
      * 
@@ -38,7 +38,8 @@ public class Map extends DoDWorld
         this.numFactions = ++numFactions;
         HexTile[][] tileMap = new HexTile[COLUMNS][ROWS];
         placeMapFeatures(tileMap);
-        initializeFactionMap(numFactions);
+        initializeFactionMapping(numFactions);
+        initializeResourceMapping();
         int[][] factionsMap = placeFactions(numFactions);
         int[][] terrainsMap = placeTerrains(tileMap);
         int[][] resourcesMap = placeResources(terrainsMap, numFactions);
@@ -262,6 +263,7 @@ public class Map extends DoDWorld
                 } else {
                     currFaction.territoryList.get(j).recruitNumber = 50 + rand.nextInt(100);
                 }
+                currFaction.territoryList.get(j).setDisplay();
             }
         }
     }
@@ -283,6 +285,9 @@ public class Map extends DoDWorld
             } else if (leatherLeft != 0 && (terrainsMap[column][row] == 5 || terrainsMap[column][row] == 6)) {
                 resourcesMap[column][row] = 3;//Leather
                 leatherLeft--;
+            }
+            else {
+                resourcesMap[column][row] = 0;
             }
         }
         return resourcesMap;
@@ -310,13 +315,24 @@ public class Map extends DoDWorld
         displayBar.setPlayer(factions.get(1));
     }
     
-    private void initializeFactionMap(int numFactions) {
+    private void initializeFactionMapping(int numFactions) {
         for (int i = 1; i <= numFactions; i++) {
             Faction newFaction = new Faction(this, i - 1);
             //addObject(newFaction, 10, 10);    // This was so I could use the faction's act method for test output
             newFaction.setFlag(new GreenfootImage("faction" + i + ".png"));
             factions.put(i, newFaction);
         }
+    }
+    
+    private void initializeResourceMapping() {
+        resourceTypes = new java.util.HashMap<Integer, String>();
+        resourceTypes.put(1, "I");
+        resourceTypes.put(2, "H");
+        resourceTypes.put(3, "L");
+    }
+    
+    public String getResourceType(int res) {
+        return resourceTypes.get(res);
     }
     
         public void scroll() {

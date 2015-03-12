@@ -39,10 +39,10 @@ public class Territory extends Actor
         this(owner, territoryID, isExterior);
         this.terrain = terrain;
         this.resource = resource;
-        setDisplay();
     }
     
-    private void setDisplay() {
+    
+    public void setDisplay() {
         GreenfootImage image = new GreenfootImage(terrain.getImage());
         //image.drawImage(new GreenfootImage("MP: " + recruitNumber, 20, Color.BLACK, Color.WHITE), 40, 30);
             //image.drawImage(new GreenfootImage("MP: " + recruitNumber, 15, Color.BLACK, Color.WHITE), 45, 30);    // I like this more
@@ -51,6 +51,9 @@ public class Territory extends Actor
         setImage(image);
         image.drawImage(new GreenfootImage("MP: " + recruitNumber, 20, owner.fgColor, owner.bgColor), 40, 40);    // I like this more
         
+        if (resource != 0) {
+            image.drawImage(new GreenfootImage(((Map)getWorld()).getResourceType(resource), 20, owner.fgColor, owner.bgColor), 60, 60);
+        }
     }
     
     protected void addedToWorld(World world) {
