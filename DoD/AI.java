@@ -204,7 +204,8 @@ public class AI {
          
          lost.outwardToggleBorder = null;
          //FIX add reference to Player in Map once added
-         if (loser.id == 0 && loser.territoryList.size() == 0)
+         Faction player = factions.get(1);
+         if (player.territoryList.size() == 0)
             Greenfoot.setWorld(new EndScreen(false));
          
          return noEnemies;
