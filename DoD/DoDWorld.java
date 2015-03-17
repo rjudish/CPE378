@@ -15,6 +15,7 @@ public class DoDWorld extends World
     public AI ai;
     private int gameTime = 0;
     private int deltaTime = 0;
+    public boolean gameOver = false;
     public DisplayBar displayBar;
     public ArrayList<Territory> conflictedTerritoryList = new ArrayList<Territory>();
     private static final int START_X = 140;
@@ -56,7 +57,7 @@ public class DoDWorld extends World
         if (deltaTime == 0) {
             gameTime++;
             //System.out.println("Game Time: " + gameTime);
-            if (gameTime > 3) {   //Give the initial wave of troops time to get to a conflicted Border
+            if (gameTime > 3 && !gameOver) {   //Give the initial wave of troops time to get to a conflicted Border
                 Battle.step(territories, ai);
                 Battle.cleanup(territories);
             }
@@ -67,10 +68,12 @@ public class DoDWorld extends World
     }
     
     public void playerWin() {
+        gameOver = true;
         Greenfoot.setWorld(new EndScreen(true));
     }
     
     public void playerLoss() {
+        gameOver = true;
         Greenfoot.setWorld(new EndScreen(false));
     }
 }

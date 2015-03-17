@@ -153,13 +153,11 @@ public class AI {
         if (player.id == winner.id && player.territoryList.size() >= maxNumTerr - 1) {
             System.out.println("Player Won!");
             Greenfoot.setWorld(new EndScreen(true));
-            Greenfoot.stop();
         }
          
         if (player.id == loser.id && player.territoryList.size() <= 1) {
             System.out.println("Player Lost!");
             Greenfoot.setWorld(new EndScreen(false));
-            Greenfoot.stop();
         }
     }
     
