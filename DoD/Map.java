@@ -4,12 +4,9 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.awt.Color;
-<<<<<<< HEAD
 import java.lang.Math;
-
-=======
 import java.util.Collections;
->>>>>>> origin/master
+
 /**
  * Write a description of class Map here.
  * 
