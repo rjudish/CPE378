@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.awt.Color;
+import java.lang.Math;
+
 /**
  * Write a description of class Map here.
  * 
@@ -146,9 +148,9 @@ public class Map extends DoDWorld
         for (int i = 0; i < ROWS; i++) { 
             for(int j = 0; j < COLUMNS; j++) {
                 if(i < ROWS/2) {
-                   factionsMap[j][i] = j/spacing+1;
+                   factionsMap[j][i] = Math.min(j/spacing+1,numFactions/2);
                 }else {
-                    factionsMap[j][i] = j/spacing+numFactions/2+1;
+                    factionsMap[j][i] = Math.min(j/spacing+numFactions/2+1,numFactions);
                 }
             }
         }            
