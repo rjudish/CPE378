@@ -23,7 +23,6 @@ public class EndScreen extends Screen
         else {
             setBackground("images/loseScreen.png");
         }
-        Greenfoot.stop();
     }
     
     void checkClick(MouseInfo mouse) {
