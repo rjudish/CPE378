@@ -37,7 +37,7 @@ public class DoDWorld extends World
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
         super(SCREEN_WIDTH, SCREEN_HEIGHT, 1, false); 
         Faction playerFaction = new Faction(this); // for testing purposes
-        
+        gameOver = false;
         //Territory TEST_TERRITORY = new Territory(playerFaction, 1, true);
         //this.addObject(TEST_TERRITORY, 400, 300);
         //conflictedTerritoryList.add(TEST_TERRITORY);
