@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.awt.Color;
+import java.util.Collections;
 /**
  * Write a description of class Map here.
  * 
@@ -28,7 +29,9 @@ public class Map extends DoDWorld
     int numFactions;
 
     DisplayBar displayBar;
+    Faction player;
     java.util.Map<Integer, String> resourceTypes;
+    
     /**
      * Constructor for objects of class Map.
      * 
@@ -60,9 +63,9 @@ public class Map extends DoDWorld
         drawRivers(); //run this after river init
         setBackground("images/background.png");
         setPaintOrder(DisplayBar.class, Toggle.class, NumDisplay.class, TroopIcon.class, Actor.class);
-        setupDisplayBar();
+        setupDisplayBar(player);
         
-        ai = new AI(factions, territories);
+        ai = new AI(this, factions, territories);
         ai.initToggle();
     }
     
@@ -212,19 +215,26 @@ public class Map extends DoDWorld
         return terrainsMap;
     }
     
-    public void setupDisplayBar() {
-        displayBar = new DisplayBar();
+    public void setupDisplayBar(Faction player) {
+        displayBar = new DisplayBar(player);
         addObject(displayBar, SCREEN_WIDTH/2, 40);
-        displayBar.setPlayer(factions.get(1));
     }
     
     private void initializeFactionMapping(int numFactions) {
-        for (int i = 1; i <= 8; i++) {
+        Random rand = new Random();
+        /*List<Integer> randomFactionList = new ArrayList<Integer>();
+        for (int i = 0; i < numFactions; i++) {
+            randomFactionList.add(i+1);
+        }*/
+        List<Integer> randomColorList = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8);
+        Collections.shuffle(randomColorList);
+        for (int i = 1; i <= numFactions; i++) {
             Faction newFaction = new Faction(this, i);
+            newFaction.setColors(randomColorList.get(i-1));
             //addObject(newFaction, 10, 10);    // This was so I could use the faction's act method for test output
-            newFaction.setFlag(new GreenfootImage("faction" + i + ".png"));
             factions.put(i, newFaction);
         }
+        player = factions.get(rand.nextInt(numFactions) + 1);
     }
     
     private void initializeResourceMapping() {

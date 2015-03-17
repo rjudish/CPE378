@@ -13,13 +13,15 @@ public class AI {
     // instance variables - replace the example below with your own
     private java.util.Map<Integer, Faction> factions;
     private List<Territory> territories;
-
+    private Map world;
+    
     /**
      * Constructor for objects of class AI
      */
-    public AI(java.util.Map<Integer, Faction> factions, List<Territory> territories) {
+    public AI(Map world, java.util.Map<Integer, Faction> factions, List<Territory> territories) {
         this.factions = factions;
         this.territories = territories;
+        this.world = world;
     }
     
     public static boolean loop(Territory original, Border outward) {
@@ -204,7 +206,7 @@ public class AI {
          
          lost.outwardToggleBorder = null;
          //FIX add reference to Player in Map once added
-         Faction player = factions.get(1);
+         Faction player = world.player;
          if (player.territoryList.size() == 0)
             Greenfoot.setWorld(new EndScreen(false));
          

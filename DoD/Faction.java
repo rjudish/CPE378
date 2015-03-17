@@ -42,32 +42,6 @@ public class Faction //extends Actor
     public Faction(World world, int id) {
         this(world);
         this.id = id;
-        switch (id) {
-            case 1: bgColor = Color.RED;
-                    fgColor = Color.WHITE;
-                     break;
-            case 2: bgColor = Color.YELLOW;
-                    fgColor = Color.BLACK;
-                    break;
-            case 3: bgColor = Color.GREEN;
-                    fgColor = Color.BLACK;
-                    break;
-            case 4: bgColor = Color.BLUE;
-                    fgColor = Color.WHITE;
-                    break;
-            case 5: bgColor = Color.CYAN;
-                    fgColor = Color.BLACK;
-                    break;
-            case 6: bgColor = Color.ORANGE;
-                    fgColor = Color.BLACK;
-                    break;
-            case 7: bgColor = Color.DARK_GRAY;
-                    fgColor = Color.WHITE;
-                    break;
-            case 8: bgColor = Color.MAGENTA;
-                    fgColor = Color.BLACK;
-                    break;
-        }   
     }
     
     /*
@@ -96,16 +70,6 @@ public class Faction //extends Actor
 
     }
     
-    
-    
-    public GreenfootImage getFlag() {
-        return flag;
-    }
-    
-    public void setFlag(GreenfootImage flag) {
-        this.flag = flag;
-    }
-    
     public int getFactionManCount() {
         return factionManCount;
     }
@@ -114,4 +78,32 @@ public class Faction //extends Actor
         factionManCount -= less;
     }
     
+    public void setColors(int randomized) {
+        switch (randomized) {
+            case 1: bgColor = Color.RED;
+                    fgColor = Color.WHITE;
+                     break;
+            case 2: bgColor = Color.YELLOW;
+                    fgColor = Color.BLACK;
+                    break;
+            case 3: bgColor = Color.GREEN;
+                    fgColor = Color.BLACK;
+                    break;
+            case 4: bgColor = Color.BLUE;
+                    fgColor = Color.WHITE;
+                    break;
+            case 5: bgColor = Color.CYAN;
+                    fgColor = Color.BLACK;
+                    break;
+            case 6: bgColor = Color.ORANGE;
+                    fgColor = Color.BLACK;
+                    break;
+            case 7: bgColor = Color.DARK_GRAY;
+                    fgColor = Color.WHITE;
+                    break;
+            case 8: bgColor = Color.MAGENTA;
+                    fgColor = Color.BLACK;
+                    break;
+        }
+    }
 }

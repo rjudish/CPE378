@@ -11,12 +11,14 @@ public class DisplayBar extends Actor
 {
     private static final String territoryText = "Territories: ";
     private static final String manpowerText = "Manpower: ";
+    private static final String factionText = "Faction: ";
     private int currentTerritories = Faction.INIT_TERRITORIES;
     private int currentManpower = 0;
     private Faction player;
     private static GreenfootImage BASE_IMAGE = new GreenfootImage("images/DisplayBar.png");
-    public DisplayBar() {
+    public DisplayBar(Faction player) {
         BASE_IMAGE.scale(DoDWorld.SCREEN_WIDTH, 80);
+        this.player = player;
         redrawDisplayBar();
     }
     
@@ -28,10 +30,13 @@ public class DisplayBar extends Actor
             redrawDisplayBar();
         }
     }
-    public void redrawDisplayBar() {
+    private void redrawDisplayBar() {
         GreenfootImage image = new GreenfootImage(BASE_IMAGE);
+        image.drawImage(new GreenfootImage(factionText, 20, Color.BLACK, Color.WHITE), 10, 5);
+        image.setColor(player.bgColor);
+        image.fillRect(70, 5, 40, 20);
         image.drawImage(new GreenfootImage(territoryText + currentTerritories, 20,
-            Color.BLACK, Color.WHITE), 10, 15);
+            Color.BLACK, Color.WHITE), 10, 25);
         image.drawImage(new GreenfootImage(manpowerText + currentManpower, 20,
             Color.BLACK, Color.WHITE), 10, 45); 
         setImage(image);
@@ -39,12 +44,12 @@ public class DisplayBar extends Actor
     
     public void updateManpower(int manpower) {
         currentManpower = manpower;
-        redrawDisplayBar();
+        //redrawDisplayBar();
     }
     
     public void updateTerritories(int territories) {
         currentTerritories = territories;
-        redrawDisplayBar();
+        //redrawDisplayBar();
     }
     
     public void setPlayer(Faction player) {
