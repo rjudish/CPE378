@@ -147,18 +147,21 @@ public class AI {
         return index > 2 ? index % 3 : index + 3;
     }
     
-    public void victoryCheck(Faction loser, Faction winner) {
+    public boolean victoryCheck(Faction loser, Faction winner) {
         Faction player = world.player;
-        
+        boolean gameOver = false;
         if (player.id == winner.id && player.territoryList.size() >= maxNumTerr - 1) {
             System.out.println("Player Won!");
             DoDWorld.playerWin();
+            gameOver = true;
         }
          
         if (player.id == loser.id && player.territoryList.size() <= 1) {
             System.out.println("Player Lost!");
             DoDWorld.playerLoss();
+            gameOver = true;
         }
+        return gameOver;
     }
     
     public boolean battleOutcome(Territory lost, Faction winner) {

@@ -241,12 +241,12 @@ public class Map extends DoDWorld
     
     private void initializeResourceMapping() {
         resourceTypes = new java.util.HashMap<Integer, String>();
-        resourceTypes.put(1, "I");
-        resourceTypes.put(2, "H");
-        resourceTypes.put(3, "L");
+        resourceTypes.put(1, "images/iron.png");
+        resourceTypes.put(2, "images/horse.png");
+        resourceTypes.put(3, "images/cow.png");
     }
     
-    public String getResourceType(int res) {
+    public String getResourceImage(int res) {
         return resourceTypes.get(res);
     }
     

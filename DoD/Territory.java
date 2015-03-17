@@ -49,10 +49,11 @@ public class Territory extends Actor
         //GreenfootImage factionImage = owner.getFlag();
         //image.drawImage(factionImage, 50, 50);
         setImage(image);
-        image.drawImage(new GreenfootImage("MP: " + recruitNumber, 20, owner.fgColor, owner.bgColor), 40, 40);    // I like this more
+        GreenfootImage mpImage = new GreenfootImage("MP: " + recruitNumber, 20, owner.fgColor, owner.bgColor);
+        image.drawImage(mpImage, 53-mpImage.getWidth()*1/3, 60-(mpImage.getHeight()));    // I like this more
         
         if (resource != 0) {
-            image.drawImage(new GreenfootImage(((Map)getWorld()).getResourceType(resource), 20, owner.fgColor, owner.bgColor), 60, 60);
+            image.drawImage(new GreenfootImage(((Map)getWorld()).getResourceImage(resource)), 45, 60);
         }
     }
     
