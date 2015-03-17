@@ -41,13 +41,14 @@ final public class Battle
                                 // A wins territory
                                 //System.out.println("Territory " + terr.territoryID + " has changed ownership!");
                                 
-                                boolean noEnemies = ai.battleOutcome(other.parentTerritory, bord.parentTerritory.owner); //lostTerritory, winningFaction
+                                ai.victoryCheck(other.parentTerritory.owner, bord.parentTerritory.owner);
                                 
                                 //Disperse troops remaining at victorious border
                                 owner.addTroops(bord.getBorderManCount(), bord.getX(), bord.getY());
                                 owner.redFactionManCount(bord.getBorderManCount());    // they were already counted, don't want to double count
                                 bord.setBorderManCount(0);
                                 
+                                boolean noEnemies = ai.battleOutcome(other.parentTerritory, bord.parentTerritory.owner); //lostTerritory, winningFaction
                                 other.parentTerritory.newOwner( terr.getOwner() );
                                 if (noEnemies)
                                     ai.reToggle(other.parentTerritory);

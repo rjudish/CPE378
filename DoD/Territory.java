@@ -118,12 +118,12 @@ public class Territory extends Actor
     
     public void newOwner(Faction newFaction) {
         //Update territory owner
-        owner = newFaction;
-        this.hasChangedOwner = true;
-        setDisplay();
+        //owner = newFaction;
+        //this.hasChangedOwner = true;
+        //setDisplay();
         
         //Update a crapton of other stuff
-        isExterior = false;
+        /*isExterior = false;
         for(int k=0; k < 6; k++) {
             conflictedBorderList[k] = false;
             borders[k].inConflict = false;
@@ -165,7 +165,7 @@ public class Territory extends Actor
             }// else {
             //    borders[k].toggle.setToggleVal(0);
             //}
-        }
+        }*/
         
         
         //Update adjacent territories' borders in conflict

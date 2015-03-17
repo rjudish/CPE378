@@ -14,7 +14,7 @@ public class AI {
     private java.util.Map<Integer, Faction> factions;
     private List<Territory> territories;
     private Map world;
-    
+    private int maxNumTerr = 0;
     /**
      * Constructor for objects of class AI
      */
@@ -147,6 +147,22 @@ public class AI {
         return index > 2 ? index % 3 : index + 3;
     }
     
+    public void victoryCheck(Faction loser, Faction winner) {
+        Faction player = world.player;
+        
+        if (player.id == winner.id && player.territoryList.size() >= maxNumTerr - 1) {
+            System.out.println("Player Won!");
+            Greenfoot.setWorld(new EndScreen(true));
+            Greenfoot.stop();
+        }
+         
+        if (player.id == loser.id && player.territoryList.size() <= 1) {
+            System.out.println("Player Lost!");
+            Greenfoot.setWorld(new EndScreen(false));
+            Greenfoot.stop();
+        }
+    }
+    
     public boolean battleOutcome(Territory lost, Faction winner) {
          Faction loser = lost.owner;
          Territory[] adjLostTerrList = lost.adjacentTerritoryList;
@@ -154,62 +170,69 @@ public class AI {
          //System.out.println("Battle it out!");
          
          lost.owner = winner;
+         lost.hasChangedOwner = true;
+         lost.setDisplay();
+         
+         lost.isExterior = false;
          winner.territoryList.add(lost);
          loser.territoryList.remove(lost);
          loser.conflictedTerritoryList.remove(lost);
          resetAllOutwardToggles(lost);
+         
          for (int i = 0; i < adjLostTerrList.length; i++) { //for all adjacent territories to the lost territory
              Territory adjTerr = adjLostTerrList[i];
+             int j = this.getInverseIndex(i);
              
              if (adjTerr == null) {
                  // do nothing... 
              }
              else if (adjTerr.owner.id == winner.id) { //winner's adjacent Territory
-                 Border[] borders = adjTerr.borders;
                  int index;
                  
                  lost.conflictedBorderList[i] = false;
-                 adjTerr.conflictedBorderList[this.getInverseIndex(i)] = false;
+                 adjTerr.conflictedBorderList[j] = false;
+                 lost.borders[i].inConflict = false;
+                 adjTerr.borders[j].inConflict = false;
+                 lost.borders[i].setBorderManCount(0);
+                 adjTerr.borders[j].setBorderManCount(0);
+                 
                  for (index = 0; index < adjTerr.conflictedBorderList.length; index++) {
                      if (adjTerr.conflictedBorderList[index])
                         break;
                  }
                  if (index == adjTerr.conflictedBorderList.length && adjTerr.isExterior) { //interior territory now
-                    //adjTerr.isExterior = false;
+                    adjTerr.isExterior = false;
                     winner.conflictedTerritoryList.remove(adjTerr);
-                    //winner.nonConflictedTerritoryList.add(adjTerr);
+                    winner.nonConflictedTerritoryList.add(adjTerr);
                     lost.borders[i].toggle.setToggleVal(1);
-                    adjTerr.borders[this.getInverseIndex(i)].toggle.setToggleVal(2);
-                    adjTerr.borders[this.getInverseIndex(i)].parentTerritory.outwardToggleBorder = adjTerr.borders[this.getInverseIndex(i)];
+                    lost.borders[i].otherBorder.toggle.setToggleVal(2);
+                    lost.borders[i].otherBorder.parentTerritory.outwardToggleBorder = lost.borders[i].otherBorder;
                  }
              }
              else { //other factions adjacent Territory
                  noEnemies = false;
+                 lost.isExterior = true;
                  lost.conflictedBorderList[i] = true;
-                 adjTerr.conflictedBorderList[this.getInverseIndex(i)] = true;
+                 adjTerr.conflictedBorderList[j] = true;
+                 lost.borders[i].inConflict = true;
+                 adjTerr.borders[j].inConflict = true;
+                 lost.borders[i].setBorderManCount(0);
+                 adjTerr.borders[j].setBorderManCount(0);
                  
                  if (adjTerr.owner.id == loser.id) { //loser's interior territories
-                     Border[] borders = adjTerr.borders;
                      
                      if (!adjTerr.isExterior) {
-                         for (int j = 0; j < borders.length; j++) {
-                             if (borders[j].toggle.getToggleVal() == 2) { //pointing outside
-                                 borders[j].toggle.setToggleVal(3); //inactive
-                                 borders[j].otherBorder.toggle.setToggleVal(3); //inactive
-                                 break;
-                             }
-                         }
+                         adjTerr.isExterior = true;
+                         adjTerr.outwardToggleBorder.toggle.setToggleVal(3);
+                         adjTerr.outwardToggleBorder.otherBorder.toggle.setToggleVal(3);
+                         //adjTerr.outwardToggleBorder = null;
                      }
                  }
              }
          }
          
          lost.outwardToggleBorder = null;
-         //FIX add reference to Player in Map once added
-         Faction player = world.player;
-         if (player.territoryList.size() == 0)
-            Greenfoot.setWorld(new EndScreen(false));
-         
+        
          return noEnemies;
     }
     
@@ -328,12 +351,15 @@ public class AI {
                     interiorTerritory.outwardToggleBorder = interiorTerritory.borders[k];
                     otherK = recv.sharedBorderIndex(k);
                     recv.borders[otherK].toggle.toggleVal = 1; //sharedBorderIndex in Territory, points inside
+                    maxNumTerr++;
                     interiorTerritoryQueue.remove(j);
                 }
             }
             
-            for (int j = 0; j < currFaction.conflictedTerritoryList.size(); j++)
+            for (int j = 0; j < currFaction.conflictedTerritoryList.size(); j++) {
+                maxNumTerr++;
                 currFaction.conflictedTerritoryList.get(j).isToggleSet = true;
+            }
         }
     }
     
@@ -357,17 +383,4 @@ public class AI {
             }
         }
     }
-    
-    /*public void act() {
-        //iterate through each faction
-        for (int i = 0; i < numFactions; i++) {
-            Faction currFaction = player;//aiFactions.get(i);
-            //go through each territory owned by currFaction
-            for (int j = 0; j < currFaction.nonConflictedTerritoryList.size(); j++) {
-                int allowed = 6;
-                int choice = (int) (Math.random() * allowed);
-                //currFaction.territoryList.get(j).moveTroops(j);
-            }
-        }
-    }*/
 }
