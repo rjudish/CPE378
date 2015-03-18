@@ -99,8 +99,8 @@ public class Faction //extends Actor
             case 5: bgColor = Color.CYAN;
                     fgColor = Color.BLACK;
                     break;
-            case 6: bgColor = Color.ORANGE;
-                    fgColor = Color.BLACK;
+            case 6: bgColor = new Color(220, 120, 0); //orange
+                    fgColor = Color.WHITE;
                     break;
             case 7: bgColor = Color.DARK_GRAY;
                     fgColor = Color.WHITE;

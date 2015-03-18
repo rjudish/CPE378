@@ -26,7 +26,7 @@ public class Map extends DoDWorld
 
     int cameraX = 0;
     int cameraY = 0;
-    public static final int SCROLL_SPEED = 20;
+    public static final int SCROLL_SPEED = 10;
     
     int numFactions;
 
