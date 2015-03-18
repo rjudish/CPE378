@@ -12,6 +12,7 @@ public class Border extends Actor
     boolean hasRiver = false;
     private int borderManCount = 0;
     NumDisplay bd;
+    private Faction player;
     
     int lastTime = 0;
     int borderID = 0;
@@ -19,10 +20,11 @@ public class Border extends Actor
     Territory parentTerritory;
     Toggle toggle;
     
-    public Border(Territory parentTerritory, int borderID) {
+    public Border(Faction player, Territory parentTerritory, int borderID) {
+        this.player = player;
         this.parentTerritory = parentTerritory;
         this.borderID = borderID;
-        this.toggle = new Toggle(this);
+        this.toggle = new Toggle(player, this);
         
         this.bd = new NumDisplay(this);
         

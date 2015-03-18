@@ -12,8 +12,10 @@ public class Toggle extends Actor
     int toggleVal = 0;
     int lastToggleVal = 0;
     Border parentBorder;
+    Faction player;
     
-    public Toggle(Border parentBorder) {
+    public Toggle(Faction player, Border parentBorder) {
+        this.player = player;
         this.parentBorder = parentBorder;
         boolean done = false;
         
@@ -21,30 +23,39 @@ public class Toggle extends Actor
         
     }
     
-    public void act() 
+    public void act() {
+        if (player.id == parentBorder.parentTerritory.owner.id) {
+            if (Greenfoot.mouseClicked(this)) {
+                AI.toggleAI(parentBorder);
+                updateImage();
+            }
+        }
+    }
+    
+    public void updateImage() 
     {
-        if (Greenfoot.mouseClicked(this)) {
-            //this.toggleToggle();
-            AI.toggleAI(parentBorder);
+        if (player.id == parentBorder.parentTerritory.owner.id) {
+            if (toggleVal == 0) {
+                this.getImage().clear();
+            } else if (toggleVal == 1) {
+                this.setImage("ArrowD.png");
+                setAngle();
+            } else if (toggleVal == 2) {
+                this.setImage("ArrowU.png");
+                setAngle();
+            } else if (toggleVal == 3) {
+                /*if (this.parentBorder.inConflict) {
+                    this.setImage(new GreenfootImage(Integer.toString(20), 20, Color.BLACK, Color.WHITE));
+                    this.setRotation(0);
+                    this.getImage().setTransparency(255);
+                else {
+                */    this.getImage().setTransparency(0);
+                //}
+            }
         }
-        if (toggleVal == 0) {
-            this.getImage().clear();
-        } else if (toggleVal == 1) {
-            this.setImage("ArrowD.png");
-            setAngle();
-        } else if (toggleVal == 2) {
-            this.setImage("ArrowU.png");
-            setAngle();
-        } else if (toggleVal == 3) {
-            /*if (this.parentBorder.inConflict) {
-                this.setImage(new GreenfootImage(Integer.toString(20), 20, Color.BLACK, Color.WHITE));
-                this.setRotation(0);
-                this.getImage().setTransparency(255);
-            else {
-            */    this.getImage().setTransparency(0);
-            //}
+        else {
+            this.getImage().setTransparency(0);
         }
-            
     }
     
     private void setAngle() {
@@ -70,6 +81,7 @@ public class Toggle extends Actor
             toggleVal = 1;
             otherToggle.setToggleVal(2);
         }
+        updateImage();
     }
     
     public int getToggleVal() {
@@ -78,6 +90,7 @@ public class Toggle extends Actor
     
     public void setToggleVal(int newVal) {
         toggleVal = newVal;
+        updateImage();
     }
     
 }

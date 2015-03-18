@@ -90,7 +90,7 @@ public class Map extends DoDWorld
                     //NOT Map feature
                     Terrain terrainType = Terrain.getTerrain(currTile.getTerrain());
                     Faction currFaction = factions.get(currTile.getFaction());
-                    Territory currTerritory = new Territory(currFaction, territoryID, false, terrainType, resourcesMap[column][row]);
+                    Territory currTerritory = new Territory(player, currFaction, territoryID, false, terrainType, resourcesMap[column][row]);
                     currFaction.territoryList.add(currTerritory);
                     currObject = currTerritory;
                     territories.add(currTerritory);

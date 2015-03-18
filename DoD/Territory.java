@@ -12,6 +12,7 @@ public class Territory extends Actor
     public int recruitNumber = 10;
     int resource = 0; //0 nothing, 1 iron, 2 horses, 3 leather
     public Faction owner;
+    private Faction player;
     Terrain terrain;
     boolean isExterior = false;
     boolean hasChangedOwner = false;
@@ -25,18 +26,20 @@ public class Territory extends Actor
     Border outwardToggleBorder = null;
     
     
-    public Territory(Faction owner, int territoryID, boolean isExterior) {
+    public Territory(Faction player, Faction owner, int territoryID, boolean isExterior) {
         super();
+        this.player = player;
         this.owner = owner;
         this.territoryID = territoryID;
         this.isExterior = isExterior;
         for( int i = 0; i < 6; i++ ) {
-            this.borders[i] = new Border(this, i);
+            this.borders[i] = new Border(player, this, i);
         }
+        //System.out.println("player: " + player.id);
     }
     
-    public Territory(Faction owner, int territoryID, boolean isExterior, Terrain terrain, int resource) {
-        this(owner, territoryID, isExterior);
+    public Territory(Faction player, Faction owner, int territoryID, boolean isExterior, Terrain terrain, int resource) {
+        this(player, owner, territoryID, isExterior);
         this.terrain = terrain;
         this.resource = resource;
     }

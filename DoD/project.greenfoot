@@ -180,12 +180,20 @@ dependency54.type=UsesDependency
 dependency55.from=AI
 dependency55.to=EndScreen
 dependency55.type=UsesDependency
-dependency56.from=CreditsScreen
-dependency56.to=TitleScreen
+dependency56.from=AI
+dependency56.to=Map
 dependency56.type=UsesDependency
+<<<<<<< Updated upstream
 dependency57.from=Troop
 dependency57.to=TroopIcon
+=======
+dependency57.from=AI
+dependency57.to=DoDWorld
+>>>>>>> Stashed changes
 dependency57.type=UsesDependency
+dependency58.from=Toggle
+dependency58.to=Faction
+dependency58.type=UsesDependency
 dependency6.from=DoDWorld
 dependency6.to=Player
 dependency6.type=UsesDependency
@@ -202,8 +210,13 @@ mainWindow.height=722
 mainWindow.width=1280
 mainWindow.x=0
 mainWindow.y=23
+<<<<<<< Updated upstream
 package.numDependencies=49
 package.numTargets=22
+=======
+package.numDependencies=58
+package.numTargets=23
+>>>>>>> Stashed changes
 project.charset=UTF-8
 simulation.speed=98
 target1.editor.height=558
@@ -221,16 +234,24 @@ target1.x=200
 target1.y=10
 target10.editor.height=558
 target10.editor.width=798
+<<<<<<< Updated upstream
 target10.editor.x=40
 target10.editor.y=20
 target10.height=50
 target10.name=DoDWorld
+=======
+target10.editor.x=482
+target10.editor.y=53
+target10.height=50
+target10.name=TroopIcon
+>>>>>>> Stashed changes
 target10.naviview.expanded=true
 target10.showInterface=false
 target10.type=ClassTarget
 target10.typeParameters=
 target10.width=90
 target10.x=100
+<<<<<<< Updated upstream
 target10.y=130
 target11.editor.height=701
 target11.editor.width=1032
@@ -238,10 +259,20 @@ target11.editor.x=0
 target11.editor.y=23
 target11.height=50
 target11.name=Battle
+=======
+target10.y=490
+target11.editor.height=558
+target11.editor.width=798
+target11.editor.x=0
+target11.editor.y=23
+target11.height=50
+target11.name=DoDWorld
+>>>>>>> Stashed changes
 target11.naviview.expanded=true
 target11.showInterface=false
 target11.type=ClassTarget
 target11.typeParameters=
+<<<<<<< Updated upstream
 target11.width=80
 target11.x=200
 target11.y=130
@@ -251,24 +282,46 @@ target12.editor.x=482
 target12.editor.y=53
 target12.height=50
 target12.name=HexTile
+=======
+target11.width=90
+target11.x=100
+target11.y=130
+target12.editor.height=724
+target12.editor.width=1280
+target12.editor.x=0
+target12.editor.y=23
+target12.height=50
+target12.name=Battle
+>>>>>>> Stashed changes
 target12.naviview.expanded=true
 target12.showInterface=false
 target12.type=ClassTarget
 target12.typeParameters=
 target12.width=80
+<<<<<<< Updated upstream
 target12.x=10
 target12.y=190
+=======
+target12.x=200
+target12.y=130
+>>>>>>> Stashed changes
 target13.editor.height=558
 target13.editor.width=798
-target13.editor.x=2
-target13.editor.y=1
+target13.editor.x=482
+target13.editor.y=53
 target13.height=50
+<<<<<<< Updated upstream
 target13.name=Terrain
 target13.naviview.expanded=false
+=======
+target13.name=HexTile
+target13.naviview.expanded=true
+>>>>>>> Stashed changes
 target13.showInterface=false
 target13.type=EnumTarget
 target13.typeParameters=
 target13.width=80
+<<<<<<< Updated upstream
 target13.x=100
 target13.y=190
 target14.editor.height=721
@@ -278,9 +331,21 @@ target14.editor.y=24
 target14.height=50
 target14.name=InstructionsScreen
 target14.naviview.expanded=true
+=======
+target13.x=10
+target13.y=190
+target14.editor.height=558
+target14.editor.width=798
+target14.editor.x=2
+target14.editor.y=23
+target14.height=50
+target14.name=Terrain
+target14.naviview.expanded=false
+>>>>>>> Stashed changes
 target14.showInterface=false
-target14.type=ClassTarget
+target14.type=EnumTarget
 target14.typeParameters=
+<<<<<<< Updated upstream
 target14.width=140
 target14.x=10
 target14.y=550
@@ -316,10 +381,48 @@ target17.editor.x=-1329
 target17.editor.y=80
 target17.height=50
 target17.name=FactionSelectScreen
+=======
+target14.width=80
+target14.x=100
+target14.y=190
+target15.editor.height=721
+target15.editor.width=904
+target15.editor.x=204
+target15.editor.y=24
+target15.height=50
+target15.name=InstructionsScreen
+target15.naviview.expanded=true
+target15.showInterface=false
+target15.type=ClassTarget
+target15.typeParameters=
+target15.width=140
+target15.x=10
+target15.y=550
+target16.editor.height=700
+target16.editor.width=900
+target16.editor.x=0
+target16.editor.y=40
+target16.height=50
+target16.name=Toggle
+target16.naviview.expanded=false
+target16.showInterface=false
+target16.type=ClassTarget
+target16.typeParameters=
+target16.width=80
+target16.x=190
+target16.y=190
+target17.editor.height=700
+target17.editor.width=900
+target17.editor.x=0
+target17.editor.y=23
+target17.height=50
+target17.name=NumDisplay
+>>>>>>> Stashed changes
 target17.naviview.expanded=true
 target17.showInterface=false
 target17.type=ClassTarget
 target17.typeParameters=
+<<<<<<< Updated upstream
 target17.width=150
 target17.x=10
 target17.y=610
@@ -329,10 +432,22 @@ target18.editor.x=40
 target18.editor.y=20
 target18.height=50
 target18.name=MapFeature
+=======
+target17.width=100
+target17.x=100
+target17.y=310
+target18.editor.height=555
+target18.editor.width=1007
+target18.editor.x=-1007
+target18.editor.y=-11
+target18.height=50
+target18.name=FactionSelectScreen
+>>>>>>> Stashed changes
 target18.naviview.expanded=true
 target18.showInterface=false
 target18.type=ClassTarget
 target18.typeParameters=
+<<<<<<< Updated upstream
 target18.width=90
 target18.x=10
 target18.y=370
@@ -342,10 +457,22 @@ target19.editor.x=204
 target19.editor.y=24
 target19.height=50
 target19.name=Border
+=======
+target18.width=150
+target18.x=10
+target18.y=610
+target19.editor.height=700
+target19.editor.width=900
+target19.editor.x=40
+target19.editor.y=23
+target19.height=50
+target19.name=MapFeature
+>>>>>>> Stashed changes
 target19.naviview.expanded=true
 target19.showInterface=false
 target19.type=ClassTarget
 target19.typeParameters=
+<<<<<<< Updated upstream
 target19.width=80
 target19.x=10
 target19.y=250
@@ -356,10 +483,23 @@ target2.editor.y=23
 target2.height=50
 target2.name=Territory
 target2.naviview.expanded=false
+=======
+target19.width=90
+target19.x=10
+target19.y=370
+target2.editor.height=558
+target2.editor.width=798
+target2.editor.x=2
+target2.editor.y=23
+target2.height=50
+target2.name=Player
+target2.naviview.expanded=true
+>>>>>>> Stashed changes
 target2.showInterface=false
 target2.type=ClassTarget
 target2.typeParameters=
 target2.width=80
+<<<<<<< Updated upstream
 target2.x=70
 target2.y=70
 target20.editor.height=644
@@ -368,11 +508,22 @@ target20.editor.x=12
 target20.editor.y=71
 target20.height=50
 target20.name=Map
+=======
+target2.x=200
+target2.y=10
+target20.editor.height=717
+target20.editor.width=1280
+target20.editor.x=0
+target20.editor.y=23
+target20.height=50
+target20.name=Border
+>>>>>>> Stashed changes
 target20.naviview.expanded=true
 target20.showInterface=false
 target20.type=ClassTarget
 target20.typeParameters=
 target20.width=80
+<<<<<<< Updated upstream
 target20.x=100
 target20.y=250
 target21.editor.height=558
@@ -381,10 +532,21 @@ target21.editor.x=176
 target21.editor.y=53
 target21.height=50
 target21.name=DisplayBar
+=======
+target20.x=10
+target20.y=250
+target21.editor.height=644
+target21.editor.width=1206
+target21.editor.x=12
+target21.editor.y=71
+target21.height=50
+target21.name=Map
+>>>>>>> Stashed changes
 target21.naviview.expanded=true
 target21.showInterface=false
 target21.type=ClassTarget
 target21.typeParameters=
+<<<<<<< Updated upstream
 target21.width=90
 target21.x=190
 target21.y=250
@@ -394,10 +556,22 @@ target22.editor.x=0
 target22.editor.y=23
 target22.height=50
 target22.name=Faction
+=======
+target21.width=80
+target21.x=100
+target21.y=250
+target22.editor.height=558
+target22.editor.width=873
+target22.editor.x=176
+target22.editor.y=53
+target22.height=50
+target22.name=DisplayBar
+>>>>>>> Stashed changes
 target22.naviview.expanded=true
 target22.showInterface=false
 target22.type=ClassTarget
 target22.typeParameters=
+<<<<<<< Updated upstream
 target22.width=80
 target22.x=10
 target22.y=550
@@ -405,15 +579,24 @@ target23.editor.height=700
 target23.editor.width=900
 target23.editor.x=40
 target23.editor.y=20
+=======
+target22.width=90
+target22.x=190
+target22.y=250
+target23.editor.height=555
+target23.editor.width=1007
+target23.editor.x=0
+target23.editor.y=23
+>>>>>>> Stashed changes
 target23.height=50
-target23.name=MapFeature
+target23.name=Faction
 target23.naviview.expanded=true
 target23.showInterface=false
 target23.type=ClassTarget
 target23.typeParameters=
-target23.width=90
+target23.width=80
 target23.x=10
-target23.y=370
+target23.y=310
 target24.editor.height=721
 target24.editor.width=904
 target24.editor.x=204
@@ -440,6 +623,7 @@ target25.typeParameters=
 target25.width=80
 target25.x=100
 target25.y=250
+<<<<<<< Updated upstream
 target3.editor.height=558
 target3.editor.width=798
 target3.editor.x=2
@@ -459,10 +643,32 @@ target4.editor.x=2
 target4.editor.y=23
 target4.height=50
 target4.name=Screen
+=======
+target3.editor.height=717
+target3.editor.width=1280
+target3.editor.x=0
+target3.editor.y=23
+target3.height=50
+target3.name=Territory
+target3.naviview.expanded=false
+target3.showInterface=false
+target3.type=ClassTarget
+target3.typeParameters=
+target3.width=80
+target3.x=70
+target3.y=70
+target4.editor.height=558
+target4.editor.width=798
+target4.editor.x=2
+target4.editor.y=1
+target4.height=50
+target4.name=CreditsScreen
+>>>>>>> Stashed changes
 target4.naviview.expanded=true
 target4.showInterface=false
 target4.type=AbstractTarget
 target4.typeParameters=
+<<<<<<< Updated upstream
 target4.width=80
 target4.x=10
 target4.y=490
@@ -472,11 +678,23 @@ target5.editor.x=40
 target5.editor.y=23
 target5.height=50
 target5.name=Troop
+=======
+target4.width=110
+target4.x=110
+target4.y=430
+target5.editor.height=700
+target5.editor.width=900
+target5.editor.x=40
+target5.editor.y=40
+target5.height=50
+target5.name=Screen
+>>>>>>> Stashed changes
 target5.naviview.expanded=true
 target5.showInterface=false
-target5.type=ClassTarget
+target5.type=AbstractTarget
 target5.typeParameters=
 target5.width=80
+<<<<<<< Updated upstream
 target5.x=160
 target5.y=70
 target6.editor.height=700
@@ -485,11 +703,22 @@ target6.editor.x=15
 target6.editor.y=23
 target6.height=50
 target6.name=AI
+=======
+target5.x=10
+target5.y=490
+target6.editor.height=729
+target6.editor.width=1280
+target6.editor.x=0
+target6.editor.y=23
+target6.height=50
+target6.name=Troop
+>>>>>>> Stashed changes
 target6.naviview.expanded=true
 target6.showInterface=false
 target6.type=ClassTarget
 target6.typeParameters=
 target6.width=80
+<<<<<<< Updated upstream
 target6.x=10
 target6.y=130
 target7.editor.height=700
@@ -512,10 +741,35 @@ target8.editor.y=23
 target8.height=50
 target8.name=TitleScreen
 target8.naviview.expanded=true
+=======
+target6.x=160
+target6.y=70
+target7.editor.height=724
+target7.editor.width=1280
+target7.editor.x=0
+target7.editor.y=23
+target7.height=50
+target7.name=AI
+target7.naviview.expanded=true
+target7.showInterface=false
+target7.type=ClassTarget
+target7.typeParameters=
+target7.width=80
+target7.x=10
+target7.y=130
+target8.editor.height=700
+target8.editor.width=900
+target8.editor.x=40
+target8.editor.y=23
+target8.height=50
+target8.name=EndScreen
+target8.naviview.expanded=false
+>>>>>>> Stashed changes
 target8.showInterface=false
 target8.type=ClassTarget
 target8.typeParameters=
 target8.width=90
+<<<<<<< Updated upstream
 target8.x=110
 target8.y=370
 target9.editor.height=558
@@ -524,12 +778,27 @@ target9.editor.x=482
 target9.editor.y=53
 target9.height=50
 target9.name=TroopIcon
+=======
+target8.x=10
+target8.y=430
+target9.editor.height=700
+target9.editor.width=900
+target9.editor.x=40
+target9.editor.y=23
+target9.height=50
+target9.name=TitleScreen
+>>>>>>> Stashed changes
 target9.naviview.expanded=true
 target9.showInterface=false
 target9.type=ClassTarget
 target9.typeParameters=
 target9.width=90
+<<<<<<< Updated upstream
 target9.x=100
 target9.y=310
+=======
+target9.x=110
+target9.y=370
+>>>>>>> Stashed changes
 version=2.7.0
 world.lastInstantiated=TitleScreen

@@ -152,14 +152,12 @@ public class AI {
         boolean gameOver = false;
         if (player.id == winner.id && player.territoryList.size() >= maxNumTerr - 1) {
             System.out.println("Player Won!");
-            DoDWorld.playerWin();
-            gameOver = true;
+            world.playerWin();
         }
          
         if (player.id == loser.id && player.territoryList.size() <= 1) {
             System.out.println("Player Lost!");
-            DoDWorld.playerLoss();
-            gameOver = true;
+            world.playerLoss();
         }
         return gameOver;
     }
@@ -347,11 +345,11 @@ public class AI {
                 if (sendList.size() > 0) {
                     k = sendList.get(rand.nextInt(sendList.size()));
                     recv = adjacentTerritoryList[k];
-                    interiorTerritory.borders[k].toggle.toggleVal = 2; //points outside
+                    interiorTerritory.borders[k].toggle.setToggleVal(2); //points outside
                     interiorTerritory.isToggleSet = true;
                     interiorTerritory.outwardToggleBorder = interiorTerritory.borders[k];
                     otherK = recv.sharedBorderIndex(k);
-                    recv.borders[otherK].toggle.toggleVal = 1; //sharedBorderIndex in Territory, points inside
+                    recv.borders[otherK].toggle.setToggleVal(1); //sharedBorderIndex in Territory, points inside
                     maxNumTerr++;
                     interiorTerritoryQueue.remove(j);
                 }
@@ -378,9 +376,9 @@ public class AI {
             
             for (int j = 0; j < temp.borders.length; j++) {
                 if (temp.adjacentTerritoryList[j] == null)
-                    temp.borders[j].toggle.toggleVal = 0; //none
+                    temp.borders[j].toggle.setToggleVal(0); //none
                 else
-                    temp.borders[j].toggle.toggleVal = 3; //inactive
+                    temp.borders[j].toggle.setToggleVal(3); //inactive
             }
         }
     }
