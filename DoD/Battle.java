@@ -14,6 +14,26 @@ final public class Battle
     {
     }
     
+    private static int territoryDefenseBonus(Territory territory) {
+        int rtn = 0;
+        int type = territory.terrain.id;
+        
+        if (type == 3) { //forrest
+            rtn += 1;
+        }
+        else if (type == 4) { //hill
+            rtn += 1;
+        }
+        else if (type == 7) { //desert
+            rtn -= 1;
+        }
+        else if (type == 8) { //arctic
+            rtn -= 1;
+        }
+        
+        return rtn;
+    }
+    
     static void step(List<Territory> territoryList, AI ai) {
         //System.out.println("Executing Battle Code.");
         //Territory terr = null;
@@ -36,8 +56,9 @@ final public class Battle
                             int aCount = bord.getBorderManCount();
                             int bCount = other.getBorderManCount();
                             
-                            aCount += aCount * terr.owner.ironCount / 10; //offense
-                            bCount += bCount * other.parentTerritory.owner.leatherCount / 10; //defense
+                            aCount += aCount * terr.owner.ironCount / 10; //resource offense
+                            bCount += bCount * other.parentTerritory.owner.leatherCount / 10; //resource defense
+                            bCount += bCount * territoryDefenseBonus(other.parentTerritory) / 10; //terrain defense
                             
                             //System.out.println(terr.owner.id + ": " + terr.owner.ironCount + " iron " + other.parentTerritory.owner.id + ": " + other.parentTerritory.owner.leatherCount + " leather");
                             //System.out.println(aCount + " vs. " + bCount);
