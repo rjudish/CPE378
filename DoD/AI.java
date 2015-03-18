@@ -72,7 +72,7 @@ public class AI {
         }
     }
     
-    public static void toggleAI(Border border) {
+    public static boolean toggleAI(Border border) {
         Toggle curToggle = border.toggle;
         Territory curTerritory = border.parentTerritory;
         Territory otherTerritory = border.otherBorder.parentTerritory;
@@ -87,7 +87,8 @@ public class AI {
                 resetAllOutwardToggles(curTerritory);
                 curToggle.setToggleVal(2);
                 border.otherBorder.toggle.setToggleVal(1);
-                return;
+                
+                return true;
             }
         }
         
@@ -101,10 +102,24 @@ public class AI {
                 resetAllOutwardToggles(otherTerritory);
                 curToggle.setToggleVal(1);
                 border.otherBorder.toggle.setToggleVal(2);
+                
+                return true;
             }
         }
         else if (curToggle.getToggleVal() == 2 && !otherTerritory.isExterior) { //send troops into
             Border newOutwardToggleBorder = findBorderToSendTo(curTerritory, border, otherTerritory);
+            
+            if (newOutwardToggleBorder == null && curTerritory.outwardToggleBorder.borderID == border.borderID) {
+                for (int i = 0; i < curTerritory.borders.length; i++) {
+                    Border flip = curTerritory.borders[i];
+                    
+                    if (flip.otherBorder != null && flip.otherBorder.parentTerritory != null && flip.borderID != border.borderID) {
+                        if (flip.otherBorder.parentTerritory.owner.id == curTerritory.owner.id && toggleAI(flip)) {
+                            break;
+                        }
+                    }
+                }
+            }
             
             if (newOutwardToggleBorder != null) {
                 otherTerritory.outwardToggleBorder.toggle.setToggleVal(3); //make old outward toggle inactive for other territory
@@ -120,10 +135,24 @@ public class AI {
                 
                 curToggle.setToggleVal(1); //to cur
                 border.otherBorder.toggle.setToggleVal(2);
+                
+                return true;
             }
         }
         else if (curToggle.getToggleVal() == 1 && !curTerritory.isExterior) { //send troops away
             Border newOtherOutwardToggleBorder = findBorderToSendTo(otherTerritory, border.otherBorder, curTerritory);
+            
+            if (newOtherOutwardToggleBorder == null && otherTerritory.outwardToggleBorder.borderID == border.otherBorder.borderID) {
+                for (int i = 0; i < otherTerritory.borders.length; i++) {
+                    Border flip = otherTerritory.borders[i];
+                    
+                    if (flip.otherBorder != null && flip.otherBorder.parentTerritory != null && flip.borderID != border.otherBorder.borderID) {
+                        if (flip.otherBorder.parentTerritory.owner.id == otherTerritory.owner.id && toggleAI(flip)) {
+                            break;
+                        }
+                    }
+                }
+            }
             
             if (newOtherOutwardToggleBorder != null) {
                 curTerritory.outwardToggleBorder.toggle.setToggleVal(3); //make old outward toggle inactive
@@ -139,8 +168,12 @@ public class AI {
                 
                 curToggle.setToggleVal(2); //away from cur
                 border.otherBorder.toggle.setToggleVal(1);
+                
+                return true;
             }
         }
+        
+        return false;
     }
     
     public int getInverseIndex(int index) {
