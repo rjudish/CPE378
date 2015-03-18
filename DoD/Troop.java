@@ -131,7 +131,7 @@ public class Troop extends Actor
                 }
             //}
             if (cont) {
-                move(speed);
+                move(speed + owner.horseCount);
                 icon.update();
             }
         }

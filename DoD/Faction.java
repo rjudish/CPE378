@@ -27,6 +27,10 @@ public class Faction //extends Actor
     public ArrayList<Territory> conflictedTerritoryList = new ArrayList<Territory>();
     public ArrayList<Territory> nonConflictedTerritoryList = new ArrayList<Territory>();
     
+    public int ironCount = 0;
+    public int horseCount = 0;
+    public int leatherCount = 0;
+    
     int lastTime = 0;
     GreenfootImage flag;
     Color bgColor;

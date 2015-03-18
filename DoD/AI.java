@@ -203,7 +203,9 @@ public class AI {
          boolean noEnemies = true;
          //System.out.println("Battle it out!");
          
+         addResourcesCount(lost, -1);
          lost.owner = winner;
+         addResourcesCount(lost, 1);
          lost.hasChangedOwner = true;
          lost.setDisplay();
          
@@ -386,13 +388,31 @@ public class AI {
                     otherK = recv.sharedBorderIndex(k);
                     recv.borders[otherK].toggle.setToggleVal(1); //sharedBorderIndex in Territory, points inside
                     maxNumTerr++;
+                    addResourcesCount(interiorTerritory, 1);
                     interiorTerritoryQueue.remove(j);
                 }
             }
             
             for (int j = 0; j < currFaction.conflictedTerritoryList.size(); j++) {
+                Territory territory = currFaction.conflictedTerritoryList.get(j);
+                
                 maxNumTerr++;
-                currFaction.conflictedTerritoryList.get(j).isToggleSet = true;
+                addResourcesCount(territory, 1);
+                territory.isToggleSet = true;
+            }
+        }
+    }
+    
+    public static void addResourcesCount(Territory territory, int count) {
+        if (territory.resource > 0) {
+            if (territory.resource == 1) { //iron
+                territory.owner.ironCount += count;
+            }
+            else if (territory.resource == 2) { //horse
+                territory.owner.horseCount += count;
+            }
+            else { //leather = 3
+                territory.owner.leatherCount += count;
             }
         }
     }

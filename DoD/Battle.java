@@ -35,6 +35,11 @@ final public class Battle
                             
                             int aCount = bord.getBorderManCount();
                             int bCount = other.getBorderManCount();
+                            
+                            aCount += aCount * terr.owner.ironCount / 10; //offense
+                            bCount += bCount * other.parentTerritory.owner.leatherCount / 10; //defense
+                            
+                            //System.out.println(terr.owner.id + ": " + terr.owner.ironCount + " iron " + other.parentTerritory.owner.id + ": " + other.parentTerritory.owner.leatherCount + " leather");
                             //System.out.println(aCount + " vs. " + bCount);
                             
                             if (aCount / 10 > bCount) {
