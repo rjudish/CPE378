@@ -119,7 +119,7 @@ public class Map extends DoDWorld
      * Then creates and initializes the objects.
      */
     public void placeMapFeatures(HexTile[][] tiles) {
-        double waterEdgeChance = 0.0, waterInteriorChance = 0.1; //ALPHA no edges to prevent islands
+        double waterEdgeChance = 0.0, waterInteriorChance = 0.12; //Need to be careful about islands
         for (int i = 0; i < ROWS; i++) {
             for (int j = 0; j < COLUMNS; j++) {
                 if (i == 0 || i == ROWS - 1 || j == 0 || j == COLUMNS - 1) {
@@ -134,7 +134,7 @@ public class Map extends DoDWorld
             }
         }
         //Mountains Pass
-        double mountainChance = 0.1;
+        double mountainChance = 0.12;
         for (int i = 1; i < ROWS - 1; i++) {
             for (int j = 1; j < COLUMNS - 1; j++) {
                 if (tiles[j][i] == null && Math.random() < mountainChance) {
@@ -206,11 +206,27 @@ public class Map extends DoDWorld
      */
     public int[][] placeTerrains(HexTile[][] tiles) {
         Random rand = new Random();
+		int random = 0;
         int[][] terrainsMap = new int[COLUMNS][ROWS];
         for (int i = 0; i < ROWS; i++) {
             for(int j = 0; j < COLUMNS; j++) {
                 if(tiles[j][i] == null) {
-                    terrainsMap[j][i] = rand.nextInt(6)+NUM_MAP_FEATURES;
+					random = rand.nextInt(100);
+					if (i > 0 && random > 80 && tiles[j][i-1] == null) {
+						terrainsMap[j][i] = terrainsMap[j][i-1];
+					} else if (j > 0 && random > 50 && tiles[j-1][i] == null) {
+						terrainsMap[j][i] = terrainsMap[j-1][i];
+					} else {
+						terrainsMap[j][i] = rand.nextInt(6)+NUM_MAP_FEATURES;
+						if (i > 0 || i < ROWS - 1) { //no arctic in middle of map
+							terrainsMap[j][i] = rand.nextInt(5)+NUM_MAP_FEATURES;
+						} else {
+							terrainsMap[j][i] = rand.nextInt(6)+NUM_MAP_FEATURES;
+						}
+						if((i == 0 || i == ROWS - 1) && rand.nextInt(100) > 60) {
+							terrainsMap[j][i] = 8;
+						  }
+					}
                 }
             }
         }
