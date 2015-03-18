@@ -32,13 +32,13 @@ public class DisplayBar extends Actor
     }
     private void redrawDisplayBar() {
         GreenfootImage image = new GreenfootImage(BASE_IMAGE);
-        image.drawImage(new GreenfootImage(factionText, 20, Color.BLACK, Color.WHITE), 10, 5);
+        image.drawImage(new GreenfootImage(factionText, 20, Color.BLACK, Color.WHITE), 5, 20);
         image.setColor(player.bgColor);
-        image.fillRect(70, 5, 40, 20);
+        image.fillRect(65, 20, 30, 20);
         image.drawImage(new GreenfootImage(territoryText + currentTerritories, 20,
-            Color.BLACK, Color.WHITE), 10, 25);
-        image.drawImage(new GreenfootImage(manpowerText + currentManpower, 20,
-            Color.BLACK, Color.WHITE), 10, 45); 
+            Color.BLACK, Color.WHITE), 5, 40);
+        image.drawImage(new GreenfootImage(manpowerText + currentManpower/1000 + "K", 20,
+            Color.BLACK, Color.WHITE), 5, 60); 
         setImage(image);
     }
     
