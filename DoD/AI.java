@@ -185,12 +185,14 @@ public class AI {
         boolean gameOver = false;
         if (player.id == winner.id && player.territoryList.size() >= maxNumTerr - 1) {
             System.out.println("Player Won!");
-            world.playerWin();
+            DoDWorld.playerWin();
+            gameOver = true;
         }
          
         if (player.id == loser.id && player.territoryList.size() <= 1) {
             System.out.println("Player Lost!");
-            world.playerLoss();
+            DoDWorld.playerLoss();
+            gameOver = true;
         }
         return gameOver;
     }
