@@ -10,7 +10,7 @@ public class InstructionsScreen extends Screen
 {
 
     int screen = 1;
-    private static final int NUM_SCREENS = 3;
+    private static final int NUM_SCREENS = 8;
     /**
      * Constructor for objects of class InstructionsScreen.
      * 
