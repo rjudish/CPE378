@@ -84,7 +84,7 @@ public class Territory extends Actor
     {
         //System.out.println("Territory " + territoryID + " acting.");
         
-        if ( ((DoDWorld)getWorld()).getGameTime() > lastTime) {
+        if ( ((DoDWorld)getWorld()).getGameTime() > lastTime + 1) {
             lastTime = ((DoDWorld)getWorld()).getGameTime();
             //if (territoryID == 123)    // To limit troops for testing
                 

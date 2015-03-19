@@ -53,7 +53,7 @@ public class DoDWorld extends World
     }
     
     public void act() {
-        deltaTime = (deltaTime + 1) % 60;
+        deltaTime = (deltaTime + 1) % 180;
         if (deltaTime == 0) {
             gameTime++;
             //System.out.println("Game Time: " + gameTime);

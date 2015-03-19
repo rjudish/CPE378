@@ -12,7 +12,7 @@ public class Troop extends Actor
 {
     Faction owner;
     int troopManCount;
-    int speed = 3;
+    int speed = 1;
     int lastTime = 0;
     
     Territory currTerr;
@@ -134,7 +134,7 @@ public class Troop extends Actor
                 }
             //}
             if (cont) {
-                move(speed + owner.horseCount);
+                move(speed + owner.horseCount/3);
                 icon.update();
             }
         }
