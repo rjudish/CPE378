@@ -94,6 +94,7 @@ public class Troop extends Actor
                 
                 if (currTerr != null && currTerr.owner != this.owner) {
                     //System.out.println("Problem: Troop in enemy territory! " + currTerr.territoryID);     //expected now that battle code changes territory ownership
+                    //owner.redFactionManCount(troopManCount);
                     owner.world.removeObject(this.icon);
                     owner.world.removeObject(this);
                     cont = false;
@@ -122,6 +123,7 @@ public class Troop extends Actor
                     } else {
                         System.out.println("Problem: Troop went off the map!");
                             //Only happens when toggle AI is broken
+                        //owner.redFactionManCount(troopManCount);
                         owner.world.removeObject(this.icon);
                         owner.world.removeObject(this);
                         cont = false;
@@ -151,6 +153,7 @@ public class Troop extends Actor
         if (!hasTarget) {
             System.out.println("Problem: No borders in territory are viable target " + currTerr.territoryID);
                 //Should be fixed by toggle AI
+            //owner.redFactionManCount(troopManCount);
             owner.world.removeObject(this.icon);
             owner.world.removeObject(this);
         }

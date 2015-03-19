@@ -34,9 +34,12 @@ final public class Battle
         return rtn;
     }
     
-    static void step(List<Territory> territoryList, AI ai) {
+    static void step(List<Territory> territoryList, AI ai, java.util.Map<Integer, Faction> factions) {
         //System.out.println("Executing Battle Code.");
         //Territory terr = null;
+        
+        int[] newManCount = new int[9];
+        
         for(Territory terr : territoryList) {
             if (terr.isExterior && !terr.hasChangedOwner) {
                 //for(int iterator = conflictedTerritoryList.size() ; iterator > 0; iterator-- ) {
@@ -76,6 +79,12 @@ final public class Battle
                                 owner.redFactionManCount(bord.getBorderManCount());    // they were already counted, don't want to double count
                                 bord.setBorderManCount(0);
                                 
+                                //loser
+                                for (int j = 0; j < 6; j++) {
+                                    other.parentTerritory.owner.redFactionManCount(other.parentTerritory.borders[j].getBorderManCount());
+                                    other.parentTerritory.borders[j].setBorderManCount(0);
+                                }
+                                
                                 boolean noEnemies = ai.battleOutcome(other.parentTerritory, bord.parentTerritory.owner); //lostTerritory, winningFaction
                                 other.parentTerritory.newOwner( terr.getOwner() );
                                 if (noEnemies)
@@ -104,8 +113,16 @@ final public class Battle
                             // B vs A gets checked when we loop through opponent's conflicted territory
                         //}
                     }
+                    
+                    if (terr.borders[i].inConflict) {
+                        newManCount[terr.owner.id] += terr.borders[i].getBorderManCount();
+                    }
                 }
             }
+        }
+        
+        for (int i = 1; i < newManCount.length; i++) {
+            factions.get(i).setFactionManCount(newManCount[i]);
         }
 
     }

@@ -66,7 +66,7 @@ public class Faction //extends Actor
         Troop newTroop = new Troop(this, incoming);
         troopList.add(newTroop);
         
-        factionManCount += incoming;
+        //factionManCount += incoming;
         
         world.addObject(newTroop, xPos, yPos); // HALP
         world.addObject(newTroop.getIcon(), xPos, yPos);
@@ -74,12 +74,16 @@ public class Faction //extends Actor
 
     }
     
+    public void setFactionManCount(int value) {
+        factionManCount = value;
+    }
+    
     public int getFactionManCount() {
         return factionManCount;
     }
     
     public void redFactionManCount( int less) {
-        factionManCount -= less;
+        //factionManCount -= less;
     }
     
     public void setColors(int randomized) {

@@ -58,7 +58,7 @@ public class DoDWorld extends World
             gameTime++;
             //System.out.println("Game Time: " + gameTime);
             if (gameTime > 3 && !gameOver) {   //Give the initial wave of troops time to get to a conflicted Border
-                Battle.step(territories, ai);
+                Battle.step(territories, ai, factions);
                 Battle.cleanup(territories);
             }
         }

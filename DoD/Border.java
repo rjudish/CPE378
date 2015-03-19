@@ -82,7 +82,12 @@ public class Border extends Actor
     }
     
     public void battleWon() {
+        int old = otherBorder.borderManCount;
+        
         otherBorder.borderManCount *= 0.5;
         borderManCount -= otherBorder.borderManCount;
+        
+        otherBorder.parentTerritory.owner.redFactionManCount(old - otherBorder.borderManCount);
+        parentTerritory.owner.redFactionManCount(otherBorder.borderManCount);
     }
 }
