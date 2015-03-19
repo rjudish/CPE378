@@ -121,9 +121,10 @@ public class Troop extends Actor
                         lastTerr = currTerr;
     
                     } else {
-                        System.out.println("Problem: Troop went off the map!");
+                        //System.out.println("Problem: Troop went off the map!");
                             //Only happens when toggle AI is broken
                         //owner.redFactionManCount(troopManCount);
+                        owner.redFactionManCount(troopManCount);
                         owner.world.removeObject(this.icon);
                         owner.world.removeObject(this);
                         cont = false;
@@ -151,11 +152,19 @@ public class Troop extends Actor
             }
         }
         if (!hasTarget) {
-            System.out.println("Problem: No borders in territory are viable target " + currTerr.territoryID);
+            //System.out.println("Problem: No borders in territory are viable target " + currTerr.territoryID);
+            AI.reToggle(currTerr);
+            
+            for (Border bord : currTerr.borders) {
+                if (!hasTarget && bord.toggle.getToggleVal() == turnToToggleVal) {
+                    turnTowards( bord.getX(), bord.getY());
+                    hasTarget = true;
+                }
+            }
                 //Should be fixed by toggle AI
             //owner.redFactionManCount(troopManCount);
-            owner.world.removeObject(this.icon);
-            owner.world.removeObject(this);
+            //owner.world.removeObject(this.icon);
+            //owner.world.removeObject(this);
         }
     }
     

@@ -71,12 +71,14 @@ public class Border extends Actor
     }
     
     public void setBorderManCount(int newManCount) {
+        //this.getOwner().redFactionManCount(borderManCount - newManCount);
         this.borderManCount = newManCount;
         this.bd.setDisplayNum(newManCount);
     }
     
     public void addTroops(int incoming) {
         borderManCount += incoming;
+        //this.getOwner().redFactionManCount(-incoming);
         bd.setDisplayNum(borderManCount);
         //System.out.println("Border " + borderID + " gets " + incoming + " new units, for a total of " + borderManCount);
     }

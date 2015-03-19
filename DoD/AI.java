@@ -287,7 +287,7 @@ public class AI {
         return -1;
     }
     
-    public void reToggle(Territory start) {
+    public static void reToggle(Territory start) {
         Faction faction = start.owner;
         Random rand = new Random();
         int neigh = isNeighborExterior(start);

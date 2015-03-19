@@ -76,12 +76,12 @@ final public class Battle
                                 }
                                 //Disperse troops remaining at victorious border
                                 owner.addTroops(bord.getBorderManCount(), bord.getX(), bord.getY());
-                                owner.redFactionManCount(bord.getBorderManCount());    // they were already counted, don't want to double count
+                                //owner.redFactionManCount(bord.getBorderManCount());    // they were already counted, don't want to double count
                                 bord.setBorderManCount(0);
                                 
                                 //loser
                                 for (int j = 0; j < 6; j++) {
-                                    other.parentTerritory.owner.redFactionManCount(other.parentTerritory.borders[j].getBorderManCount());
+                                    //other.parentTerritory.owner.redFactionManCount(other.parentTerritory.borders[j].getBorderManCount());
                                     other.parentTerritory.borders[j].setBorderManCount(0);
                                 }
                                 
@@ -97,7 +97,7 @@ final public class Battle
                                             Border aBord = aTerr.borders[j];
                                             if (!aBord.inConflict && aBord.getBorderManCount() != 0) {
                                                 owner.addTroops(aBord.getBorderManCount(), aBord.getX(), aBord.getY());
-                                                owner.redFactionManCount(aBord.getBorderManCount());    // they were already counted, don't want to double count
+                                                //owner.redFactionManCount(aBord.getBorderManCount());    // they were already counted, don't want to double count
                                                 aBord.setBorderManCount(0);
                                             }
                                         }
@@ -125,7 +125,16 @@ final public class Battle
             if (factions.get(i) != null)
                 factions.get(i).setFactionManCount(newManCount[i]);
         }
-
+        
+        for (int i = 1; i < newManCount.length; i++) {
+            if (newManCount[i] > 0) {
+                Faction fac = factions.get(i);
+                
+                for (int j = 0; j < fac.troopList.size(); j++) {
+                    newManCount[i] += fac.troopList.get(j).troopManCount;
+                }
+            }
+        }
     }
     
     
