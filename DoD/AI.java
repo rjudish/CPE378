@@ -15,6 +15,8 @@ public class AI {
     private List<Territory> territories;
     private Map world;
     private int maxNumTerr = 0;
+    private static final double reduction = 0.8; // 0.8 reduces the recruit number by 20%
+    private static final int minRecruit = 10; //minimum recruit number that a territory must have
     /**
      * Constructor for objects of class AI
      */
@@ -207,6 +209,8 @@ public class AI {
          lost.owner = winner;
          addResourcesCount(lost, 1);
          lost.hasChangedOwner = true;
+         lost.recruitNumber *= reduction;
+         lost.recruitNumber = lost.recruitNumber < minRecruit ? minRecruit : lost.recruitNumber;
          lost.setDisplay();
          
          lost.isExterior = false;

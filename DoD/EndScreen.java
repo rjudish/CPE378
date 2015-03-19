@@ -17,11 +17,16 @@ public class EndScreen extends Screen
     {    
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
         super();
+        music.stop();
         if (win) {
             setBackground("images/winScreen.png");
+            music = new GreenfootSound("Ta Da.wav");
+            music.play();
         }
         else {
             setBackground("images/loseScreen.png");
+            music = new GreenfootSound("GameoverOne.wav");
+            music.play();
         }
     }
     

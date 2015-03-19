@@ -122,7 +122,8 @@ final public class Battle
         }
         
         for (int i = 1; i < newManCount.length; i++) {
-            factions.get(i).setFactionManCount(newManCount[i]);
+            if (factions.get(i) != null)
+                factions.get(i).setFactionManCount(newManCount[i]);
         }
 
     }

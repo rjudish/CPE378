@@ -8,6 +8,7 @@ import greenfoot.*;
  */
 public abstract class Screen extends World
 {
+    public static GreenfootSound music;
 
     /**
      * Constructor for objects of class Screen.
